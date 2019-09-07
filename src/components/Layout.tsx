@@ -1,7 +1,7 @@
+import { CSSReset, ThemeProvider } from '@chakra-ui/core';
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { ThemeProvider } from 'emotion-theming';
 import { theme } from '../utils/theme';
 
 interface LayoutProps {
@@ -25,29 +25,29 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <div>
-          <Helmet
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
-            defaultTitle={data.site.siteMetadata.title}
-          >
-            <html lang={data.site.siteMetadata.languageCode} />
-            <meta
-              name="description"
-              content={data.site.siteMetadata.description}
-            />
+        <CSSReset />
 
-            <meta
-              property="og:locale"
-              content={`${data.site.siteMetadata.languageCode}_${data.site.siteMetadata.countryCode}`}
-            />
-          </Helmet>
+        <Helmet
+          titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+          defaultTitle={data.site.siteMetadata.title}
+        >
+          <html lang={data.site.siteMetadata.languageCode} />
+          <meta
+            name="description"
+            content={data.site.siteMetadata.description}
+          />
 
-          <header>{/* TODO */}</header>
+          <meta
+            property="og:locale"
+            content={`${data.site.siteMetadata.languageCode}_${data.site.siteMetadata.countryCode}`}
+          />
+        </Helmet>
 
-          <main>{children}</main>
+        <header>{/* TODO */}</header>
 
-          <footer>{/* TODO */}</footer>
-        </div>
+        <main>{children}</main>
+
+        <footer>{/* TODO */}</footer>
       </ThemeProvider>
     </React.StrictMode>
   );
