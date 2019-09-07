@@ -1,8 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Strict Starter',
-    description:
-      'Demo for a Gatsby starter with strict linting and auto-formatting rules.',
+    title: 'Exigo',
+    description: '', // TODO
     languageCode: 'en',
     countryCode: 'US',
   },
@@ -11,13 +10,13 @@ module.exports = {
       resolve: 'gatsby-plugin-manifest',
       options: {
         /* eslint-disable @typescript-eslint/camelcase */
-        name: 'Gatsby Strict Starter',
-        short_name: 'starter',
+        name: 'Exigo',
+        short_name: 'Exigo',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#663399', // TODO
+        theme_color: '#663399', // TODO
         display: 'minimal-ui',
-        icon: 'src/assets/favicon.png',
+        icon: 'src/assets/favicon.png', // TODO
         /* eslint-enable */
       },
     },
