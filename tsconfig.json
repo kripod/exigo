@@ -10,7 +10,6 @@
     "isolatedModules": true,
 
     // Define Emotion 'css' prop and theme types
-    "types": ["@emotion/core", "jest"],
     "baseUrl": "./src",
     "paths": {
       "@emotion/styled": ["utils/theme"]

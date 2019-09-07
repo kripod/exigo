@@ -12,6 +12,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.2.6",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@rhysforyou/gatsby-plugin-react-helmet-async": "^0.1.1",
