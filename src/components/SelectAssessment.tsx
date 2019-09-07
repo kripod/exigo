@@ -1,6 +1,7 @@
-import { Radio, RadioGroup } from '@chakra-ui/core';
+import { RadioButtonGroup } from '@chakra-ui/core';
 import React, { useMemo, useState } from 'react';
 import { sort } from '../utils/array';
+import RadioButton from './RadioButton';
 
 type SelectAssessmentProps = {
   question: string;
@@ -27,32 +28,31 @@ export default function SelectAssessment({
     <>
       <p>{question}</p>
 
-      <RadioGroup
-        value={selectedChoice}
-        onChange={(e: any) => setSelectedChoice(e.target.value)}
-      >
+      <RadioButtonGroup value={selectedChoice} onChange={setSelectedChoice}>
         {choices.map(choice => {
-          let bgColor;
+          let color;
           if (selectedChoice != null) {
             if (choice === solution) {
-              bgColor = 'green.400';
+              color = 'green';
             } else if (choice === selectedChoice) {
-              bgColor = 'red.400';
+              color = 'red';
             }
           }
 
           return (
-            <Radio
+            <RadioButton
               key={choice}
               value={choice}
+              variant={color ? 'solid' : 'outline'}
+              variantColor={color}
               isDisabled={selectedChoice != null}
-              bg={bgColor}
+              isFullWidth
             >
               {choice}
-            </Radio>
+            </RadioButton>
           );
         })}
-      </RadioGroup>
+      </RadioButtonGroup>
     </>
   );
 }
