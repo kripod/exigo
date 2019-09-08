@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import SelectAssessment from '../components/SelectAssessment';
+import SelectChoice from '../models/SelectChoice';
 
 export default function IndexPage() {
+  const [solutionID, setSolutionID] = useState<SelectChoice['id']>();
+
   return (
     <Layout>
       <SelectAssessment
@@ -13,9 +16,10 @@ export default function IndexPage() {
           { id: '3', label: '8' },
           { id: '4', label: '12' },
         ]}
-        solutionID="2"
+        solutionID={solutionID}
         onChange={() => {
-          /* TODO: Get solutionID from server */
+          /* TODO: Get solutionID from server instead of simulated delay */
+          if (!solutionID) setTimeout(() => setSolutionID('2'), 800);
         }}
       />
     </Layout>
