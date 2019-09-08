@@ -50,9 +50,12 @@ export default function SelectAssessment({
           }
 
           return (
+            // TODO: Use 'isReadOnly' prop instead of 'isDisabled'
+            // See: https://github.com/chakra-ui/chakra-ui/issues/52
             <Radio
               key={choice.id}
               value={String(choice.id)}
+              isDisabled={Boolean(solutionID && selectedChoiceID)}
               isFullWidth
               px={5}
               py={3}
