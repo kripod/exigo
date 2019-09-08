@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from '@chakra-ui/core';
+import { Radio, RadioGroup, Text } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
 
@@ -21,7 +21,9 @@ export default function SelectAssessment({
 
   return (
     <>
-      <p>{question}</p>
+      <Text as="p" m={5}>
+        {question}
+      </Text>
 
       <RadioGroup
         value={selectedChoiceID}
@@ -30,9 +32,10 @@ export default function SelectAssessment({
           setSelectedChoiceID(choiceID);
           onChange(choiceID);
         }}
+        spacing={0}
       >
-        {choices.map(choice => {
-          let color;
+        {choices.map((choice, i) => {
+          let color = i % 2 === 0 ? 'gray.50' : '';
           if (solutionID && selectedChoiceID) {
             if (choice.id === solutionID) {
               color = 'green.200';
@@ -48,10 +51,9 @@ export default function SelectAssessment({
               key={choice.id}
               value={choice.id}
               isFullWidth
-              px={3}
-              py={2}
+              px={5}
+              py={3}
               bg={color}
-              borderWidth={1}
             >
               {choice.label}
             </Radio>
