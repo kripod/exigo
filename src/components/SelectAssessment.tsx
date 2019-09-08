@@ -1,58 +1,59 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
-import React, { useMemo, useState } from 'react';
-import { sort } from '../utils/array';
+import React, { useState } from 'react';
+import SelectChoice from '../models/SelectChoice';
 
 type SelectAssessmentProps = {
   question: string;
-  solution: string;
-  distractors: string[];
-  sortChoices?: (choices: string[]) => string[];
+  choices: SelectChoice[];
+  solutionID?: SelectChoice['id'];
+  onChange: (choiceID: SelectChoice['id']) => void;
 };
 
 export default function SelectAssessment({
   question,
-  solution,
-  distractors,
-  sortChoices = sort,
+  choices,
+  solutionID,
+  onChange,
 }: SelectAssessmentProps) {
-  const choices = useMemo(() => sortChoices([...solution, ...distractors]), [
-    distractors,
-    solution,
-    sortChoices,
-  ]);
-
-  const [selectedChoice, setSelectedChoice] = useState<string>();
+  const [selectedChoiceID, setSelectedChoiceID] = useState<
+    SelectChoice['id']
+  >();
 
   return (
     <>
       <p>{question}</p>
 
       <RadioGroup
-        value={selectedChoice}
-        onChange={e => setSelectedChoice(e.target.value)}
+        value={selectedChoiceID}
+        onChange={(event: any) => {
+          const choiceID = event.target.value;
+          setSelectedChoiceID(choiceID);
+          onChange(choiceID);
+        }}
       >
         {choices.map(choice => {
           let color;
-          if (selectedChoice != null) {
-            if (choice === solution) {
+          if (solutionID && selectedChoiceID) {
+            if (choice.id === solutionID) {
               color = 'green.200';
-            } else if (choice === selectedChoice) {
+            } else if (choice.id === selectedChoiceID) {
               color = 'red.200';
             }
+          } else if (choice.id === selectedChoiceID) {
+            color = 'blue.200';
           }
 
           return (
             <Radio
-              key={choice}
-              value={choice}
-              isDisabled={selectedChoice != null}
+              key={choice.id}
+              value={choice.id}
               isFullWidth
               px={3}
               py={2}
               bg={color}
               borderWidth={1}
             >
-              {choice}
+              {choice.label}
             </Radio>
           );
         })}
