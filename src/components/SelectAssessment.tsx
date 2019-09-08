@@ -35,15 +35,18 @@ export default function SelectAssessment({
         spacing={0}
       >
         {choices.map((choice, i) => {
-          let color = i % 2 === 0 ? 'gray.50' : '';
-          if (solutionID && selectedChoiceID) {
-            if (choice.id === solutionID) {
-              color = 'green.200';
-            } else if (choice.id === selectedChoiceID) {
-              color = 'red.200';
-            }
+          let color;
+          if (choice.id === solutionID) {
+            color = 'green';
           } else if (choice.id === selectedChoiceID) {
-            color = 'blue.200';
+            color = solutionID ? 'red' : 'blue';
+          }
+
+          let bgColor;
+          if (color) {
+            bgColor = `${color}.200`;
+          } else if (i % 2 === 0) {
+            bgColor = 'gray.50';
           }
 
           return (
@@ -53,7 +56,8 @@ export default function SelectAssessment({
               isFullWidth
               px={5}
               py={3}
-              bg={color}
+              color={color}
+              bg={bgColor}
             >
               {choice.label}
             </Radio>
