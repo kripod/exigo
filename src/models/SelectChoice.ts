@@ -1,4 +1,4 @@
 export default interface SelectChoice {
-  id: string;
+  id: number;
   label: string;
 }

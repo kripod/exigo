@@ -26,9 +26,9 @@ export default function SelectAssessment({
       </Heading>
 
       <RadioGroup
-        value={selectedChoiceID}
+        value={String(selectedChoiceID)}
         onChange={(event: any) => {
-          const choiceID = event.target.value;
+          const choiceID: SelectChoice['id'] = Number(event.target.value);
           setSelectedChoiceID(choiceID);
           onChange(choiceID);
         }}
@@ -49,7 +49,7 @@ export default function SelectAssessment({
           return (
             <Radio
               key={choice.id}
-              value={choice.id}
+              value={String(choice.id)}
               isFullWidth
               px={5}
               py={3}
