@@ -9,7 +9,7 @@ export default function IndexPage() {
 
   return (
     <Layout>
-      <AssessmentCard question="If a=1 and b=2, what is a+b?">
+      <AssessmentCard title="If a=1 and b=2, what is a+b?">
         <SelectAssessment
           choices={[
             { id: 1, label: '1' },
