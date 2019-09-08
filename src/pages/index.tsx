@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AssessmentCard from '../components/AssessmentCard';
 import Layout from '../components/Layout';
-import SelectAssessment from '../components/SelectAssessment';
+import SelectSingleAssessment from '../components/SelectSingleAssessment';
 import SelectChoice from '../models/SelectChoice';
 
 export default function IndexPage() {
@@ -10,7 +10,7 @@ export default function IndexPage() {
   return (
     <Layout>
       <AssessmentCard title="If a=1 and b=2, what is a+b?">
-        <SelectAssessment
+        <SelectSingleAssessment
           choices={[
             { id: 1, label: '1' },
             { id: 2, label: '3' },
