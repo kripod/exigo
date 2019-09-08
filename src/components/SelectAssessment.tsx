@@ -1,13 +1,12 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
+import { SelectSingleAssessmentProps } from '../models/SelectSingleAssessment';
 import { ASSESSMENT_CARD_PADDING } from './AssessmentCard';
 
-type SelectAssessmentProps = {
-  choices: SelectChoice[];
-  solutionID?: SelectChoice['id'];
+interface SelectAssessmentProps extends SelectSingleAssessmentProps {
   onChange: (choiceID: SelectChoice['id']) => void;
-};
+}
 
 export default function SelectAssessment({
   choices,
