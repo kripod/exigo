@@ -1,4 +1,4 @@
-import { Radio, RadioGroup, Text } from '@chakra-ui/core';
+import { Heading, Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
 
@@ -21,9 +21,9 @@ export default function SelectAssessment({
 
   return (
     <>
-      <Text as="p" m={5}>
+      <Heading as="h3" size="md" fontWeight={500} m={5}>
         {question}
-      </Text>
+      </Heading>
 
       <RadioGroup
         value={selectedChoiceID}
