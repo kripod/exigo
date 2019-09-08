@@ -1,6 +1,7 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
+import { ASSESSMENT_CARD_PADDING } from './AssessmentCard';
 
 type SelectAssessmentProps = {
   choices: SelectChoice[];
@@ -50,7 +51,7 @@ export default function SelectAssessment({
             value={String(choice.id)}
             isDisabled={Boolean(solutionID && selectedChoiceID)}
             isFullWidth
-            px={5}
+            px={ASSESSMENT_CARD_PADDING}
             py={3}
             color={color}
             bg={bgColor}
