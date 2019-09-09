@@ -1,5 +1,6 @@
 {
   "private": true,
+  "name": "exigo",
   "scripts": {
     "build": "gatsby build",
     "clean": "git clean --force -dX",
