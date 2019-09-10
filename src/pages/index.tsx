@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import QuizItemCard from '../components/QuizItemCard';
 import Layout from '../components/Layout';
-import SelectSingleItemForm from '../components/SelectSingleItemForm';
+import MultipleChoiceForm from '../components/MultipleChoiceForm';
 import SelectChoice from '../models/SelectChoice';
 
 export default function IndexPage() {
@@ -10,7 +10,7 @@ export default function IndexPage() {
   return (
     <Layout>
       <QuizItemCard stem="If a=1 and b=2, what is a+b?">
-        <SelectSingleItemForm
+        <MultipleChoiceForm
           choices={[
             { id: 1, label: '1' },
             { id: 2, label: '3' },

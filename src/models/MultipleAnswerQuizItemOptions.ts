@@ -1,6 +1,6 @@
 import SelectChoice from './SelectChoice';
 
-export default interface SelectMultipleQuizItemOptions {
+export default interface MultipleAnswerQuizItemOptions {
   choices: SelectChoice[];
   solutionIDs?: SelectChoice['id'][];
 }

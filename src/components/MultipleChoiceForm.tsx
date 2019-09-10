@@ -1,14 +1,14 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
-import SelectSingleQuizItemOptions from '../models/SelectSingleQuizItemOptions';
+import MultipleChoiceQuizItemOptions from '../models/MultipleChoiceQuizItemOptions';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface SelectSingleItemFormProps extends SelectSingleQuizItemOptions {
+interface SelectSingleItemFormProps extends MultipleChoiceQuizItemOptions {
   onChange: (choiceID: SelectChoice['id']) => void;
 }
 
-export default function SelectSingleItemForm({
+export default function MultipleChoiceForm({
   choices,
   solutionID,
   onChange,
