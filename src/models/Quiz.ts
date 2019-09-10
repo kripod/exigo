@@ -8,12 +8,8 @@ export interface QuizBase {
 
 type Quiz = QuizBase &
   (
-    | ({
-        type: QuizType.SELECT_SINGLE;
-      } & SelectSingleQuiz)
-    | ({
-        type: QuizType.SELECT_MULTIPLE;
-      } & SelectMultipleQuiz));
+    | ({ type: QuizType.SELECT_SINGLE } & SelectSingleQuiz)
+    | ({ type: QuizType.SELECT_MULTIPLE } & SelectMultipleQuiz));
 
 // eslint-disable-next-line no-undef
 export default Quiz;
