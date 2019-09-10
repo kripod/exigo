@@ -1,10 +1,10 @@
 import { Heading } from '@chakra-ui/core';
 import React from 'react';
+import { QuizBase } from '../models/Quiz';
 
 export const QUIZ_CARD_PADDING = 5;
 
-interface QuizCardProps {
-  item: string;
+interface QuizCardProps extends QuizBase {
   children: React.ReactNode;
 }
 
