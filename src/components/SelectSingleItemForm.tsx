@@ -1,18 +1,18 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
-import SelectSingleQuizOptions from '../models/SelectSingleQuizOptions';
-import { QUIZ_CARD_PADDING } from './QuizCard';
+import SelectSingleQuizItemOptions from '../models/SelectSingleQuizItemOptions';
+import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface SelectSingleQuizProps extends SelectSingleQuizOptions {
+interface SelectSingleItemFormProps extends SelectSingleQuizItemOptions {
   onChange: (choiceID: SelectChoice['id']) => void;
 }
 
-export default function SelectSingleQuiz({
+export default function SelectSingleItemForm({
   choices,
   solutionID,
   onChange,
-}: SelectSingleQuizProps) {
+}: SelectSingleItemFormProps) {
   const [selectedChoiceID, setSelectedChoiceID] = useState<
     SelectChoice['id']
   >();
@@ -50,7 +50,7 @@ export default function SelectSingleQuiz({
             value={String(choice.id)}
             isDisabled={Boolean(solutionID && selectedChoiceID)}
             isFullWidth
-            px={QUIZ_CARD_PADDING}
+            px={QUIZ_ITEM_CARD_PADDING}
             py={3}
             color={color}
             bg={bgColor}
