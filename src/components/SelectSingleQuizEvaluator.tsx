@@ -1,18 +1,18 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
-import SelectSingleAssessment from '../models/SelectSingleAssessment';
-import { ASSESSMENT_CARD_PADDING } from './AssessmentCard';
+import SelectSingleQuiz from '../models/SelectSingleQuiz';
+import { QUIZ_CARD_PADDING } from './QuizCard';
 
-interface SelectSingleAssessmentEvaluatorProps extends SelectSingleAssessment {
+interface SelectSingleQuizEvaluatorProps extends SelectSingleQuiz {
   onChange: (choiceID: SelectChoice['id']) => void;
 }
 
-export default function SelectSingleAssessmentEvaluator({
+export default function SelectSingleQuizEvaluator({
   choices,
   solutionID,
   onChange,
-}: SelectSingleAssessmentEvaluatorProps) {
+}: SelectSingleQuizEvaluatorProps) {
   const [selectedChoiceID, setSelectedChoiceID] = useState<
     SelectChoice['id']
   >();
@@ -50,7 +50,7 @@ export default function SelectSingleAssessmentEvaluator({
             value={String(choice.id)}
             isDisabled={Boolean(solutionID && selectedChoiceID)}
             isFullWidth
-            px={ASSESSMENT_CARD_PADDING}
+            px={QUIZ_CARD_PADDING}
             py={3}
             color={color}
             bg={bgColor}

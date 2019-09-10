@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AssessmentCard from '../components/AssessmentCard';
+import QuizCard from '../components/QuizCard';
 import Layout from '../components/Layout';
-import SelectSingleAssessmentEvaluator from '../components/SelectSingleAssessmentEvaluator';
+import SelectSingleQuizEvaluator from '../components/SelectSingleQuizEvaluator';
 import SelectChoice from '../models/SelectChoice';
 
 export default function IndexPage() {
@@ -9,8 +9,8 @@ export default function IndexPage() {
 
   return (
     <Layout>
-      <AssessmentCard item="If a=1 and b=2, what is a+b?">
-        <SelectSingleAssessmentEvaluator
+      <QuizCard item="If a=1 and b=2, what is a+b?">
+        <SelectSingleQuizEvaluator
           choices={[
             { id: 1, label: '1' },
             { id: 2, label: '3' },
@@ -23,7 +23,7 @@ export default function IndexPage() {
             if (!solutionID) setTimeout(() => setSolutionID(2), 800);
           }}
         />
-      </AssessmentCard>
+      </QuizCard>
     </Layout>
   );
 }
