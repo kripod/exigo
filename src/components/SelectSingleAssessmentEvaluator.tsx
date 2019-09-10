@@ -4,15 +4,16 @@ import SelectChoice from '../models/SelectChoice';
 import SelectSingleAssessmentAttributes from '../models/SelectSingleAssessmentAttributes';
 import { ASSESSMENT_CARD_PADDING } from './AssessmentCard';
 
-interface SelectSingleAssessmentProps extends SelectSingleAssessmentAttributes {
+interface SelectSingleAssessmentEvaluatorProps
+  extends SelectSingleAssessmentAttributes {
   onChange: (choiceID: SelectChoice['id']) => void;
 }
 
-export default function SelectSingleAssessment({
+export default function SelectSingleAssessmentEvaluator({
   choices,
   solutionID,
   onChange,
-}: SelectSingleAssessmentProps) {
+}: SelectSingleAssessmentEvaluatorProps) {
   const [selectedChoiceID, setSelectedChoiceID] = useState<
     SelectChoice['id']
   >();

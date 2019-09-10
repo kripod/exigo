@@ -2,7 +2,7 @@ import AssessmentType from './AssessmentType';
 import SelectSingleAssessmentAttributes from './SelectSingleAssessmentAttributes';
 import SelectMultipleAssessmentAttributes from './SelectMultipleAssessmentAttributes';
 
-interface AssessmentAttributesBase {
+export interface AssessmentAttributesBase {
   item: string;
 }
 
