@@ -1,6 +1,6 @@
 import QuizType from './QuizType';
-import SelectSingleQuiz from './SelectSingleQuiz';
-import SelectMultipleQuiz from './SelectMultipleQuiz';
+import SelectSingleQuizOptions from './SelectSingleQuizOptions';
+import SelectMultipleQuizOptions from './SelectMultipleQuizOptions';
 
 export interface QuizBase {
   item: string;
@@ -8,8 +8,8 @@ export interface QuizBase {
 
 type Quiz = QuizBase &
   (
-    | ({ type: QuizType.SELECT_SINGLE } & SelectSingleQuiz)
-    | ({ type: QuizType.SELECT_MULTIPLE } & SelectMultipleQuiz));
+    | ({ type: QuizType.SELECT_SINGLE } & SelectSingleQuizOptions)
+    | ({ type: QuizType.SELECT_MULTIPLE } & SelectMultipleQuizOptions));
 
 // eslint-disable-next-line no-undef
 export default Quiz;
