@@ -1,6 +1,6 @@
 import SelectChoice from './SelectChoice';
 
-export default interface SelectMultipleAssessmentAttributes {
+export default interface SelectMultipleAssessment {
   choices: SelectChoice[];
   solutionIDs?: SelectChoice['id'][];
 }

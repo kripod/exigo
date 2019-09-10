@@ -1,11 +1,10 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import SelectChoice from '../models/SelectChoice';
-import SelectSingleAssessmentAttributes from '../models/SelectSingleAssessmentAttributes';
+import SelectSingleAssessment from '../models/SelectSingleAssessment';
 import { ASSESSMENT_CARD_PADDING } from './AssessmentCard';
 
-interface SelectSingleAssessmentEvaluatorProps
-  extends SelectSingleAssessmentAttributes {
+interface SelectSingleAssessmentEvaluatorProps extends SelectSingleAssessment {
   onChange: (choiceID: SelectChoice['id']) => void;
 }
 
