@@ -2,7 +2,11 @@ import AssessmentType from './AssessmentType';
 import SelectSingleAssessmentAttributes from './SelectSingleAssessmentAttributes';
 import SelectMultipleAssessmentAttributes from './SelectMultipleAssessmentAttributes';
 
-type Assessment = ({ item: string }) &
+interface AssessmentBase {
+  item: string;
+}
+
+type Assessment = AssessmentBase &
   (
     | ({
         type: AssessmentType.SELECT_SINGLE;
