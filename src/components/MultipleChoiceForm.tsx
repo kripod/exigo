@@ -1,11 +1,11 @@
 import { Radio, RadioGroup } from '@chakra-ui/core';
 import React, { useState } from 'react';
-import SelectChoice from '../models/SelectChoice';
-import MultipleChoiceQuizItemOptions from '../models/MultipleChoiceQuizItemOptions';
+import MultipleChoiceQuizItemProps from '../models/MultipleChoiceQuizItemProps';
+import Option from '../models/Option';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface SelectSingleItemFormProps extends MultipleChoiceQuizItemOptions {
-  onChange: (choiceID: SelectChoice['id']) => void;
+interface SelectSingleItemFormProps extends MultipleChoiceQuizItemProps {
+  onChange: (choiceID: Option['id']) => void;
 }
 
 export default function MultipleChoiceForm({
@@ -13,15 +13,13 @@ export default function MultipleChoiceForm({
   solutionID,
   onChange,
 }: SelectSingleItemFormProps) {
-  const [selectedChoiceID, setSelectedChoiceID] = useState<
-    SelectChoice['id']
-  >();
+  const [selectedChoiceID, setSelectedChoiceID] = useState<Option['id']>();
 
   return (
     <RadioGroup
       value={String(selectedChoiceID)}
       onChange={(event: any) => {
-        const choiceID: SelectChoice['id'] = Number(event.target.value);
+        const choiceID: Option['id'] = Number(event.target.value);
         setSelectedChoiceID(choiceID);
         onChange(choiceID);
       }}
@@ -55,7 +53,7 @@ export default function MultipleChoiceForm({
             color={color}
             bg={bgColor}
           >
-            {choice.label}
+            {choice.text}
           </Radio>
         );
       })}

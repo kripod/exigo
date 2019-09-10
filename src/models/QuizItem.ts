@@ -1,6 +1,6 @@
+import MultipleAnswerQuizItemProps from './MultipleAnswerQuizItemProps';
+import MultipleChoiceQuizItemProps from './MultipleChoiceQuizItemProps';
 import QuizItemType from './QuizItemType';
-import MultipleAnswerQuizItemOptions from './MultipleAnswerQuizItemOptions';
-import MultipleChoiceQuizItemOptions from './MultipleChoiceQuizItemOptions';
 
 export interface QuizItemBase {
   stem: string;
@@ -8,8 +8,8 @@ export interface QuizItemBase {
 
 type QuizItem = QuizItemBase &
   (
-    | ({ type: QuizItemType.MULTIPLE_CHOICE } & MultipleChoiceQuizItemOptions)
-    | ({ type: QuizItemType.MULTIPLE_ANSWER } & MultipleAnswerQuizItemOptions));
+    | ({ type: QuizItemType.MULTIPLE_CHOICE } & MultipleChoiceQuizItemProps)
+    | ({ type: QuizItemType.MULTIPLE_ANSWER } & MultipleAnswerQuizItemProps));
 
 // eslint-disable-next-line no-undef
 export default QuizItem;
