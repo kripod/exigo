@@ -4,18 +4,18 @@ import React from 'react';
 export const ASSESSMENT_CARD_PADDING = 5;
 
 interface AssessmentCardProps {
-  title: string;
+  item: string;
   children: React.ReactNode;
 }
 
 export default function AssessmentCard({
-  title,
+  item,
   children,
 }: AssessmentCardProps) {
   return (
     <>
       <Heading as="h3" size="md" fontWeight={500} m={ASSESSMENT_CARD_PADDING}>
-        {title}
+        {item}
       </Heading>
 
       {children}
