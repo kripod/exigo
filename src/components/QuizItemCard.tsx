@@ -31,16 +31,13 @@ export default function QuizItemCard({
         <Heading as="h3" size="md" fontWeight={500}>
           {stem}
         </Heading>
-        {timeLimit ? (
+        {timeLimit && (
           // TODO: Use timer-based value
           <CircularProgress value={timeLimit * 0.6}>
             <CircularProgressLabel fontSize="md">
               {timeLimit * 0.6}
             </CircularProgressLabel>
           </CircularProgress>
-        ) : (
-          // TODO: Remove this
-          <div />
         )}
       </Stack>
 
