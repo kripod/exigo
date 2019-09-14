@@ -13,29 +13,29 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@chakra-ui/core": "^0.2.6",
+    "@chakra-ui/core": "^0.2.8",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@rhysforyou/gatsby-plugin-react-helmet-async": "^0.1.1",
-    "emotion-theming": "^10.0.17",
-    "gatsby": "^2.15.9",
-    "gatsby-plugin-emotion": "^4.1.5",
-    "gatsby-plugin-manifest": "^2.2.14",
-    "gatsby-plugin-typescript": "^2.1.6",
+    "emotion-theming": "^10.0.18",
+    "gatsby": "^2.15.15",
+    "gatsby-plugin-emotion": "^4.1.6",
+    "gatsby-plugin-manifest": "^2.2.16",
+    "gatsby-plugin-typescript": "^2.1.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-helmet-async": "^1.0.2"
+    "react-helmet-async": "^1.0.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
     "@types/react-helmet-async": "^1.0.0",
     "@types/react-test-renderer": "^16.9.0",
-    "@typescript-eslint/eslint-plugin": "^2.1.0",
-    "@typescript-eslint/parser": "^2.1.0",
-    "eslint": "^6.3.0",
+    "@typescript-eslint/eslint-plugin": "^2.2.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "eslint": "^6.4.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.2.0",
+    "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-emotion": "^10.0.14",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
@@ -54,7 +54,7 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^3.1.0",
     "stylelint-processor-styled-components": "^1.8.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.6.2"
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
   }
 }
