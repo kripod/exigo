@@ -13,11 +13,11 @@ export default function MultipleChoiceForm({
   solutionID,
   onChange,
 }: SelectSingleItemFormProps) {
-  const [selectedChoiceID, setSelectedChoiceID] = useState<Option['id']>();
+  const [selectedChoiceID, setSelectedChoiceID] = useState<Option['id']>(0);
 
   return (
     <RadioGroup
-      value={String(selectedChoiceID)}
+      value={selectedChoiceID}
       onChange={(event: any) => {
         const choiceID: Option['id'] = Number(event.target.value);
         setSelectedChoiceID(choiceID);
@@ -45,7 +45,7 @@ export default function MultipleChoiceForm({
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
           <Radio
             key={choice.id}
-            value={String(choice.id)}
+            value={choice.id}
             isDisabled={Boolean(solutionID && selectedChoiceID)}
             isFullWidth
             px={QUIZ_ITEM_CARD_PADDING}
