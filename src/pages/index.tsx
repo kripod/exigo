@@ -9,7 +9,7 @@ export default function IndexPage() {
 
   return (
     <Layout>
-      <QuizItemCard stem="If a=1 and b=2, what is a+b?">
+      <QuizItemCard stem="If a=1 and b=2, what is a+b?" mx="auto">
         <MultipleChoiceForm
           choices={[
             { id: 1, text: '1' },
