@@ -12,35 +12,14 @@ export const QUIZ_ITEM_CARD_PADDING = 5;
 
 interface QuizItemCardProps extends QuizItemBase {
   children: React.ReactNode;
-  onTimeout: () => void;
 }
 
-export default function QuizItemCard({
-  stem,
-  timeLimit,
-  children,
-}: QuizItemCardProps) {
+export default function QuizItemCard({ stem, children }: QuizItemCardProps) {
   return (
     <Measure boxShadow="md">
-      <Stack
-        isInline
-        align="center"
-        justify="space-between"
-        spacing={QUIZ_ITEM_CARD_PADDING}
-        p={QUIZ_ITEM_CARD_PADDING}
-      >
-        <Heading as="h3" size="md" fontWeight={500}>
-          {stem}
-        </Heading>
-        {timeLimit && (
-          // TODO: Use timer-based value
-          <CircularProgress value={timeLimit * 0.6}>
-            <CircularProgressLabel fontSize="md">
-              {timeLimit * 0.6}
-            </CircularProgressLabel>
-          </CircularProgress>
-        )}
-      </Stack>
+      <Heading as="h3" size="md" fontWeight={500} p={QUIZ_ITEM_CARD_PADDING}>
+        {stem}
+      </Heading>
 
       {children}
     </Measure>
