@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/core';
 import React from 'react';
 import { QuizItemBase } from '../models/QuizItem';
+import Measure from './Measure';
 
 export const QUIZ_ITEM_CARD_PADDING = 5;
 
@@ -20,13 +21,13 @@ export default function QuizItemCard({
   children,
 }: QuizItemCardProps) {
   return (
-    <>
+    <Measure boxShadow="md">
       <Stack
         isInline
         align="center"
         justify="space-between"
         spacing={QUIZ_ITEM_CARD_PADDING}
-        m={QUIZ_ITEM_CARD_PADDING}
+        p={QUIZ_ITEM_CARD_PADDING}
       >
         <Heading as="h3" size="md" fontWeight={500}>
           {stem}
@@ -42,6 +43,6 @@ export default function QuizItemCard({
       </Stack>
 
       {children}
-    </>
+    </Measure>
   );
 }
