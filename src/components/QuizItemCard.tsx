@@ -1,4 +1,4 @@
-import { BoxProps, Heading } from '@chakra-ui/core';
+import { BoxProps, Button, Heading, Stack } from '@chakra-ui/core';
 import React from 'react';
 import { QuizItemBase } from '../models/QuizItem';
 import Card from './Card';
@@ -22,6 +22,11 @@ export default function QuizItemCard({
       </Heading>
 
       {children}
+
+      <Stack justify="space-between">
+        <Button variantColor="blue">Next</Button>
+        <Button variant="ghost">Surrender</Button>
+      </Stack>
     </Card>
   );
 }
