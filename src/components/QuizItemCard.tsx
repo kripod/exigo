@@ -13,10 +13,10 @@ interface QuizItemCardProps extends QuizItemBase, BoxProps {
 export default function QuizItemCard({
   stem,
   children,
-  ...props
+  ...restProps
 }: QuizItemCardProps) {
   return (
-    <Card as={Measure} {...props}>
+    <Card as={Measure} {...restProps}>
       <Heading as="h3" size="md" fontWeight={500} p={QUIZ_ITEM_CARD_PADDING}>
         {stem}
       </Heading>
