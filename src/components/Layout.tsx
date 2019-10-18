@@ -47,7 +47,9 @@ export default function Layout({ children }: LayoutProps) {
           {/* TODO */}
         </Box>
 
-        <main>{children}</main>
+        <Box as="main" bg="blue.50" py={32}>
+          {children}
+        </Box>
 
         <footer>{/* TODO */}</footer>
       </ThemeProvider>

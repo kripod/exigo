@@ -16,7 +16,7 @@ export default function QuizItemCard({
   ...restProps
 }: QuizItemCardProps) {
   return (
-    <Card as={Measure} boxShadow="lg" {...restProps}>
+    <Card as={Measure} boxShadow="xl" {...restProps}>
       <Heading
         as="h3"
         size="md"
