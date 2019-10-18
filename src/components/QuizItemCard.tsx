@@ -23,7 +23,8 @@ export default function QuizItemCard({
 
       {children}
 
-      <Stack justify="space-between">
+      {/* TODO: isReversed, see https://github.com/chakra-ui/chakra-ui/issues/189 */}
+      <Stack isInline justify="space-between" p={QUIZ_ITEM_CARD_PADDING}>
         <Button variantColor="blue">Next</Button>
         <Button variant="ghost">Surrender</Button>
       </Stack>
