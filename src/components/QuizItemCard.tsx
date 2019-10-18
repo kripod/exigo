@@ -1,4 +1,11 @@
-import { Box, BoxProps, Button, Heading, Stack } from '@chakra-ui/core';
+import {
+  Box,
+  BoxProps,
+  Button,
+  Heading,
+  Stack,
+  useColorMode,
+} from '@chakra-ui/core';
 import React from 'react';
 import { QuizItemBase } from '../models/QuizItem';
 import Card from './Card';
@@ -15,6 +22,9 @@ export default function QuizItemCard({
   children,
   ...restProps
 }: QuizItemCardProps) {
+  const { colorMode } = useColorMode();
+  const isDarkMode = colorMode === 'dark';
+
   return (
     <Card as={Measure} boxShadow="xl" {...restProps}>
       <Heading
@@ -36,7 +46,7 @@ export default function QuizItemCard({
         justify="space-between"
         px={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING - 1}
-        bg="gray.50"
+        bg={`gray.${isDarkMode ? 900 : 50}`}
       >
         <Button leftIcon={'running' as any} variant="outline">
           Surrender

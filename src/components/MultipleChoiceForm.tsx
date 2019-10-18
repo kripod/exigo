@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from '@chakra-ui/core';
+import { Radio, RadioGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import MultipleChoiceQuizItemProps from '../models/MultipleChoiceQuizItemProps';
 import Option from '../models/Option';
@@ -13,6 +13,9 @@ export default function MultipleChoiceForm({
   solutionID,
   onChange,
 }: SelectSingleItemFormProps) {
+  const { colorMode } = useColorMode();
+  const isDarkMode = colorMode === 'dark';
+
   const [selectedChoiceID, setSelectedChoiceID] = useState<Option['id']>(0);
 
   return (
@@ -35,7 +38,7 @@ export default function MultipleChoiceForm({
 
         let bgColor;
         if (color) {
-          bgColor = `${color}.200`;
+          bgColor = `${color}.${isDarkMode ? 800 : 100}`;
         }
 
         return (
