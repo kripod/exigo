@@ -8,6 +8,7 @@
     "allowJs": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "resolveJsonModule": true,
 
     // Define Emotion 'css' prop and theme types
     "baseUrl": "./src",
