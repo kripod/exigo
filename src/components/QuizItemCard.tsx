@@ -23,8 +23,7 @@ export default function QuizItemCard({
         fontWeight={500}
         mx={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING + 2}
-        borderColor="gray.100"
-        borderBottomWidth={2}
+        borderBottomWidth={1}
       >
         {stem}
       </Heading>
