@@ -1,4 +1,4 @@
-import { CSSReset, ThemeProvider } from '@chakra-ui/core';
+import { Box, CSSReset, ThemeProvider } from '@chakra-ui/core';
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -43,7 +43,9 @@ export default function Layout({ children }: LayoutProps) {
           />
         </Helmet>
 
-        <header>{/* TODO */}</header>
+        <Box as="header" mb={32}>
+          {/* TODO */}
+        </Box>
 
         <main>{children}</main>
 
