@@ -25,7 +25,7 @@ export default function MultipleChoiceForm({
       }}
       spacing={0}
     >
-      {choices.map((choice, i) => {
+      {choices.map(choice => {
         let color;
         if (choice.id === solutionID) {
           color = 'green';
@@ -36,8 +36,6 @@ export default function MultipleChoiceForm({
         let bgColor;
         if (color) {
           bgColor = `${color}.200`;
-        } else if (i % 2 === 0) {
-          bgColor = 'gray.50';
         }
 
         return (
