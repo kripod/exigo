@@ -4,7 +4,6 @@ import QuizItemType from './QuizItemType';
 
 export interface QuizItemBase {
   stem: string;
-  // TODO: `timeLimit?: number;` for entire quizzes
 }
 
 type QuizItem = QuizItemBase &
