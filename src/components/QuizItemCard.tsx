@@ -39,8 +39,12 @@ export default function QuizItemCard({
         py={QUIZ_ITEM_CARD_PADDING - 1}
         bg="gray.50"
       >
-        <Button variantColor="blue">Next</Button>
-        <Button variant="ghost">Surrender</Button>
+        <Button rightIcon="chevron-right" variantColor="blue">
+          Next
+        </Button>
+        <Button leftIcon={'running' as any} variant="outline">
+          Surrender
+        </Button>
       </Stack>
     </Card>
   );
