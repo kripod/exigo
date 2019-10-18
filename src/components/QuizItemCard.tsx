@@ -39,11 +39,11 @@ export default function QuizItemCard({
         py={QUIZ_ITEM_CARD_PADDING - 1}
         bg="gray.50"
       >
-        <Button rightIcon="chevron-right" variantColor="blue">
-          Next
-        </Button>
         <Button leftIcon={'running' as any} variant="outline">
           Surrender
+        </Button>
+        <Button rightIcon="chevron-right" variantColor="blue">
+          Next
         </Button>
       </Stack>
     </Card>
