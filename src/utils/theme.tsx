@@ -21,7 +21,7 @@ export const theme = {
   ...defaultTheme,
   icons: {
     ...defaultTheme.icons,
-    customIcons,
+    ...customIcons,
   },
 };
 
