@@ -4,22 +4,22 @@
   "items": [
     {
       "type": 1,
-      "stem": "These values exist at a function's critical points when the function is concave down.",
-      "choices": [
-        { "id": 1, "text": "minimum" },
-        { "id": 2, "text": "maximum" }
-      ],
-      "solution": 2
-    },
-    {
-      "type": 1,
-      "stem": "A popular method for solving systems of linear equations works one of these objects into reduced \"row-echelon form.\" If one of these objects is (*)) square, its trace is simply the sum of values along a diagonal, and these mathematical arrangements have an inverse if and only if their determinant is not zero.",
+      "stem": "A popular method for solving systems of linear equations works one of these objects into reduced \"row-echelon form.\" If one of these objects is square, its trace is simply the sum of values along a diagonal, and these mathematical arrangements have an inverse if and only if their determinant is not zero.",
       "choices": [
         { "id": 1, "text": "matrix" },
         { "id": 2, "text": "vector" },
         { "id": 3, "text": "relation" }
       ],
       "solution": 1
+    },
+    {
+      "type": 1,
+      "stem": "These values exist at a function's critical points when the function is concave down.",
+      "choices": [
+        { "id": 1, "text": "minimum" },
+        { "id": 2, "text": "maximum" }
+      ],
+      "solution": 2
     },
     {
       "type": 1,
