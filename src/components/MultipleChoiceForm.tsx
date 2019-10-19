@@ -5,12 +5,14 @@ import Option from '../models/Option';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
 interface SelectSingleItemFormProps extends MultipleChoiceQuizItemProps {
+  showSolution?: boolean;
   onChange: (choiceID: Option['id']) => void;
 }
 
 export default function MultipleChoiceForm({
   choices,
   solutionID,
+  showSolution,
   onChange,
 }: SelectSingleItemFormProps) {
   const { colorMode } = useColorMode();
@@ -30,10 +32,10 @@ export default function MultipleChoiceForm({
     >
       {choices.map(choice => {
         let color;
-        if (choice.id === solutionID) {
+        if (showSolution && choice.id === solutionID) {
           color = 'green';
         } else if (choice.id === selectedChoiceID) {
-          color = solutionID ? 'red' : 'blue';
+          color = showSolution ? 'red' : 'blue';
         }
 
         let bgColor;
@@ -47,7 +49,7 @@ export default function MultipleChoiceForm({
           <Radio
             key={choice.id}
             value={choice.id}
-            isDisabled={Boolean(solutionID && selectedChoiceID)}
+            isDisabled={showSolution}
             isFullWidth
             px={QUIZ_ITEM_CARD_PADDING}
             py={3}
