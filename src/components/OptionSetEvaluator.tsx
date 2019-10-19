@@ -11,7 +11,7 @@ interface OptionSetEvaluatorProps extends MultipleAnswerQuizItemProps {
 
 export default function OptionSetEvaluator({
   choices,
-  solutionIDs,
+  solution,
   showSolution,
   onChange,
 }: OptionSetEvaluatorProps) {
@@ -33,7 +33,7 @@ export default function OptionSetEvaluator({
       {choices.map(choice => {
         let color;
         // TODO: solutionIDs?.includes(choice.id)
-        if (showSolution && solutionIDs && solutionIDs.includes(choice.id)) {
+        if (showSolution && solution && solution.includes(choice.id)) {
           color = 'green';
         } else if (response.includes(choice.id)) {
           color = showSolution ? 'red' : 'blue';

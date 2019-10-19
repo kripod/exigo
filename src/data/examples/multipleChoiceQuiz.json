@@ -9,7 +9,7 @@
         { "id": 1, "text": "minimum" },
         { "id": 2, "text": "maximum" }
       ],
-      "solutionID": 2
+      "solution": 2
     },
     {
       "type": 1,
@@ -19,7 +19,7 @@
         { "id": 2, "text": "vector" },
         { "id": 3, "text": "relation" }
       ],
-      "solutionID": 1
+      "solution": 1
     },
     {
       "type": 1,
@@ -30,7 +30,7 @@
         { "id": 3, "text": "functions" },
         { "id": 4, "text": "vectors" }
       ],
-      "solutionID": 3
+      "solution": 3
     }
   ]
 }
