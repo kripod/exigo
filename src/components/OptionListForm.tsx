@@ -4,17 +4,17 @@ import MultipleChoiceQuizItemProps from '../models/MultipleChoiceQuizItemProps';
 import Option from '../models/Option';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface MultipleAnswerFormProps extends MultipleChoiceQuizItemProps {
+interface OptionListFormProps extends MultipleChoiceQuizItemProps {
   showSolution?: boolean;
   onChange: (choiceID: Option['id']) => void;
 }
 
-export default function MultipleAnswerForm({
+export default function OptionListForm({
   choices,
   solutionID,
   showSolution,
   onChange,
-}: MultipleAnswerFormProps) {
+}: OptionListFormProps) {
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
 

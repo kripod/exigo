@@ -1,12 +1,12 @@
 import { BoxProps } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import QuizItemCard from './QuizItemCard';
-import MultipleAnswerForm from './MultipleAnswerForm';
+import OptionListForm from './OptionListForm';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 
 const formComponents = new Map([
-  [QuizItemType.MULTIPLE_CHOICE, MultipleAnswerForm],
+  [QuizItemType.MULTIPLE_CHOICE, OptionListForm],
 ]);
 
 interface QuizItemCardSetProps extends BoxProps {
