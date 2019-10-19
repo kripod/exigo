@@ -18,7 +18,7 @@ export default function QuizItemCardSet({
   ...restProps
 }: QuizItemCardSetProps) {
   const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState<{ [index: number]: unknown }>({});
+  const [responses, setResponses] = useState<{ [index: number]: unknown }>({});
 
   const item = items[index];
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -28,8 +28,11 @@ export default function QuizItemCardSet({
     <QuizItemCard stem={item.stem} {...restProps}>
       <Evaluator
         {...item}
-        onChange={answer => {
-          setAnswers(prevAnswers => ({ ...prevAnswers, [index]: answer }));
+        onChange={response => {
+          setResponses(prevResponses => ({
+            ...prevResponses,
+            [index]: response,
+          }));
         }}
       />
     </QuizItemCard>

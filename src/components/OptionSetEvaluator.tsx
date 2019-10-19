@@ -18,16 +18,14 @@ export default function OptionSetEvaluator({
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
 
-  const [selectedAnswerIDs, setSelectedAnswerIDs] = useState<Option['id'][]>(
-    [],
-  );
+  const [response, setResponse] = useState<Option['id'][]>([]);
 
   return (
     <CheckboxGroup
-      // TODO: value={selectedAnswerIDs}
+      // TODO: value={response}
       onChange={(values: any) => {
         const optionIDs: Option['id'][] = values.map(Number);
-        setSelectedAnswerIDs(optionIDs);
+        setResponse(optionIDs);
         onChange(optionIDs);
       }}
       spacing={0}
@@ -37,7 +35,7 @@ export default function OptionSetEvaluator({
         // TODO: solutionIDs?.includes(choice.id)
         if (showSolution && solutionIDs && solutionIDs.includes(choice.id)) {
           color = 'green';
-        } else if (selectedAnswerIDs.includes(choice.id)) {
+        } else if (response.includes(choice.id)) {
           color = showSolution ? 'red' : 'blue';
         }
 
