@@ -18,10 +18,9 @@ export default function QuizItemCardSet({
   ...restProps
 }: QuizItemCardSetProps) {
   const [index, setIndex] = useState(0);
-  const [solutions, setSolutions] = useState<{ [index: number]: unknown }>({});
+  const [answers, setAnswers] = useState<{ [index: number]: unknown }>({});
 
   const item = items[index];
-  const solution = solutions[index];
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const Form = formComponents.get(item.type)!;
 
@@ -29,19 +28,9 @@ export default function QuizItemCardSet({
     <QuizItemCard stem={item.stem} {...restProps}>
       <Form
         {...item}
-        solutionID={solution}
-        onChange={() => {
-          /* TODO: Get solutionID from server instead of simulated delay */
-          if (solution == null) {
-            setTimeout(
-              () =>
-                setSolutions(prevSolutions => ({
-                  ...prevSolutions,
-                  [index]: item.solutionID,
-                })),
-              800,
-            );
-          }
+        solutionID={undefined} // TODO: Remove this
+        onChange={answer => {
+          setAnswers(prevAnswers => ({ ...prevAnswers, [index]: answer }));
         }}
       />
     </QuizItemCard>
