@@ -5,7 +5,7 @@ import styled, { CreateStyled } from '../../node_modules/@emotion/styled';
 
 const faIconDefinitions = [faChevronRight, faRunning];
 
-const icons = Object.fromEntries(
+const customIcons = Object.fromEntries(
   faIconDefinitions.map(
     ({ iconName, icon: [width, height, , , svgPathData] }) => [
       iconName,
@@ -19,7 +19,10 @@ const icons = Object.fromEntries(
 
 export const theme = {
   ...defaultTheme,
-  icons,
+  icons: {
+    ...defaultTheme.icons,
+    customIcons,
+  },
 };
 
 export default styled as CreateStyled<typeof theme>;

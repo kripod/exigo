@@ -1,43 +1,47 @@
-import { Radio, RadioGroup, useColorMode } from '@chakra-ui/core';
+import { Checkbox, CheckboxGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
-import MultipleChoiceQuizItemProps from '../models/MultipleChoiceQuizItemProps';
+import MultipleAnswerQuizItemProps from '../models/MultipleAnswerQuizItemProps';
 import Option from '../models/Option';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface OptionListFormProps extends MultipleChoiceQuizItemProps {
+interface OptionListFormProps extends MultipleAnswerQuizItemProps {
   showSolution?: boolean;
-  onChange: (choiceID: Option['id']) => void;
+  onChange: (answerIDs: Option['id'][]) => void;
 }
 
 export default function OptionListForm({
   choices,
-  solutionID,
+  solutionIDs,
   showSolution,
   onChange,
 }: OptionListFormProps) {
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
 
-  const [selectedChoiceID, setSelectedChoiceID] = useState<Option['id']>(0);
+  const [selectedAnswerIDs, setSelectedAnswerIDs] = useState<Option['id'][]>(
+    [],
+  );
 
   return (
-    <RadioGroup
-      value={selectedChoiceID}
-      onChange={(event: any) => {
-        const choiceID: Option['id'] = Number(event.target.value);
-        setSelectedChoiceID(choiceID);
-        onChange(choiceID);
+    <CheckboxGroup
+      value={selectedAnswerIDs}
+      onChange={(values: any) => {
+        const optionIDs: Option['id'][] = values.map(Number);
+        setSelectedAnswerIDs(optionIDs);
+        onChange(optionIDs);
       }}
       spacing={0}
     >
       {choices.map(choice => {
         let color;
-        if (showSolution && choice.id === solutionID) {
+        // TODO: solutionIDs?.includes(choice.id)
+        if (showSolution && solutionIDs && solutionIDs.includes(choice.id)) {
           color = 'green';
-        } else if (choice.id === selectedChoiceID) {
+        } else if (selectedAnswerIDs.includes(choice.id)) {
           color = showSolution ? 'red' : 'blue';
         }
 
+        // TODO: embed bgColor = color ?? `${color}.${isDarkMode ? 800 : 100}`;
         let bgColor;
         if (color) {
           bgColor = `${color}.${isDarkMode ? 800 : 100}`;
@@ -46,7 +50,7 @@ export default function OptionListForm({
         return (
           // TODO: Use 'isReadOnly' prop instead of 'isDisabled'
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
-          <Radio
+          <Checkbox
             key={choice.id}
             value={choice.id}
             isDisabled={showSolution}
@@ -57,9 +61,9 @@ export default function OptionListForm({
             bg={bgColor}
           >
             {choice.text}
-          </Radio>
+          </Checkbox>
         );
       })}
-    </RadioGroup>
+    </CheckboxGroup>
   );
 }
