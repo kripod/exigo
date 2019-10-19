@@ -6,7 +6,7 @@ import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
 interface OptionSetEvaluatorProps extends MultipleAnswerQuizItemProps {
   showSolution?: boolean;
-  onChange: (answerIDs: Option['id'][]) => void;
+  onChange: (response: Option['id'][]) => void;
 }
 
 export default function OptionSetEvaluator({
