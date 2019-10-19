@@ -1,4 +1,4 @@
-import { BoxProps, Flex } from '@chakra-ui/core';
+import { Box, BoxProps, Flex } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
@@ -24,30 +24,35 @@ export default function QuizItemCardSet({
   return (
     <Flex
       as={Measure}
+      alignItems="flex-start" // TODO: Remove 'flex' prefix
+      my={-6}
       overflow="auto"
       css={{ scrollSnapType: 'x mandatory' }}
       {...restProps}
     >
-      {items.map(item => {
+      {items.map((item, i) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const Evaluator = evaluatorComponents.get(item.type)!;
 
         return (
-          <QuizItemCard
-            stem={item.stem}
+          <Box
             flex="0 0 100%"
+            px={4}
+            py={6}
             css={{ scrollSnapAlign: 'center' }}
           >
-            <Evaluator
-              {...item}
-              onChange={response => {
-                setResponses(prevResponses => ({
-                  ...prevResponses,
-                  [index]: response,
-                }));
-              }}
-            />
-          </QuizItemCard>
+            <QuizItemCard stem={item.stem}>
+              <Evaluator
+                {...item}
+                onChange={response => {
+                  setResponses(prevResponses => ({
+                    ...prevResponses,
+                    [index]: response,
+                  }));
+                }}
+              />
+            </QuizItemCard>
+          </Box>
         );
       })}
     </Flex>

@@ -26,7 +26,7 @@ export default function QuizItemCard({
   const isDarkMode = colorMode === 'dark';
 
   return (
-    <Card as={Measure} boxShadow="xl" {...restProps}>
+    <Card as={Measure} boxShadow="lg" {...restProps}>
       <Heading
         as="h3"
         size="md"
