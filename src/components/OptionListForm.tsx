@@ -24,7 +24,7 @@ export default function OptionListForm({
 
   return (
     <CheckboxGroup
-      value={selectedAnswerIDs}
+      // TODO: value={selectedAnswerIDs}
       onChange={(values: any) => {
         const optionIDs: Option['id'][] = values.map(Number);
         setSelectedAnswerIDs(optionIDs);
@@ -52,7 +52,7 @@ export default function OptionListForm({
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
           <Checkbox
             key={choice.id}
-            value={choice.id}
+            value={`${choice.id}`}
             isDisabled={showSolution}
             isFullWidth
             px={QUIZ_ITEM_CARD_PADDING}
