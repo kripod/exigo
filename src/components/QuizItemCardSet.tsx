@@ -1,12 +1,12 @@
 import { BoxProps } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import QuizItemCard from './QuizItemCard';
-import OptionListForm from './OptionListForm';
+import OptionSetEvaluator from './OptionSetEvaluator';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 
-const formComponents = new Map([
-  [QuizItemType.MULTIPLE_CHOICE, OptionListForm],
+const evaluatorComponents = new Map([
+  [QuizItemType.MULTIPLE_CHOICE, OptionSetEvaluator],
 ]);
 
 interface QuizItemCardSetProps extends BoxProps {
@@ -22,11 +22,11 @@ export default function QuizItemCardSet({
 
   const item = items[index];
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const Form = formComponents.get(item.type)!;
+  const Evaluator = evaluatorComponents.get(item.type)!;
 
   return (
     <QuizItemCard stem={item.stem} {...restProps}>
-      <Form
+      <Evaluator
         {...item}
         onChange={answer => {
           setAnswers(prevAnswers => ({ ...prevAnswers, [index]: answer }));
