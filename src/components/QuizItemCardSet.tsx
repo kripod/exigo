@@ -1,12 +1,12 @@
 import { BoxProps } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import QuizItemCard from './QuizItemCard';
-import MultipleChoiceForm from './MultipleChoiceForm';
+import MultipleAnswerForm from './MultipleAnswerForm';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 
 const formComponents = new Map([
-  [QuizItemType.MULTIPLE_CHOICE, MultipleChoiceForm],
+  [QuizItemType.MULTIPLE_CHOICE, MultipleAnswerForm],
 ]);
 
 interface QuizItemCardSetProps extends BoxProps {
@@ -28,7 +28,6 @@ export default function QuizItemCardSet({
     <QuizItemCard stem={item.stem} {...restProps}>
       <Form
         {...item}
-        solutionID={undefined} // TODO: Remove this
         onChange={answer => {
           setAnswers(prevAnswers => ({ ...prevAnswers, [index]: answer }));
         }}
