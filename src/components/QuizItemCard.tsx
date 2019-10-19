@@ -30,9 +30,10 @@ export default function QuizItemCard({
       <Heading
         as="h3"
         size="md"
-        fontWeight={500}
         mx={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING + 2}
+        fontWeight={500}
+        lineHeight={1.5}
         borderBottomWidth={1}
       >
         {stem}
