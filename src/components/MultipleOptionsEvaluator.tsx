@@ -11,6 +11,7 @@ interface MultipleOptionsEvaluatorProps extends MultipleOptionsQuizItemProps {
 
 export default function MultipleOptionsEvaluator({
   options,
+  constraints = {},
   solution,
   showSolution,
   onChange,
@@ -22,12 +23,22 @@ export default function MultipleOptionsEvaluator({
 
   return (
     <CheckboxGroup
-      // TODO: value={response}
-      onChange={(values: any) => {
-        const optionIDs: Option['id'][] = values.map(Number);
-        setResponse(optionIDs);
-        onChange(optionIDs);
-      }}
+      // value={response}
+      onChange={
+        ((values: any[]) => {
+          let optionIDs: Option['id'][] = values.map(Number);
+
+          // TODO: Leverage optional chaining with TypeScript 3.7
+          const { minCount, maxCount } = constraints;
+          if (maxCount && values.length > maxCount) {
+            if (maxCount > 1) return; // TODO: Optionally provide visual feedback
+            optionIDs = optionIDs.slice(-1);
+          }
+
+          setResponse(optionIDs);
+          onChange(optionIDs);
+        }) as any
+      }
       spacing={0}
     >
       {options.map(option => {

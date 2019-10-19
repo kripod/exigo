@@ -10,6 +10,7 @@
         { "id": 2, "text": "vector" },
         { "id": 3, "text": "relation" }
       ],
+      "constraints": { "maxCount": 1 },
       "solution": [1]
     },
     {
@@ -19,6 +20,7 @@
         { "id": 1, "text": "minimum" },
         { "id": 2, "text": "maximum" }
       ],
+      "constraints": { "maxCount": 1 },
       "solution": [2]
     },
     {
@@ -30,6 +32,7 @@
         { "id": 3, "text": "functions" },
         { "id": 4, "text": "vectors" }
       ],
+      "constraints": { "maxCount": 1 },
       "solution": [3]
     }
   ]
