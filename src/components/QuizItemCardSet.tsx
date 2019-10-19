@@ -1,12 +1,12 @@
 import { BoxProps } from '@chakra-ui/core';
 import React, { useState } from 'react';
 import QuizItemCard from './QuizItemCard';
-import OptionSetEvaluator from './OptionSetEvaluator';
+import MultipleOptionsEvaluator from './MultipleOptionsEvaluator';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 
 const evaluatorComponents = new Map([
-  [QuizItemType.MULTIPLE_CHOICE, OptionSetEvaluator],
+  [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],
 ]);
 
 interface QuizItemCardSetProps extends BoxProps {

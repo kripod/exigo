@@ -1,6 +1,5 @@
 enum QuizItemType {
-  MULTIPLE_CHOICE = 1,
-  MULTIPLE_ANSWER,
+  MULTIPLE_OPTIONS = 1,
   // FREE_RESPONSE,
 }
 

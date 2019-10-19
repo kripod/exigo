@@ -1,20 +1,20 @@
 import { Checkbox, CheckboxGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
-import MultipleAnswerQuizItemProps from '../models/MultipleAnswerQuizItemProps';
+import MultipleOptionsQuizItemProps from '../models/MultipleOptionsQuizItemProps';
 import Option from '../models/Option';
 import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
-interface OptionSetEvaluatorProps extends MultipleAnswerQuizItemProps {
+interface MultipleOptionsEvaluatorProps extends MultipleOptionsQuizItemProps {
   showSolution?: boolean;
   onChange: (response: Option['id'][]) => void;
 }
 
-export default function OptionSetEvaluator({
-  choices,
+export default function MultipleOptionsEvaluator({
+  options,
   solution,
   showSolution,
   onChange,
-}: OptionSetEvaluatorProps) {
+}: MultipleOptionsEvaluatorProps) {
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
 
@@ -30,12 +30,12 @@ export default function OptionSetEvaluator({
       }}
       spacing={0}
     >
-      {choices.map(choice => {
+      {options.map(option => {
         let color;
-        // TODO: solutionIDs?.includes(choice.id)
-        if (showSolution && solution && solution.includes(choice.id)) {
+        // TODO: solutionIDs?.includes(option.id)
+        if (showSolution && solution && solution.includes(option.id)) {
           color = 'green';
-        } else if (response.includes(choice.id)) {
+        } else if (response.includes(option.id)) {
           color = showSolution ? 'red' : 'blue';
         }
 
@@ -49,8 +49,8 @@ export default function OptionSetEvaluator({
           // TODO: Use 'isReadOnly' prop instead of 'isDisabled'
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
           <Checkbox
-            key={choice.id}
-            value={`${choice.id}`}
+            key={option.id}
+            value={`${option.id}`}
             isDisabled={showSolution}
             isFullWidth
             px={QUIZ_ITEM_CARD_PADDING}
@@ -58,7 +58,7 @@ export default function OptionSetEvaluator({
             color={color}
             bg={bgColor}
           >
-            {choice.text}
+            {option.text}
           </Checkbox>
         );
       })}
