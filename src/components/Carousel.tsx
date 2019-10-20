@@ -44,7 +44,12 @@ export default function Carousel({
       aria-live="polite" // The carousel is NOT automatically rotating
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow="auto"
-      css={{ scrollSnapType: 'x mandatory' }}
+      css={{
+        scrollSnapType: 'x mandatory',
+        '::-webkit-scrollbar': { width: 0 },
+        '-ms-overflow-style': 'none',
+        scrollbarWidth: 'none',
+      }}
       {...restProps}
     >
       {React.Children.map(children, child =>
