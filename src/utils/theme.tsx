@@ -2,10 +2,11 @@ import { theme as defaultTheme } from '@chakra-ui/core';
 import { faChevronRight, faRunning } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import styled, { CreateStyled } from '../../node_modules/@emotion/styled';
+import { fromEntries } from './object';
 
 const faIconDefinitions = [faChevronRight, faRunning];
 
-const customIcons = Object.fromEntries(
+const customIcons = fromEntries(
   faIconDefinitions.map(
     ({ iconName, icon: [width, height, , , svgPathData] }) => [
       iconName,
