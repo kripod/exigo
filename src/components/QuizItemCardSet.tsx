@@ -14,7 +14,7 @@ const evaluatorComponents = new Map([
   [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],
 ]);
 
-interface QuizItemCardSetProps extends CarouselProps {
+interface QuizItemCardSetProps extends Omit<CarouselProps, 'children'> {
   items: QuizItem[];
 }
 
