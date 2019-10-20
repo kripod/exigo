@@ -42,7 +42,7 @@ export default function Carousel({
       aria-labelledby={ariaLabelledby}
       aria-live="polite" // The carousel is NOT automatically rotating
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
-      overflow="hidden"
+      overflow="auto"
       css={{ scrollSnapType: 'x mandatory' }}
       {...restProps}
     >
