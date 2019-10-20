@@ -27,7 +27,8 @@
     "gatsby-plugin-typescript": "^2.1.15",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-helmet-async": "^1.0.4"
+    "react-helmet-async": "^1.0.4",
+    "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.0",
