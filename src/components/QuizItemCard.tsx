@@ -49,10 +49,18 @@ export default function QuizItemCard({
         py={QUIZ_ITEM_CARD_PADDING - 1}
         bg={`gray.${isDarkMode ? 900 : 50}`}
       >
-        <Button leftIcon={'running' as any} variant="outline">
+        <Button
+          aria-label="Surrender current assessment"
+          leftIcon={'running' as any}
+          variant="outline"
+        >
           Surrender
         </Button>
-        <Button rightIcon="chevron-right" variantColor="blue">
+        <Button
+          aria-label="Next assessment"
+          rightIcon="chevron-right"
+          variantColor="blue"
+        >
           Next
         </Button>
       </Stack>
