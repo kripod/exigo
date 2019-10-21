@@ -1,3 +1,4 @@
+// TODO: Replace with `Object.fromEntries`, see: https://github.com/gatsbyjs/gatsby/issues/15601
 // eslint-disable-next-line import/prefer-default-export
 export function fromEntries<T>(
   entries: Iterable<readonly [string | number, T]>,

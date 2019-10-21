@@ -42,6 +42,7 @@ export default function Carousel({
       overflow="auto"
       css={{
         scrollSnapType: 'x mandatory',
+        // TODO: Leave vendor prefixing to the underlying library
         '::-webkit-scrollbar': { width: 0 },
         '-msOverflowStyle': 'none',
         scrollbarWidth: 'none',
