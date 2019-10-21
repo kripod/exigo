@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
-import Carousel, { CarouselProps } from './Carousel';
+import CarouselRotator, { CarouselRotatorProps } from './CarouselRotator';
 import CarouselSlide from './CarouselSlide';
 import Measure from './Measure';
 import MultipleOptionsEvaluator from './MultipleOptionsEvaluator';
@@ -11,7 +11,7 @@ const evaluatorComponents = new Map([
   [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],
 ]);
 
-interface QuizItemCardSetProps extends Omit<CarouselProps, 'children'> {
+interface QuizItemCardSetProps extends Omit<CarouselRotatorProps, 'children'> {
   items: QuizItem[];
 }
 
@@ -23,7 +23,7 @@ export default function QuizItemCardSet({
   const [responses, setResponses] = useState<{ [index: number]: unknown }>({});
 
   return (
-    <Carousel
+    <CarouselRotator
       as={Measure}
       slideIndex={itemIndex}
       spacingX={4}
@@ -50,6 +50,6 @@ export default function QuizItemCardSet({
           </CarouselSlide>
         );
       })}
-    </Carousel>
+    </CarouselRotator>
   );
 }

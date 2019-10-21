@@ -17,7 +17,7 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
   );
 }
 
-export interface CarouselProps extends FlexProps {
+export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactComponentElement<typeof CarouselSlide>[];
   slideIndex?: number;
   spacing?: MarginProps['margin'];
@@ -25,14 +25,14 @@ export interface CarouselProps extends FlexProps {
   spacingY?: MarginProps['my'];
 }
 
-export default function Carousel({
+export default function CarouselRotator({
   children,
   slideIndex = 0,
   spacing,
   spacingX,
   spacingY,
   ...restProps
-}: CarouselProps) {
+}: CarouselRotatorProps) {
   return (
     <Flex
       as="section"
