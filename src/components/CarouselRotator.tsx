@@ -2,7 +2,8 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
-import useCarouselState from '../hooks/useCarouselState';
+import useCarouselActiveIndexState from '../hooks/useCarouselActiveIndexState';
+import useCarouselPlayState from '../hooks/useCarouselPlayState';
 import { fromEntries } from '../utils/object';
 import CarouselSlide from './CarouselSlide';
 
@@ -21,7 +22,6 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
   infinite?: boolean;
-  autoPlay?: boolean;
   playInterval?: number;
   activeIndex?: number;
   spacing?: MarginProps['margin'];
@@ -32,7 +32,6 @@ export interface CarouselRotatorProps extends FlexProps {
 export default function CarouselRotator({
   children,
   infinite,
-  autoPlay,
   playInterval = 5000,
   activeIndex: controlledActiveIndex,
   spacing,
@@ -40,10 +39,11 @@ export default function CarouselRotator({
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
+  const [isPlaying] = useCarouselPlayState();
   const [
     uncontrolledActiveIndex,
     setUncontrolledActiveIndex,
-  ] = useCarouselState();
+  ] = useCarouselActiveIndexState();
   const activeIndex =
     controlledActiveIndex != null
       ? controlledActiveIndex
@@ -79,7 +79,7 @@ export default function CarouselRotator({
     <Flex
       ref={rotatorRef}
       aria-atomic={false}
-      aria-live={autoPlay ? 'off' : 'polite'}
+      aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
         // TODO: if (e.button === 1) e.preventDefault();
