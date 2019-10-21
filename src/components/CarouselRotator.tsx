@@ -19,7 +19,10 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactComponentElement<typeof CarouselSlide>[];
-  slideIndex?: number;
+  infinite?: boolean;
+  autoPlay?: boolean;
+  playInterval?: number;
+  activeIndex?: number;
   spacing?: MarginProps['margin'];
   spacingX?: MarginProps['mx'];
   spacingY?: MarginProps['my'];
@@ -27,7 +30,10 @@ export interface CarouselRotatorProps extends FlexProps {
 
 export default function CarouselRotator({
   children,
-  slideIndex = 0,
+  infinite,
+  autoPlay,
+  playInterval = 5000,
+  activeIndex = 0,
   spacing,
   spacingX,
   spacingY,
@@ -51,7 +57,7 @@ export default function CarouselRotator({
     >
       {React.Children.map(children, (child, i) => (
         <CarouselSlide
-          inert={i !== slideIndex ? '' : undefined}
+          inert={i !== activeIndex ? '' : undefined}
           px={spacingX != null ? spacingX : spacing}
           py={spacingY != null ? spacingY : spacing}
         >

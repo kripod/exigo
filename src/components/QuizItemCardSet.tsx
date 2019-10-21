@@ -25,7 +25,7 @@ export default function QuizItemCardSet({
   return (
     <CarouselRotator
       as={Measure}
-      slideIndex={itemIndex}
+      activeIndex={itemIndex}
       spacingX={4}
       spacingY={6}
       {...restProps}
