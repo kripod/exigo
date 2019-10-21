@@ -1,5 +1,5 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
 import { fromEntries } from '../utils/object';
@@ -39,13 +39,40 @@ export default function CarouselRotator({
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
+  const rotatorRef = useRef<HTMLElement>();
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const slides = [...rotatorRef.current!.children];
+
+    const observer = new IntersectionObserver(
+      entries => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        console.log(
+          slides.indexOf(entries.find(entry => entry.isIntersecting)!.target),
+        );
+      },
+      { threshold: 0.5 },
+    );
+    if (rotatorRef.current) {
+      [...rotatorRef.current.children].forEach(slide => {
+        observer.observe(slide);
+      });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [children]);
+
   return (
     <Flex
+      ref={rotatorRef}
       aria-atomic={false}
       aria-live={autoPlay ? 'off' : 'polite'}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
-        if (e.button === 1) e.preventDefault();
+        // if (e.button === 1) e.preventDefault();
       }}
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow="auto"
