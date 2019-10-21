@@ -13,9 +13,7 @@ import Measure from './Measure';
 
 export const QUIZ_ITEM_CARD_PADDING = 6;
 
-interface QuizItemCardProps extends QuizItemBase, BoxProps {
-  children: React.ReactNode;
-}
+interface QuizItemCardProps extends QuizItemBase, BoxProps {}
 
 export default function QuizItemCard({
   stem,

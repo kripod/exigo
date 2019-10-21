@@ -18,7 +18,7 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 }
 
 export interface CarouselRotatorProps extends FlexProps {
-  children: React.ReactComponentElement<typeof CarouselSlide>[];
+  children: React.ReactElement[];
   infinite?: boolean;
   autoPlay?: boolean;
   playInterval?: number;
@@ -41,9 +41,8 @@ export default function CarouselRotator({
 }: CarouselRotatorProps) {
   return (
     <Flex
-      as="section"
-      aria-roledescription="carousel"
-      aria-live="polite" // The carousel is NOT automatically rotating
+      aria-atomic={false}
+      aria-live={autoPlay ? 'off' : 'polite'}
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow="auto"
       css={{
@@ -56,12 +55,18 @@ export default function CarouselRotator({
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
+        // Labels are lifted up to comply with WAI-ARIA Authoring Practices
         <CarouselSlide
           inert={i !== activeIndex ? '' : undefined}
+          aria-label={child.props['aria-label']}
+          aria-labelledby={child.props['aria-labelledby']}
           px={spacingX != null ? spacingX : spacing}
           py={spacingY != null ? spacingY : spacing}
         >
-          {child}
+          {React.cloneElement(child, {
+            'aria-label': undefined,
+            'aria-labelledby': undefined,
+          })}
         </CarouselSlide>
       ))}
     </Flex>
