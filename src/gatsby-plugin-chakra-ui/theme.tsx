@@ -1,8 +1,7 @@
 import { theme as defaultTheme } from '@chakra-ui/core';
 import { faChevronRight, faRunning } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import styled, { CreateStyled } from '../../node_modules/@emotion/styled';
-import { fromEntries } from './object';
+import { fromEntries } from '../utils/object';
 
 const faIconDefinitions = [faChevronRight, faRunning];
 
@@ -26,4 +25,4 @@ export const theme = {
   },
 };
 
-export default styled as CreateStyled<typeof theme>;
+export default theme;

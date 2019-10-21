@@ -23,6 +23,6 @@ module.exports = {
     '@rhysforyou/gatsby-plugin-react-helmet-async',
     'gatsby-plugin-typescript',
     'gatsby-plugin-emotion',
-    // TODO: 'gatsby-plugin-chakra-ui',
+    'gatsby-plugin-chakra-ui',
   ],
 };
