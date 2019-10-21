@@ -1,6 +1,9 @@
 import { Box, BoxProps } from '@chakra-ui/core';
 import React from 'react';
 
+// TODO: Follow the status of https://github.com/WICG/inert and remove polyfill
+import 'wicg-inert';
+
 export default function CarouselSlide({
   children,
   inert,

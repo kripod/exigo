@@ -7,9 +7,6 @@ import Measure from './Measure';
 import MultipleOptionsEvaluator from './MultipleOptionsEvaluator';
 import QuizItemCard from './QuizItemCard';
 
-// TODO: Follow the status of https://github.com/WICG/inert and remove polyfill
-import 'wicg-inert';
-
 const evaluatorComponents = new Map([
   [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],
 ]);
