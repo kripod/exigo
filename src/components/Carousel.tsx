@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CarouselContainer from './CarouselContainer';
 import CarouselControls from './CarouselControls';
 import CarouselRotator, { CarouselRotatorProps } from './CarouselRotator';
@@ -8,18 +8,13 @@ interface CarouselProps extends CarouselRotatorProps {
 }
 
 export default function Carousel({
-  initialIndex = 0,
-  ...props
+  initialIndex,
+  ...restProps
 }: CarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(initialIndex);
-
   return (
-    <CarouselContainer>
+    <CarouselContainer initialIndex={initialIndex}>
       <CarouselControls />
-      <CarouselRotator
-        activeIndex={activeIndex}
-        {...props} // `activeIndex` is overridable for controllability
-      />
+      <CarouselRotator {...restProps} />
     </CarouselContainer>
   );
 }

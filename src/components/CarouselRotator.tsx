@@ -1,8 +1,9 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
 import { fromEntries } from '../utils/object';
+import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#grouped-carousel-elements
@@ -33,37 +34,45 @@ export default function CarouselRotator({
   infinite,
   autoPlay,
   playInterval = 5000,
-  activeIndex = 0,
+  activeIndex: controlledActiveIndex,
   spacing,
   spacingX,
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
+  const [uncontrolledActiveIndex, setUncontrolledActiveIndex] = useContext(
+    CarouselContext,
+  );
+  const activeIndex =
+    controlledActiveIndex != null
+      ? controlledActiveIndex
+      : uncontrolledActiveIndex;
+
   const rotatorRef = useRef<HTMLElement>();
 
   useEffect(() => {
+    // Skip observing intersections when the component is controlled
+    if (controlledActiveIndex != null) return undefined;
+
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const slides = [...rotatorRef.current!.children];
-
     const observer = new IntersectionObserver(
       entries => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        console.log(
+        setUncontrolledActiveIndex(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           slides.indexOf(entries.find(entry => entry.isIntersecting)!.target),
         );
       },
       { threshold: 0.5 },
     );
-    if (rotatorRef.current) {
-      [...rotatorRef.current.children].forEach(slide => {
-        observer.observe(slide);
-      });
-    }
+    slides.forEach(slide => {
+      observer.observe(slide);
+    });
 
     return () => {
       observer.disconnect();
     };
-  }, [children]);
+  }, [children, controlledActiveIndex, setUncontrolledActiveIndex]);
 
   return (
     <Flex
@@ -72,10 +81,13 @@ export default function CarouselRotator({
       aria-live={autoPlay ? 'off' : 'polite'}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
-        // if (e.button === 1) e.preventDefault();
+        // TODO: if (e.button === 1) e.preventDefault();
       }}
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
-      overflow="auto"
+      overflow={
+        // Disable user-initiated scrolling when the component is controlled
+        controlledActiveIndex != null ? 'hidden' : 'auto'
+      }
       css={{
         scrollSnapType: 'x mandatory',
         // TODO: Leave vendor prefixing to the underlying library

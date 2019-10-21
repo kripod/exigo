@@ -19,19 +19,12 @@ export default function QuizItemCardSet({
   items,
   ...restProps
 }: QuizItemCardSetProps) {
-  const [itemIndex, setItemIndex] = useState(0);
-  const [responses, setResponses] = useState<{ [index: number]: unknown }>({});
+  const [responses, setResponses] = useState<{ [id: number]: unknown }>({});
 
   return (
     <CarouselContainer>
-      <CarouselRotator
-        as={Measure}
-        activeIndex={itemIndex}
-        spacingX={4}
-        spacingY={6}
-        {...restProps}
-      >
-        {items.map((item, i) => {
+      <CarouselRotator as={Measure} spacingX={4} spacingY={6} {...restProps}>
+        {items.map(item => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const Evaluator = evaluatorComponents.get(item.type)!;
 
@@ -42,7 +35,7 @@ export default function QuizItemCardSet({
                 onChange={response => {
                   setResponses(prevResponses => ({
                     ...prevResponses,
-                    [itemIndex]: response,
+                    [item.id]: response,
                   }));
                 }}
               />
