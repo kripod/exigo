@@ -1,10 +1,10 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
-import useCarouselActiveIndexState from '../hooks/useCarouselActiveIndexState';
-import useCarouselPlayState from '../hooks/useCarouselPlayState';
+import useCarouselControls from '../hooks/useCarouselControls';
 import { fromEntries } from '../utils/object';
+import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#grouped-carousel-elements
@@ -21,7 +21,6 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
-  infinite?: boolean;
   playInterval?: number;
   activeIndex?: number;
   spacing?: MarginProps['margin'];
@@ -31,7 +30,6 @@ export interface CarouselRotatorProps extends FlexProps {
 
 export default function CarouselRotator({
   children,
-  infinite,
   playInterval = 5000,
   activeIndex: controlledActiveIndex,
   spacing,
@@ -39,15 +37,19 @@ export default function CarouselRotator({
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
-  const [isPlaying] = useCarouselPlayState();
-  const [
-    uncontrolledActiveIndex,
-    setUncontrolledActiveIndex,
-  ] = useCarouselActiveIndexState();
+  const {
+    isPlaying,
+    activeIndex: uncontrolledActiveIndex,
+    jumpTo,
+  } = useCarouselControls();
   const activeIndex =
     controlledActiveIndex != null
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
+
+  // Inform other components about the amount of slides
+  const [, setSlideCount] = useContext(CarouselContext)[3];
+  setSlideCount(React.Children.count(children));
 
   const rotatorRef = useRef<HTMLElement>();
 
@@ -59,7 +61,7 @@ export default function CarouselRotator({
     const slides = [...rotatorRef.current!.children];
     const observer = new IntersectionObserver(
       entries => {
-        setUncontrolledActiveIndex(
+        jumpTo(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           slides.indexOf(entries.find(entry => entry.isIntersecting)!.target),
         );
@@ -73,7 +75,7 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, setUncontrolledActiveIndex]);
+  }, [children, controlledActiveIndex, jumpTo]);
 
   return (
     <Flex
