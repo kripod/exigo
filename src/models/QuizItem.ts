@@ -2,6 +2,7 @@ import MultipleOptionsQuizItemProps from './MultipleOptionsQuizItemProps';
 import QuizItemType from './QuizItemType';
 
 export interface QuizItemBase {
+  id: number;
   stem: string;
 }
 

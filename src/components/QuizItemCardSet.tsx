@@ -36,8 +36,7 @@ export default function QuizItemCardSet({
           const Evaluator = evaluatorComponents.get(item.type)!;
 
           return (
-            // eslint-disable-next-line react/no-array-index-key
-            <QuizItemCard key={i} stem={item.stem}>
+            <QuizItemCard key={item.id} stem={item.stem}>
               <Evaluator
                 {...item}
                 onChange={response => {

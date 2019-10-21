@@ -3,6 +3,7 @@
   "title": "2016 SCOP MS 6",
   "items": [
     {
+      "id": 1,
       "type": 1,
       "stem": "A popular method for solving systems of linear equations works one of these objects into reduced \"row-echelon form.\" If one of these objects is square, its trace is simply the sum of values along a diagonal, and these mathematical arrangements have an inverse if and only if their determinant is not zero.",
       "options": [
@@ -14,6 +15,7 @@
       "solution": [1]
     },
     {
+      "id": 2,
       "type": 1,
       "stem": "These values exist at a function's critical points when the function is concave down.",
       "options": [
@@ -24,6 +26,7 @@
       "solution": [2]
     },
     {
+      "id": 3,
       "type": 1,
       "stem": "Composition of these mathematical objects make the codomain of one of them the domain of the other.",
       "options": [

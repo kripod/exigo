@@ -13,7 +13,7 @@ import Measure from './Measure';
 
 export const QUIZ_ITEM_CARD_PADDING = 6;
 
-interface QuizItemCardProps extends QuizItemBase, BoxProps {}
+interface QuizItemCardProps extends Omit<QuizItemBase, 'id'>, BoxProps {}
 
 export default function QuizItemCard({
   stem,
