@@ -1,9 +1,9 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
+import useCarouselState from '../hooks/useCarouselState';
 import { fromEntries } from '../utils/object';
-import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#grouped-carousel-elements
@@ -40,9 +40,10 @@ export default function CarouselRotator({
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
-  const [uncontrolledActiveIndex, setUncontrolledActiveIndex] = useContext(
-    CarouselContext,
-  );
+  const [
+    uncontrolledActiveIndex,
+    setUncontrolledActiveIndex,
+  ] = useCarouselState();
   const activeIndex =
     controlledActiveIndex != null
       ? controlledActiveIndex
