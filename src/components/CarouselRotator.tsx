@@ -49,7 +49,7 @@ export default function CarouselRotator({
         scrollSnapType: 'x mandatory',
         // TODO: Leave vendor prefixing to the underlying library
         '::-webkit-scrollbar': { width: 0 },
-        '-msOverflowStyle': 'none',
+        msOverflowStyle: 'none',
         scrollbarWidth: 'none',
       }}
       {...restProps}
