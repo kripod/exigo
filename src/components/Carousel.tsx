@@ -18,7 +18,7 @@ export default function Carousel({
       <CarouselControls />
       <CarouselRotator
         activeIndex={activeIndex}
-        {...props} // `activeIndex` is overridable from here
+        {...props} // `activeIndex` is overridable for controllability
       />
     </CarouselContainer>
   );
