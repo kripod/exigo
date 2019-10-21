@@ -19,7 +19,7 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 
 export interface CarouselProps extends FlexProps {
   children: React.ReactComponentElement<typeof CarouselSlide>[];
-  role?: 'region' | 'group';
+  slideIndex?: number;
   spacing?: MarginProps['margin'];
   spacingX?: MarginProps['mx'];
   spacingY?: MarginProps['my'];
@@ -27,9 +27,7 @@ export interface CarouselProps extends FlexProps {
 
 export default function Carousel({
   children,
-  'aria-label': ariaLabel,
-  'aria-labelledby': ariaLabelledby,
-  role = ariaLabel || ariaLabelledby ? 'region' : 'group',
+  slideIndex = 0,
   spacing,
   spacingX,
   spacingY,
@@ -37,23 +35,22 @@ export default function Carousel({
 }: CarouselProps) {
   return (
     <Flex
-      role={role}
+      as="section"
       aria-roledescription="carousel"
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledby}
       aria-live="polite" // The carousel is NOT automatically rotating
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow="auto"
       css={{
         scrollSnapType: 'x mandatory',
         '::-webkit-scrollbar': { width: 0 },
-        '-ms-overflow-style': 'none',
+        '-msOverflowStyle': 'none',
         scrollbarWidth: 'none',
       }}
       {...restProps}
     >
-      {React.Children.map(children, child =>
+      {React.Children.map(children, (child, i) =>
         React.cloneElement(child, {
+          inert: i !== slideIndex ? '' : undefined,
           px: spacingX != null ? spacingX : spacing,
           py: spacingY != null ? spacingY : spacing,
         }),

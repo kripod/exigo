@@ -1,7 +1,11 @@
 import { Box, BoxProps } from '@chakra-ui/core';
 import React from 'react';
 
-export default function CarouselSlide({ children, ...restProps }: BoxProps) {
+export default function CarouselSlide({
+  children,
+  inert,
+  ...restProps
+}: BoxProps) {
   return (
     <Box
       role="group"
@@ -10,7 +14,8 @@ export default function CarouselSlide({ children, ...restProps }: BoxProps) {
       css={{ scrollSnapAlign: 'center' }}
       {...restProps}
     >
-      {children}
+      {/* TODO: Remove extra `div` once `shouldForwardProp` of `Box` supports `inert` */}
+      <div inert={inert}>{children}</div>
     </Box>
   );
 }
