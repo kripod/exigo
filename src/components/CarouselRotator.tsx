@@ -2,6 +2,7 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
+import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import { fromEntries } from '../utils/object';
 import CarouselContext from './CarouselContext';
@@ -40,6 +41,7 @@ export default function CarouselRotator({
   const {
     isPlaying,
     activeIndex: uncontrolledActiveIndex,
+    jump,
     jumpTo,
   } = useCarouselControls();
   const activeIndex =
@@ -51,8 +53,16 @@ export default function CarouselRotator({
   const [, setSlideCount] = useContext(CarouselContext)[3];
   setSlideCount(React.Children.count(children));
 
-  const rotatorRef = useRef<HTMLElement>();
+  // Auto-rotate slides if desired
+  useInterval(
+    () => {
+      jump(+1);
+    },
+    isPlaying ? playInterval : null,
+  );
 
+  // Track user-initiated scrolling
+  const rotatorRef = useRef<HTMLElement>();
   useEffect(() => {
     // Skip observing intersections when the component is controlled
     if (controlledActiveIndex != null) return undefined;
@@ -76,6 +86,9 @@ export default function CarouselRotator({
       observer.disconnect();
     };
   }, [children, controlledActiveIndex, jumpTo]);
+
+  // TODO: React to `uncontrolledActiveIndex` changes
+  useEffect(() => {}, [uncontrolledActiveIndex]);
 
   return (
     <Flex

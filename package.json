@@ -29,6 +29,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet-async": "^1.0.4",
+    "web-api-hooks": "^2.0.1",
     "wicg-inert": "^3.0.0"
   },
   "devDependencies": {
