@@ -43,6 +43,10 @@ export default function CarouselRotator({
     <Flex
       aria-atomic={false}
       aria-live={autoPlay ? 'off' : 'polite'}
+      onMouseDown={e => {
+        // Disable mouse wheel scrolling between slides
+        if (e.button === 1) e.preventDefault();
+      }}
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow="auto"
       css={{
