@@ -35,19 +35,18 @@ export default function QuizItemCardSet({
         const Evaluator = evaluatorComponents.get(item.type)!;
 
         return (
-          <CarouselSlide>
-            <QuizItemCard stem={item.stem}>
-              <Evaluator
-                {...item}
-                onChange={response => {
-                  setResponses(prevResponses => ({
-                    ...prevResponses,
-                    [itemIndex]: response,
-                  }));
-                }}
-              />
-            </QuizItemCard>
-          </CarouselSlide>
+          // eslint-disable-next-line react/no-array-index-key
+          <QuizItemCard key={i} stem={item.stem}>
+            <Evaluator
+              {...item}
+              onChange={response => {
+                setResponses(prevResponses => ({
+                  ...prevResponses,
+                  [itemIndex]: response,
+                }));
+              }}
+            />
+          </QuizItemCard>
         );
       })}
     </CarouselRotator>

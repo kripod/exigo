@@ -49,13 +49,15 @@ export default function CarouselRotator({
       }}
       {...restProps}
     >
-      {React.Children.map(children, (child, i) =>
-        React.cloneElement(child, {
-          inert: i !== slideIndex ? '' : undefined,
-          px: spacingX != null ? spacingX : spacing,
-          py: spacingY != null ? spacingY : spacing,
-        }),
-      )}
+      {React.Children.map(children, (child, i) => (
+        <CarouselSlide
+          inert={i !== slideIndex ? '' : undefined}
+          px={spacingX != null ? spacingX : spacing}
+          py={spacingY != null ? spacingY : spacing}
+        >
+          {child}
+        </CarouselSlide>
+      ))}
     </Flex>
   );
 }
