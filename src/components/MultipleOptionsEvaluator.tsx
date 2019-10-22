@@ -23,7 +23,7 @@ export default function MultipleOptionsEvaluator({
 
   return (
     <CheckboxGroup
-      // TODO: value={response}
+      value={response}
       onChange={
         ((values: any[]) => {
           let optionIDs: Option['id'][] = values.map(Number);
@@ -61,7 +61,7 @@ export default function MultipleOptionsEvaluator({
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
           <Checkbox
             key={option.id}
-            value={`${option.id}`}
+            value={option.id}
             isDisabled={showSolution}
             isFullWidth
             px={QUIZ_ITEM_CARD_PADDING}
