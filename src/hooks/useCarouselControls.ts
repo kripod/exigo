@@ -1,6 +1,10 @@
 import { useContext } from 'react';
+import smoothscroll from 'smoothscroll-polyfill';
 import CarouselContext from '../components/CarouselContext';
 import { mod } from '../utils/math';
+
+// TODO: Follow the status of element scrolling methods and remove polyfill
+smoothscroll.polyfill();
 
 export default function useCarouselControls() {
   const [
@@ -19,11 +23,11 @@ export default function useCarouselControls() {
 
       const slide = slidesRef.current[nextActiveIndex];
       if (slide.parentElement) {
-        // TODO: Smooth scrolling polyfill
-        slide.parentElement.scrollTop =
-          slide.offsetTop - slide.parentElement.offsetTop;
-        slide.parentElement.scrollLeft =
-          slide.offsetLeft - slide.parentElement.offsetLeft;
+        slide.parentElement.scroll({
+          top: slide.offsetTop - slide.parentElement.offsetTop,
+          left: slide.offsetLeft - slide.parentElement.offsetLeft,
+          behavior: 'smooth',
+        });
       }
       return nextActiveIndex;
     });
