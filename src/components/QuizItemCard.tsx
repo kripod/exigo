@@ -47,18 +47,18 @@ export default function QuizItemCard({
         bg={`gray.${isDarkMode ? 900 : 50}`}
       >
         <Button
-          aria-label="Surrender current assessment"
-          leftIcon={'running' as any}
-          variant="outline"
-        >
-          Surrender
-        </Button>
-        <Button
           aria-label="Next assessment"
           rightIcon="chevron-right"
           variantColor="blue"
         >
           Next
+        </Button>
+        <Button
+          aria-label="Surrender current assessment"
+          leftIcon={'running' as any}
+          variant="outline"
+        >
+          Surrender
         </Button>
       </Stack>
     </Card>
