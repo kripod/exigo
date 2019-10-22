@@ -7,7 +7,7 @@ export default function useCarouselControls() {
     infinite,
     [isPlaying, setIsPlaying],
     [activeIndex, setActiveIndex],
-    [slideCount],
+    { current: slides },
   ] = useContext(CarouselContext);
 
   return {
@@ -17,12 +17,12 @@ export default function useCarouselControls() {
     },
 
     activeIndex,
-    slideCount,
+    slideCount: slides.length,
     jumpTo: setActiveIndex,
     jump(delta: number) {
       setActiveIndex(prevActiveIndex => {
         const sum = prevActiveIndex + delta;
-        return infinite ? mod(sum, slideCount) : sum;
+        return infinite ? mod(sum, slides.length) : sum;
       });
     },
   };

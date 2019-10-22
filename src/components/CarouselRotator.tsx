@@ -49,10 +49,6 @@ export default function CarouselRotator({
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
 
-  // Inform other components about the amount of slides
-  const [, setSlideCount] = useContext(CarouselContext)[3];
-  setSlideCount(React.Children.count(children));
-
   // Auto-rotate slides if desired
   useInterval(
     () => {
@@ -63,12 +59,15 @@ export default function CarouselRotator({
 
   // Track user-initiated scrolling
   const rotatorRef = useRef<HTMLElement>();
+  const slidesRef = useContext(CarouselContext)[3];
   useEffect(() => {
     // Skip observing intersections when the component is controlled
     if (controlledActiveIndex != null) return undefined;
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const slides = [...rotatorRef.current!.children];
+    slidesRef.current = slides;
+
     const observer = new IntersectionObserver(
       entries => {
         jumpTo(
@@ -85,10 +84,7 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, jumpTo]);
-
-  // TODO: React to `uncontrolledActiveIndex` changes
-  useEffect(() => {}, [uncontrolledActiveIndex]);
+  }, [children, controlledActiveIndex, jumpTo, slidesRef]);
 
   return (
     <Flex

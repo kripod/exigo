@@ -1,5 +1,5 @@
 import { Box, BoxProps } from '@chakra-ui/core';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CarouselContext from './CarouselContext';
 
 interface CarouselContainerProps extends BoxProps {
@@ -16,12 +16,7 @@ export default function CarouselContainer({
 }: CarouselContainerProps) {
   return (
     <CarouselContext.Provider
-      value={[
-        infinite,
-        useState(autoPlay),
-        useState(initialIndex),
-        useState(initialIndex + 1),
-      ]}
+      value={[infinite, useState(autoPlay), useState(initialIndex), useRef([])]}
     >
       <Box as="section" aria-roledescription="carousel" {...restProps} />
     </CarouselContext.Provider>
