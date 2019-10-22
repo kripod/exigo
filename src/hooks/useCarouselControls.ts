@@ -10,10 +10,13 @@ export default function useCarouselControls() {
     slidesRef,
   ] = useContext(CarouselContext);
 
-  function goTo(value: React.SetStateAction<number>) {
+  function goTo(index: React.SetStateAction<number>) {
     setActiveIndex(prevActiveIndex => {
       const nextActiveIndex =
-        typeof value !== 'function' ? value : value(prevActiveIndex);
+        typeof index !== 'function' ? index : index(prevActiveIndex);
+      if (nextActiveIndex < 0 || nextActiveIndex >= slidesRef.current.length)
+        return prevActiveIndex;
+
       console.log(nextActiveIndex);
       slidesRef.current[nextActiveIndex].scrollIntoView(); // TODO: Smooth scrolling
       return nextActiveIndex;
@@ -27,16 +30,12 @@ export default function useCarouselControls() {
     },
 
     activeIndex,
-    slideCount: slidesRef.current.length,
+    slidesRef,
     goTo,
     jump(delta: number) {
       goTo(prevActiveIndex => {
         const sum = prevActiveIndex + delta;
-        const slideCount = slidesRef.current.length;
-        return Math.min(
-          slideCount - 1,
-          Math.max(0, infinite ? mod(sum, slideCount) : sum),
-        );
+        return infinite ? mod(sum, slidesRef.current.length) : sum;
       });
     },
   };
