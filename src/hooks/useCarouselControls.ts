@@ -24,8 +24,8 @@ export default function useCarouselControls() {
       const slide = slidesRef.current[nextActiveIndex];
       if (slide.parentElement) {
         slide.parentElement.scroll({
-          top: slide.offsetTop - slide.parentElement.offsetTop,
-          left: slide.offsetLeft - slide.parentElement.offsetLeft,
+          top: slide.offsetTop,
+          left: slide.offsetLeft,
           behavior: 'smooth',
         });
       }
