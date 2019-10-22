@@ -42,7 +42,7 @@ export default function CarouselRotator({
     isPlaying,
     activeIndex: uncontrolledActiveIndex,
     jump,
-    jumpTo,
+    goTo,
   } = useCarouselControls();
   const activeIndex =
     controlledActiveIndex != null
@@ -52,6 +52,7 @@ export default function CarouselRotator({
   // Auto-rotate slides if desired
   useInterval(
     () => {
+      // TODO: Disable intersection observation during programmatic movements
       jump(+1);
     },
     isPlaying ? playInterval : null,
@@ -71,7 +72,8 @@ export default function CarouselRotator({
       entries => {
         const intersectingEntry = entries.find(entry => entry.isIntersecting);
         if (intersectingEntry) {
-          jumpTo(slides.indexOf(intersectingEntry.target));
+          console.log(slides.indexOf(intersectingEntry.target));
+          goTo(slides.indexOf(intersectingEntry.target));
         }
       },
       { threshold: 0.5 },
@@ -83,7 +85,7 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, jumpTo, slidesRef]);
+  }, [children, controlledActiveIndex, goTo, slidesRef]);
 
   return (
     <Flex

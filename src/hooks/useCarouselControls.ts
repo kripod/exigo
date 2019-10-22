@@ -5,24 +5,38 @@ import { mod } from '../utils/math';
 export default function useCarouselControls() {
   const [
     infinite,
-    [isPlaying, setIsPlaying],
+    [isPlaying, setPlaying],
     [activeIndex, setActiveIndex],
-    { current: slides },
+    slidesRef,
   ] = useContext(CarouselContext);
+
+  function goTo(value: React.SetStateAction<number>) {
+    setActiveIndex(prevActiveIndex => {
+      const nextActiveIndex =
+        typeof value !== 'function' ? value : value(prevActiveIndex);
+      console.log(nextActiveIndex);
+      slidesRef.current[nextActiveIndex].scrollIntoView(); // TODO: Smooth scrolling
+      return nextActiveIndex;
+    });
+  }
 
   return {
     isPlaying,
     togglePlaying() {
-      setIsPlaying(prevIsPlaying => !prevIsPlaying);
+      setPlaying(prevIsPlaying => !prevIsPlaying);
     },
 
     activeIndex,
-    slideCount: slides.length,
-    jumpTo: setActiveIndex,
+    slideCount: slidesRef.current.length,
+    goTo,
     jump(delta: number) {
-      setActiveIndex(prevActiveIndex => {
+      goTo(prevActiveIndex => {
         const sum = prevActiveIndex + delta;
-        return infinite ? mod(sum, slides.length) : sum;
+        const slideCount = slidesRef.current.length;
+        return Math.min(
+          slideCount - 1,
+          Math.max(0, infinite ? mod(sum, slideCount) : sum),
+        );
       });
     },
   };
