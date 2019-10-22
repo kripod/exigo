@@ -17,7 +17,6 @@ export default function useCarouselControls() {
       if (nextActiveIndex < 0 || nextActiveIndex >= slidesRef.current.length)
         return prevActiveIndex;
 
-      console.log(nextActiveIndex);
       slidesRef.current[nextActiveIndex].scrollIntoView(); // TODO: Smooth scrolling
       return nextActiveIndex;
     });

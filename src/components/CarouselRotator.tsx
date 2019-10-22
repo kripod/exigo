@@ -38,12 +38,13 @@ export default function CarouselRotator({
   spacingY,
   ...restProps
 }: CarouselRotatorProps) {
-  const {
-    isPlaying,
-    activeIndex: uncontrolledActiveIndex,
-    jump,
-    goTo,
-  } = useCarouselControls();
+  const [
+    ,
+    ,
+    [uncontrolledActiveIndex, setUncontrolledActiveIndex],
+    slidesRef,
+  ] = useContext(CarouselContext);
+  const { isPlaying, jump } = useCarouselControls();
   const activeIndex =
     controlledActiveIndex != null
       ? controlledActiveIndex
@@ -52,15 +53,13 @@ export default function CarouselRotator({
   // Auto-rotate slides if desired
   useInterval(
     () => {
-      // TODO: Disable intersection observation during programmatic movements
       jump(+1);
     },
     isPlaying ? playInterval : null,
   );
 
-  // Track user-initiated scrolling
+  // Track scroll position
   const rotatorRef = useRef<HTMLElement>();
-  const slidesRef = useContext(CarouselContext)[3];
   useEffect(() => {
     // Skip observation when the component is controlled or not mounted
     if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
@@ -72,8 +71,8 @@ export default function CarouselRotator({
       entries => {
         const intersectingEntry = entries.find(entry => entry.isIntersecting);
         if (intersectingEntry) {
-          console.log(slides.indexOf(intersectingEntry.target));
-          goTo(slides.indexOf(intersectingEntry.target));
+          // Scroll events shall not be fired here, so `goTo` cannot be used
+          setUncontrolledActiveIndex(slides.indexOf(intersectingEntry.target));
         }
       },
       { threshold: 0.5 },
@@ -85,7 +84,7 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, goTo, slidesRef]);
+  }, [children, controlledActiveIndex, setUncontrolledActiveIndex, slidesRef]);
 
   return (
     <Flex
