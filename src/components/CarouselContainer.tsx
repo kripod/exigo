@@ -18,7 +18,12 @@ export default function CarouselContainer({
     <CarouselContext.Provider
       value={[infinite, useState(autoPlay), useState(initialIndex), useRef([])]}
     >
-      <Box as="section" aria-roledescription="carousel" {...restProps} />
+      <Box
+        as="section"
+        aria-roledescription="carousel"
+        position="relative"
+        {...restProps}
+      />
     </CarouselContext.Provider>
   );
 }
