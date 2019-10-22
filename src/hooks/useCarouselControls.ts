@@ -4,7 +4,9 @@ import CarouselContext from '../components/CarouselContext';
 import { mod } from '../utils/math';
 
 // TODO: Follow the status of element scrolling methods and remove polyfill
-smoothscroll.polyfill();
+if (typeof window !== 'undefined') {
+  smoothscroll.polyfill();
+}
 
 export default function useCarouselControls() {
   const [
