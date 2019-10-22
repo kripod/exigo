@@ -1,5 +1,5 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MarginProps, ResponsiveValue } from 'styled-system';
 import { useInterval } from 'web-api-hooks';
@@ -50,12 +50,17 @@ export default function CarouselRotator({
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
 
+  const [isFocused, setFocused] = useState(false);
+  const [isHovered, setHovered] = useState(false);
+
   // Auto-rotate slides if desired
   useInterval(
     () => {
       jump(+1);
     },
-    isPlaying ? playInterval : null,
+
+    // Avoid interfering with the user's intentions
+    isPlaying && !isFocused && !isHovered ? playInterval : null,
   );
 
   // Track scroll position
@@ -94,6 +99,28 @@ export default function CarouselRotator({
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
         // TODO: if (e.button === 1) e.preventDefault();
+      }}
+      onFocus={() => {
+        setFocused(true);
+      }}
+      onBlur={() => {
+        setFocused(false);
+      }}
+      onMouseEnter={() => {
+        console.log('mouseEnter');
+        setHovered(true);
+      }}
+      onMouseLeave={() => {
+        console.log('mouseLeave');
+        setHovered(false);
+      }}
+      onTouchStart={() => {
+        console.log('touchStart');
+        setHovered(true);
+      }}
+      onTouchEnd={() => {
+        console.log('touchEnd');
+        setHovered(false);
       }}
       position="relative"
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
