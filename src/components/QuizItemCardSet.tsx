@@ -22,7 +22,7 @@ export default function QuizItemCardSet({
   const [responses, setResponses] = useState<{ [id: number]: unknown }>({});
 
   return (
-    <CarouselContainer>
+    <CarouselContainer infinite autoPlay>
       <CarouselRotator as={Measure} spacingX={4} spacingY={6} {...restProps}>
         {items.map(item => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
