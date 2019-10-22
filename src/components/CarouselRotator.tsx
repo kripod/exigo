@@ -61,19 +61,18 @@ export default function CarouselRotator({
   const rotatorRef = useRef<HTMLElement>();
   const slidesRef = useContext(CarouselContext)[3];
   useEffect(() => {
-    // Skip observing intersections when the component is controlled
-    if (controlledActiveIndex != null) return undefined;
+    // Skip observation when the component is controlled or not mounted
+    if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const slides = [...rotatorRef.current!.children];
+    const slides = [...rotatorRef.current.children];
     slidesRef.current = slides;
 
     const observer = new IntersectionObserver(
       entries => {
-        jumpTo(
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          slides.indexOf(entries.find(entry => entry.isIntersecting)!.target),
-        );
+        const intersectingEntry = entries.find(entry => entry.isIntersecting);
+        if (intersectingEntry) {
+          jumpTo(slides.indexOf(intersectingEntry.target));
+        }
       },
       { threshold: 0.5 },
     );
