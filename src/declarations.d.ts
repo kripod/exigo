@@ -7,20 +7,4 @@
 // And to shim assets, use (one file extension per `declare`):
 // declare module '*.png';
 
-// TODO: Remove `inert` attribute declarations
-
-declare module 'react' {
-  interface DOMAttributes<T> {
-    inert?: '' | undefined;
-  }
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicAttributes {
-      inert?: '' | undefined;
-    }
-  }
-}
-
-export {};
+declare module 'wicg-inert';
