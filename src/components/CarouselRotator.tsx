@@ -65,7 +65,7 @@ export default function CarouselRotator({
     if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
 
     const slides = [...rotatorRef.current.children];
-    slidesRef.current = slides;
+    slidesRef.current = slides as HTMLElement[];
 
     const observer = new IntersectionObserver(
       entries => {

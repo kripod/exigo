@@ -17,7 +17,14 @@ export default function useCarouselControls() {
       if (nextActiveIndex < 0 || nextActiveIndex >= slidesRef.current.length)
         return prevActiveIndex;
 
-      slidesRef.current[nextActiveIndex].scrollIntoView(); // TODO: Smooth scrolling
+      const slide = slidesRef.current[nextActiveIndex];
+      if (slide.parentElement) {
+        // TODO: Smooth scrolling polyfill
+        slide.parentElement.scrollTop =
+          slide.offsetTop - slide.parentElement.offsetTop;
+        slide.parentElement.scrollLeft =
+          slide.offsetLeft - slide.parentElement.offsetLeft;
+      }
       return nextActiveIndex;
     });
   }

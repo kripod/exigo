@@ -5,7 +5,7 @@ const CarouselContext = createContext<
     boolean,
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
-    React.MutableRefObject<Element[]>,
+    React.MutableRefObject<HTMLElement[]>,
   ]
 >([false, [false, () => {}], [0, () => {}], { current: [] }]);
 
