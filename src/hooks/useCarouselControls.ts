@@ -29,7 +29,9 @@ export default function useCarouselControls() {
     },
 
     activeIndex,
-    slidesRef,
+    getTotalCount() {
+      return slidesRef.current.length;
+    },
     goTo,
     jump(delta: number) {
       goTo(prevActiveIndex => {
