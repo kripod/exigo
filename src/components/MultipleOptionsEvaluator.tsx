@@ -23,7 +23,7 @@ export default function MultipleOptionsEvaluator({
 
   return (
     <CheckboxGroup
-      // value={response}
+      // TODO: value={response}
       onChange={
         ((values: any[]) => {
           let optionIDs: Option['id'][] = values.map(Number);

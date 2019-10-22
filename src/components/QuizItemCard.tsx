@@ -39,9 +39,8 @@ export default function QuizItemCard({
 
       <Box my={QUIZ_ITEM_CARD_PADDING - 1}>{children}</Box>
 
-      {/* TODO: isReversed, see https://github.com/chakra-ui/chakra-ui/issues/189 */}
       <Stack
-        isInline
+        direction="row-reverse"
         justify="space-between"
         px={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING - 1}
