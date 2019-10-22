@@ -2,7 +2,7 @@ import { Box, BoxProps } from '@chakra-ui/core';
 import React, { useRef, useState } from 'react';
 import CarouselContext from './CarouselContext';
 
-interface CarouselContainerProps extends BoxProps {
+export interface CarouselContainerProps extends BoxProps {
   infinite?: boolean;
   autoPlay?: boolean;
   initialIndex?: number;

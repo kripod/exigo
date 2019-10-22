@@ -23,7 +23,7 @@ function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
 }
 
 export interface CarouselRotatorProps extends FlexProps {
-  children: React.ReactElement[];
+  children?: React.ReactElement[];
   playInterval?: number;
   activeIndex?: number;
   spacing?: MarginProps['margin'];
