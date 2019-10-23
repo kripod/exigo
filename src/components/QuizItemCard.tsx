@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import { QuizItemBase } from '../models/QuizItem';
 import Card from './Card';
-import Measure from './Measure';
 
 export const QUIZ_ITEM_CARD_PADDING = 6;
 
@@ -24,7 +23,7 @@ export default function QuizItemCard({
   const isDarkMode = colorMode === 'dark';
 
   return (
-    <Card as={Measure} boxShadow="lg" {...restProps}>
+    <Card as={Stack} boxShadow="lg" {...restProps}>
       <Heading
         as="h3"
         size="md"
@@ -37,7 +36,9 @@ export default function QuizItemCard({
         {stem}
       </Heading>
 
-      <Box my={QUIZ_ITEM_CARD_PADDING - 1}>{children}</Box>
+      <Box flex={1} my={QUIZ_ITEM_CARD_PADDING - 1}>
+        {children}
+      </Box>
 
       <Stack
         direction="row-reverse"
