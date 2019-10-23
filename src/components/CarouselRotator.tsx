@@ -1,6 +1,6 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect, useRef } from 'react';
-import { useInterval } from 'web-api-hooks';
+import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
@@ -24,7 +24,7 @@ export default function CarouselRotator({
     isFocused,
     [disableAutoPause],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
-    [, setSlides],
+    [slides, setSlides],
   ] = useContext(CarouselContext);
   const { isPlaying, jump } = useCarouselControls();
   const activeIndex =
@@ -48,20 +48,22 @@ export default function CarouselRotator({
     // Skip observation when the component is controlled or not mounted
     if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
 
-    const slides = [...rotatorRef.current.children];
-    setSlides(slides as HTMLElement[]);
+    const nextSlides = [...rotatorRef.current.children];
+    setSlides(nextSlides as HTMLElement[]);
 
     const observer = new IntersectionObserver(
       entries => {
         const intersectingEntry = entries.find(entry => entry.isIntersecting);
         if (intersectingEntry) {
           // Scroll events shall not be fired here, so `goTo` cannot be used
-          setUncontrolledActiveIndex(slides.indexOf(intersectingEntry.target));
+          setUncontrolledActiveIndex(
+            nextSlides.indexOf(intersectingEntry.target),
+          );
         }
       },
       { threshold: 0.5 },
     );
-    slides.forEach(slide => {
+    nextSlides.forEach(slide => {
       observer.observe(slide);
     });
 
@@ -69,6 +71,17 @@ export default function CarouselRotator({
       observer.disconnect();
     };
   }, [children, controlledActiveIndex, setSlides, setUncontrolledActiveIndex]);
+
+  // Re-snap scroll position when content of the snapport changes
+  // TODO: Remove this when browsers do this natively
+  const [windowWidth] = useWindowSize();
+  useEffect(() => {
+    if (activeIndex < slides.length) {
+      const slide = slides[activeIndex];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      slide.parentElement!.scrollLeft = slide.offsetLeft;
+    }
+  }, [activeIndex, slides, windowWidth]);
 
   return (
     <Flex
@@ -88,7 +101,7 @@ export default function CarouselRotator({
         scrollSnapType: 'x mandatory',
         scrollBehavior: 'smooth',
         // TODO: Leave vendor prefixing to the underlying library
-        '::-webkit-scrollbar': { width: 0 },
+        // '::-webkit-scrollbar': { width: 0 },
         msOverflowStyle: 'none',
         scrollbarWidth: 'none',
       }}
