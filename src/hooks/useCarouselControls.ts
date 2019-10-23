@@ -10,10 +10,11 @@ if (typeof window !== 'undefined') {
 
 export default function useCarouselControls() {
   const [
-    infinite,
-    [isPlaying, setPlaying],
+    ,
     [activeIndex, setActiveIndex],
     slidesRef,
+    infinite,
+    [isPlaying, setPlaying],
   ] = useContext(CarouselContext);
 
   function goTo(index: React.SetStateAction<number>) {

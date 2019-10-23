@@ -3,10 +3,11 @@ import { createContext } from 'react';
 const CarouselContext = createContext<
   [
     boolean,
-    [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
     React.MutableRefObject<HTMLElement[]>,
+    boolean,
+    [boolean, React.Dispatch<React.SetStateAction<boolean>>],
   ]
->([false, [false, () => {}], [0, () => {}], { current: [] }]);
+>([false, [0, () => {}], { current: [] }, false, [false, () => {}]]);
 
 export default CarouselContext;

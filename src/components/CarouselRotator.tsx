@@ -41,8 +41,7 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    ,
-    ,
+    isActive,
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
     slidesRef,
   ] = useContext(CarouselContext);
@@ -52,9 +51,6 @@ export default function CarouselRotator({
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
 
-  const [isFocused, bindFocus] = useFocus();
-  const [isHovered, bindHover] = useHover();
-
   // Auto-rotate slides if desired
   useInterval(
     () => {
@@ -62,7 +58,7 @@ export default function CarouselRotator({
     },
 
     // Avoid interfering with the user's intentions
-    isPlaying && !isFocused && !isHovered ? playInterval : null,
+    isPlaying && !isActive ? playInterval : null,
   );
 
   // Track scroll position
@@ -98,8 +94,6 @@ export default function CarouselRotator({
       ref={rotatorRef}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
-      {...bindFocus}
-      {...bindHover}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
         // TODO: if (e.button === 1) e.preventDefault();
