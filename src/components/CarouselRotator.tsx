@@ -43,7 +43,7 @@ export default function CarouselRotator({
   const [
     isActive,
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
-    slidesRef,
+    [, setSlides],
   ] = useContext(CarouselContext);
   const { isPlaying, jump } = useCarouselControls();
   const activeIndex =
@@ -68,7 +68,7 @@ export default function CarouselRotator({
     if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
 
     const slides = [...rotatorRef.current.children];
-    slidesRef.current = slides as HTMLElement[];
+    setSlides(slides as HTMLElement[]);
 
     const observer = new IntersectionObserver(
       entries => {
@@ -87,7 +87,7 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, setUncontrolledActiveIndex, slidesRef]);
+  }, [children, controlledActiveIndex, setSlides, setUncontrolledActiveIndex]);
 
   return (
     <Flex

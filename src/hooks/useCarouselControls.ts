@@ -12,19 +12,18 @@ export default function useCarouselControls() {
   const [
     ,
     [activeIndex, setActiveIndex],
-    slidesRef,
+    [slides],
     isInfinite,
     [isPlaying, setPlaying],
   ] = useContext(CarouselContext);
+  const totalCount = slides.length;
 
   function goTo(index: React.SetStateAction<number>) {
     setActiveIndex(prevIndex => {
       const nextIndex = typeof index !== 'function' ? index : index(prevIndex);
-      if (nextIndex < 0 || nextIndex >= slidesRef.current.length) {
-        return prevIndex;
-      }
+      if (nextIndex < 0 || nextIndex >= totalCount) return prevIndex;
 
-      const slide = slidesRef.current[nextIndex];
+      const slide = slides[nextIndex];
       if (slide.parentElement) {
         slide.parentElement.scroll({
           top: slide.offsetTop,
@@ -41,18 +40,16 @@ export default function useCarouselControls() {
 
     isPlaying,
     togglePlaying() {
-      setPlaying(prevIsPlaying => !prevIsPlaying);
+      setPlaying(prevPlaying => !prevPlaying);
     },
 
     activeIndex,
-    getTotalCount() {
-      return slidesRef.current.length;
-    },
+    totalCount,
     goTo,
     jump(delta: number) {
       goTo(prevIndex => {
         const sum = prevIndex + delta;
-        return isInfinite ? mod(sum, slidesRef.current.length) : sum;
+        return isInfinite ? mod(sum, totalCount) : sum;
       });
     },
   };
