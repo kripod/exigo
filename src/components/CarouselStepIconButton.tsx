@@ -10,13 +10,22 @@ export default function CarouselStepIconButton({
   delta,
   ...props
 }: CarouselStepIconButtonProps) {
-  const { jump } = useCarouselControls();
+  const {
+    isInfinite,
+    activeIndex,
+    getTotalCount,
+    jump,
+  } = useCarouselControls();
+  const nextIndex = activeIndex + delta;
+
   const { colorMode } = useColorMode();
   const isDarkMode = colorMode === 'dark';
 
-  // TODO: Disable button if necessary when the carousel is not infinite
   return (
     <IconButton
+      isDisabled={
+        !isInfinite && (nextIndex < 0 || nextIndex >= getTotalCount())
+      }
       variantColor={isDarkMode ? 'whiteAlpha' : 'blackAlpha'}
       color="white"
       size="lg"

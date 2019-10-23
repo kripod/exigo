@@ -13,7 +13,7 @@ export default function useCarouselControls() {
     ,
     [activeIndex, setActiveIndex],
     slidesRef,
-    infinite,
+    isInfinite,
     [isPlaying, setPlaying],
   ] = useContext(CarouselContext);
 
@@ -37,6 +37,8 @@ export default function useCarouselControls() {
   }
 
   return {
+    isInfinite,
+
     isPlaying,
     togglePlaying() {
       setPlaying(prevIsPlaying => !prevIsPlaying);
@@ -50,7 +52,7 @@ export default function useCarouselControls() {
     jump(delta: number) {
       goTo(prevActiveIndex => {
         const sum = prevActiveIndex + delta;
-        return infinite ? mod(sum, slidesRef.current.length) : sum;
+        return isInfinite ? mod(sum, slidesRef.current.length) : sum;
       });
     },
   };
