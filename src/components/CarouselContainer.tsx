@@ -19,19 +19,10 @@ export default function CarouselContainer({
   const [isFocused, bindFocus] = useFocus();
   const [isHovered, bindHover] = useHover();
 
-  const [ignoreUserInteracting, setIgnoreUserInteracting] = useState(false);
-
   return (
     <CarouselContext.Provider
       value={[
-        [
-          ignoreUserInteracting,
-          (value: boolean) => {
-            if (value !== ignoreUserInteracting) {
-              setIgnoreUserInteracting(value);
-            }
-          },
-        ],
+        useState<boolean>(false),
         isFocused || isHovered,
         useState(initialIndex),
         useState<HTMLElement[]>([]),
