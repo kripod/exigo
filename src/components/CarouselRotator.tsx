@@ -1,43 +1,22 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect, useRef } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import StyledSystem from 'styled-system';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import { fromEntries } from '../utils/object';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
-function negateResponsiveValue<T>(value: StyledSystem.ResponsiveValue<T>) {
-  if (value == null) return value;
-  if (typeof value === 'number') return -value;
-  if (typeof value === 'string') return `-${value}`;
-
-  // TODO: Call `negateResponsiveValue` recursively instead of stringification
-  if (Array.isArray(value)) return value.map(v => (v != null ? `${-v}` : v));
-  return fromEntries(
-    Object.entries(value).map(([k, v]) => [k, v != null ? `${-v}` : v]),
-  );
-}
-
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
   playInterval?: number;
   activeIndex?: number;
-  spacing?: StyledSystem.MarginProps['margin'];
-  spacingX?: StyledSystem.MarginProps['mx'];
-  spacingY?: StyledSystem.MarginProps['my'];
 }
 
 export default function CarouselRotator({
   children,
   playInterval = 5000,
   activeIndex: controlledActiveIndex,
-  spacing,
-  spacingX,
-  spacingY,
   ...restProps
 }: CarouselRotatorProps) {
   const [
@@ -101,7 +80,6 @@ export default function CarouselRotator({
         if (e.button === 1) e.preventDefault();
       }}
       position="relative"
-      my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
       overflow={
         // Disable user-initiated scrolling when the component is controlled
         controlledActiveIndex != null ? 'hidden' : 'auto'
@@ -122,8 +100,6 @@ export default function CarouselRotator({
           inert={i !== activeIndex ? '' : undefined}
           aria-label={child.props['aria-label']}
           aria-labelledby={child.props['aria-labelledby']}
-          px={spacingX != null ? spacingX : spacing}
-          py={spacingY != null ? spacingY : spacing}
         >
           {React.cloneElement(child, {
             'aria-label': undefined,

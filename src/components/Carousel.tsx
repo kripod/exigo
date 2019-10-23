@@ -11,21 +11,12 @@ export default function Carousel({
   children,
   playInterval,
   activeIndex,
-  spacing,
-  spacingX,
-  spacingY,
   ...restProps
 }: CarouselProps) {
   return (
     <CarouselContainer {...restProps}>
       <CarouselOverlay />
-      <CarouselRotator
-        playInterval={playInterval}
-        activeIndex={activeIndex}
-        spacing={spacing}
-        spacingX={spacingX}
-        spacingY={spacingY}
-      >
+      <CarouselRotator playInterval={playInterval} activeIndex={activeIndex}>
         {children}
       </CarouselRotator>
     </CarouselContainer>
