@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Flex,
   Heading,
   Stack,
   useColorMode,
@@ -23,7 +24,7 @@ export default function QuizItemCard({
   const isDarkMode = colorMode === 'dark';
 
   return (
-    <Card as={Stack} boxShadow="lg" {...restProps}>
+    <Card as={Flex} flexDirection="column" boxShadow="lg" {...restProps}>
       <Heading
         as="h3"
         size="md"
