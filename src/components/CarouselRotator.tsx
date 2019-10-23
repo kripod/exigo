@@ -98,7 +98,7 @@ export default function CarouselRotator({
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
-        // TODO: if (e.button === 1) e.preventDefault();
+        if (e.button === 1) e.preventDefault();
       }}
       position="relative"
       my={negateResponsiveValue(spacingY != null ? spacingY : spacing)}
