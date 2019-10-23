@@ -16,14 +16,14 @@ export default function CarouselContainer({
   initialIndex = 0,
   ...restProps
 }: CarouselContainerProps) {
-  const [isFocused, bindFocus] = useFocus();
   const [isHovered, bindHover] = useHover();
+  const [isFocused, bindFocus] = useFocus();
 
   return (
     <CarouselContext.Provider
       value={[
-        isFocused,
         isHovered,
+        isFocused,
         useState<boolean>(false),
         useState(initialIndex),
         useState<HTMLElement[]>([]),
@@ -35,8 +35,8 @@ export default function CarouselContainer({
         as="section"
         aria-roledescription="carousel"
         position="relative"
-        {...bindFocus}
         {...bindHover}
+        {...bindFocus}
         {...restProps}
       />
     </CarouselContext.Provider>

@@ -17,15 +17,15 @@ export default function CarouselPlayToggleIconButton(
   const { isPlaying, togglePlaying } = useCarouselControls();
 
   const [
-    isContainerFocused,
     isContainerHovered,
+    isContainerFocused,
     [disableAutoPause, setDisableAutoPause],
   ] = useContext(CarouselContext);
-  const [isFocused, bindFocus] = useFocus();
   const [isHovered, bindHover] = useHover();
+  const [isFocused, bindFocus] = useFocus();
   const nextDisableAutoPause =
-    (isFocused && (!isContainerHovered || isHovered)) ||
-    (isHovered && !isContainerFocused);
+    (isHovered && !isContainerFocused) ||
+    (isFocused && (!isContainerHovered || isHovered));
   if (nextDisableAutoPause !== disableAutoPause) {
     setDisableAutoPause(nextDisableAutoPause);
   }
@@ -36,8 +36,8 @@ export default function CarouselPlayToggleIconButton(
       // TODO: Use `pause` and `play` icons once they're available
       icon={isPlaying ? 'view-off' : 'view'}
       onClick={togglePlaying}
-      {...bindFocus}
       {...bindHover}
+      {...bindFocus}
       {...props}
     />
   );

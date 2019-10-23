@@ -39,8 +39,8 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    isFocused,
     isHovered,
+    isFocused,
     [disableAutoPause],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
     [, setSlides],
@@ -56,7 +56,7 @@ export default function CarouselRotator({
     () => {
       jump(+1);
     },
-    isPlaying && ((!isFocused && !isHovered) || disableAutoPause)
+    isPlaying && ((!isHovered && !isFocused) || disableAutoPause)
       ? playInterval
       : null,
   );
