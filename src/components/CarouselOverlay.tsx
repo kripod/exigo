@@ -10,19 +10,19 @@ export default function CarouselOverlay({
   children = [
     // TODO: Add play/pause button
     <CarouselStepIconButton
-      delta={+1}
-      aria-label="Next slide"
-      icon="chevron-right"
-      top="50%"
-      right={4}
-      transform="translateY(-50%)"
-    />,
-    <CarouselStepIconButton
       delta={-1}
       aria-label="Previous slide"
       icon="chevron-left"
       top="50%"
       left={4}
+      transform="translateY(-50%)"
+    />,
+    <CarouselStepIconButton
+      delta={+1}
+      aria-label="Next slide"
+      icon="chevron-right"
+      top="50%"
+      right={4}
       transform="translateY(-50%)"
     />,
   ],
