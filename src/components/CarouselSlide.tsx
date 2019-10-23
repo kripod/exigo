@@ -23,7 +23,19 @@ export default function CarouselSlide({
       {...restProps}
     >
       {/* TODO: Remove extra `div` once `shouldForwardProp` of `Box` supports `inert` */}
-      <div inert={inert}>{children}</div>
+      <div
+        inert={inert}
+        css={{
+          height: '100%',
+          '& > *': {
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          },
+        }}
+      >
+        {children}
+      </div>
     </Box>
   );
 }
