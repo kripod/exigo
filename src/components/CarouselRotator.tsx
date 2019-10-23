@@ -55,12 +55,15 @@ export default function CarouselRotator({
 
     const observer = new IntersectionObserver(
       entries => {
-        const intersectingEntry = entries.find(entry => entry.isIntersecting);
-        if (intersectingEntry) {
-          // Scroll events shall not be fired here, so `goTo` cannot be used
-          setUncontrolledActiveIndex(
-            nextSlides.indexOf(intersectingEntry.target),
-          );
+        // Ignore unintentional scrolls (e.g. during window resize)
+        if (isHovered) {
+          const intersectingEntry = entries.find(entry => entry.isIntersecting);
+          if (intersectingEntry) {
+            // Scroll events shall not be fired here, so `goTo` cannot be used
+            setUncontrolledActiveIndex(
+              nextSlides.indexOf(intersectingEntry.target),
+            );
+          }
         }
       },
       { threshold: 0.5 },
@@ -72,7 +75,13 @@ export default function CarouselRotator({
     return () => {
       observer.disconnect();
     };
-  }, [children, controlledActiveIndex, setSlides, setUncontrolledActiveIndex]);
+  }, [
+    children,
+    controlledActiveIndex,
+    isHovered,
+    setSlides,
+    setUncontrolledActiveIndex,
+  ]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
