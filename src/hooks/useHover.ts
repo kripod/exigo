@@ -1,26 +1,25 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useHover(mouseOnly = false) {
   const [isHovered, setHovered] = useState(false);
 
+  const onTouchStart = useCallback(() => {
+    setHovered(true);
+  }, []);
+  const onTouchEnd = useCallback(() => {
+    setHovered(false);
+  }, []);
+
   return [
     isHovered,
     {
-      onMouseEnter() {
+      ...(!mouseOnly && { onTouchStart, onTouchEnd }),
+      onMouseEnter: useCallback(() => {
         setHovered(true);
-      },
-      onMouseLeave() {
+      }, []),
+      onMouseLeave: useCallback(() => {
         setHovered(false);
-      },
-
-      ...(!mouseOnly && {
-        onTouchStart() {
-          setHovered(true);
-        },
-        onTouchEnd() {
-          setHovered(false);
-        },
-      }),
+      }, []),
     },
   ] as const;
 }

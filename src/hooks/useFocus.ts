@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useFocus() {
   const [isFocused, setFocused] = useState(false);
@@ -6,12 +6,12 @@ export default function useFocus() {
   return [
     isFocused,
     {
-      onFocus() {
+      onFocus: useCallback(() => {
         setFocused(true);
-      },
-      onBlur() {
+      }, []),
+      onBlur: useCallback(() => {
         setFocused(false);
-      },
+      }, []),
     },
   ] as const;
 }
