@@ -22,27 +22,37 @@ export default function QuizItemCardSet({
   const [responses, setResponses] = useState<{ [id: number]: unknown }>({});
 
   return (
-    <CarouselContainer infinite autoPlay>
-      <CarouselRotator as={Measure} spacingX={4} spacingY={6} {...restProps}>
-        {items.map(item => {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const Evaluator = evaluatorComponents.get(item.type)!;
+    <Measure {...restProps}>
+      <CarouselContainer>
+        <CarouselRotator
+          my={-6}
+          // TODO: Use `sx` prop when Chakra switches to Theme UI
+          css={theme => ({
+            '& > *': {
+              padding: `${theme.space[6]} ${theme.space[4]}`,
+            },
+          })}
+        >
+          {items.map(item => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            const Evaluator = evaluatorComponents.get(item.type)!;
 
-          return (
-            <QuizItemCard key={item.id} stem={item.stem}>
-              <Evaluator
-                {...item}
-                onChange={response => {
-                  setResponses(prevResponses => ({
-                    ...prevResponses,
-                    [item.id]: response,
-                  }));
-                }}
-              />
-            </QuizItemCard>
-          );
-        })}
-      </CarouselRotator>
-    </CarouselContainer>
+            return (
+              <QuizItemCard key={item.id} stem={item.stem}>
+                <Evaluator
+                  {...item}
+                  onChange={response => {
+                    setResponses(prevResponses => ({
+                      ...prevResponses,
+                      [item.id]: response,
+                    }));
+                  }}
+                />
+              </QuizItemCard>
+            );
+          })}
+        </CarouselRotator>
+      </CarouselContainer>
+    </Measure>
   );
 }
