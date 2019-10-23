@@ -1,4 +1,4 @@
-import { Flex, FlexProps } from '@chakra-ui/core';
+import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { useInterval, useWindowSize } from 'web-api-hooks';
@@ -74,15 +74,16 @@ export default function CarouselRotator({
   }, [children, controlledActiveIndex, setSlides, setUncontrolledActiveIndex]);
 
   // Re-snap scroll position when content of the snapport changes
-  // TODO: Remove this when browsers do this natively
+  // TODO: Remove when browsers handle this natively
   const [windowWidth] = useWindowSize();
+  const prevWindowWidth = usePrevious(windowWidth);
   useEffect(() => {
-    if (activeIndex < slides.length) {
+    if (windowWidth !== prevWindowWidth && activeIndex < slides.length) {
       const slide = slides[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       slide.parentElement!.scrollLeft = slide.offsetLeft;
     }
-  }, [activeIndex, slides, windowWidth]);
+  }, [activeIndex, prevWindowWidth, slides, windowWidth]);
 
   return (
     <Flex
