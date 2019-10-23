@@ -1,9 +1,8 @@
-import { Box } from '@chakra-ui/core';
+import { Box, BoxProps } from '@chakra-ui/core';
 import React from 'react';
 import CarouselStepIconButton from './CarouselStepIconButton';
 
-// TODO: Consider renaming to `CarouselControlPanel`
-export default function CarouselControls() {
+export default function CarouselOverlay(props: BoxProps) {
   return (
     <Box
       position="absolute"
@@ -13,6 +12,7 @@ export default function CarouselControls() {
       left={0}
       zIndex={1}
       css={{ '& > *': { position: 'absolute' } }}
+      {...props}
     >
       {/* TODO: Add play/pause button */}
       <CarouselStepIconButton
