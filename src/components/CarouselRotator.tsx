@@ -101,9 +101,13 @@ export default function CarouselRotator({
         scrollSnapType: 'x mandatory',
         scrollBehavior: 'smooth',
         // TODO: Leave vendor prefixing to the underlying library
-        // '::-webkit-scrollbar': { width: 0 },
+        '::-webkit-scrollbar': { width: 0 },
         msOverflowStyle: 'none',
         scrollbarWidth: 'none',
+
+        '@media (prefers-reduced-motion: reduce)': {
+          scrollSnapType: 'none',
+        },
       }}
       {...restProps}
     >
