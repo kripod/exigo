@@ -22,11 +22,12 @@ export default function CarouselContainer({
   return (
     <CarouselContext.Provider
       value={[
+        useState<boolean>(false),
         isFocused || isHovered,
         useState(initialIndex),
         useState<HTMLElement[]>([]),
-        isInfinite,
         useState(autoPlay),
+        isInfinite,
       ]}
     >
       <Box

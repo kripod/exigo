@@ -11,10 +11,11 @@ if (typeof window !== 'undefined') {
 export default function useCarouselControls() {
   const [
     ,
+    ,
     [activeIndex, setActiveIndex],
     [slides],
-    isInfinite,
     [isPlaying, setPlaying],
+    isInfinite,
   ] = useContext(CarouselContext);
   const totalCount = slides.length;
 
