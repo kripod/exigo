@@ -1,8 +1,10 @@
-import { IconButton, IconButtonProps, useColorMode } from '@chakra-ui/core';
 import React, { useCallback } from 'react';
 import useCarouselControls from '../hooks/useCarouselControls';
+import CarouselIconButton, {
+  CarouselIconButtonProps,
+} from './CarouselIconButton';
 
-export interface CarouselStepIconButtonProps extends IconButtonProps {
+export interface CarouselStepIconButtonProps extends CarouselIconButtonProps {
   delta: number;
 }
 
@@ -13,17 +15,9 @@ export default function CarouselStepIconButton({
   const { isInfinite, activeIndex, totalCount, jump } = useCarouselControls();
   const nextIndex = activeIndex + delta;
 
-  const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
-
   return (
-    <IconButton
+    <CarouselIconButton
       isDisabled={!isInfinite && (nextIndex < 0 || nextIndex >= totalCount)}
-      variantColor={isDarkMode ? 'whiteAlpha' : 'blackAlpha'}
-      color="white"
-      size="lg"
-      fontSize="3xl"
-      isRound
       onClick={useCallback(() => {
         jump(delta);
       }, [delta, jump])}
