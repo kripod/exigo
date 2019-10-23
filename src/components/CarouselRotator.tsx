@@ -1,4 +1,5 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
+import { css } from '@emotion/core';
 import React, { useContext, useEffect, useRef } from 'react';
 import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
@@ -97,18 +98,24 @@ export default function CarouselRotator({
         // Disable user-initiated scrolling when the component is controlled
         controlledActiveIndex != null ? 'hidden' : 'auto'
       }
-      css={{
-        scrollSnapType: 'x mandatory',
-        scrollBehavior: 'smooth',
-        // TODO: Leave vendor prefixing to the underlying library
-        '::-webkit-scrollbar': { width: 0 },
-        msOverflowStyle: 'none',
-        scrollbarWidth: 'none',
+      css={css`
+        /* Support every version of CSS Scroll Snap */
+        scroll-snap-type: x mandatory;
+        scroll-snap-type-x: mandatory;
+        scroll-snap-points-x: repeat(100%);
 
-        '@media (prefers-reduced-motion: reduce)': {
-          scrollSnapType: 'none',
-        },
-      }}
+        /* TODO: Leave vendor prefixing to the underlying library */
+        ::-webkit-scrollbar {
+          width: 0;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        scroll-behavior: smooth;
+        @media (prefers-reduced-motion: reduce) {
+          scroll-behavior: auto;
+        }
+      `}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
