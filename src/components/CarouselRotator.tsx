@@ -59,8 +59,10 @@ export default function CarouselRotator({
     const observer = new IntersectionObserver(
       entries => {
         // Ignore unintentional scrolls (e.g. during window resize)
-        if (windowWidth === prevWindowWidth || isHovered) {
-          const intersectingEntry = entries.find(entry => entry.isIntersecting);
+        if (windowWidth === prevWindowWidth) {
+          const intersectingEntry = entries.find(
+            entry => entry.intersectionRatio > 0.5,
+          );
           if (intersectingEntry) {
             // Scroll events shall not be fired here, so `goTo` cannot be used
             setUncontrolledActiveIndex(
@@ -81,7 +83,6 @@ export default function CarouselRotator({
   }, [
     children,
     controlledActiveIndex,
-    isHovered,
     prevWindowWidth,
     setSlides,
     setUncontrolledActiveIndex,
