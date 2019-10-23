@@ -1,19 +1,21 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect, useRef } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { MarginProps, ResponsiveValue } from 'styled-system';
+import StyledSystem from 'styled-system';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import { fromEntries } from '../utils/object';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
-// TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#grouped-carousel-elements
+// TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
-function negateResponsiveValue<T>(value: ResponsiveValue<T>) {
+function negateResponsiveValue<T>(value: StyledSystem.ResponsiveValue<T>) {
   if (value == null) return value;
   if (typeof value === 'number') return -value;
   if (typeof value === 'string') return `-${value}`;
+
+  // TODO: Call `negateResponsiveValue` recursively instead of stringification
   if (Array.isArray(value)) return value.map(v => (v != null ? `${-v}` : v));
   return fromEntries(
     Object.entries(value).map(([k, v]) => [k, v != null ? `${-v}` : v]),
@@ -24,9 +26,9 @@ export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
   playInterval?: number;
   activeIndex?: number;
-  spacing?: MarginProps['margin'];
-  spacingX?: MarginProps['mx'];
-  spacingY?: MarginProps['my'];
+  spacing?: StyledSystem.MarginProps['margin'];
+  spacingX?: StyledSystem.MarginProps['mx'];
+  spacingY?: StyledSystem.MarginProps['my'];
 }
 
 export default function CarouselRotator({

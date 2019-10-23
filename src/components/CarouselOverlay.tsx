@@ -31,10 +31,10 @@ export default function CarouselOverlay({
       transform="translateY(-50%)"
     />,
   ],
-  ...props
+  ...restProps
 }: CarouselOverlayProps) {
   return (
-    <Box {...props}>
+    <Box {...restProps}>
       {React.Children.map(children, child =>
         React.cloneElement(child, {
           css: {

@@ -10,7 +10,7 @@ export interface CarouselStepIconButtonProps extends CarouselIconButtonProps {
 
 export default function CarouselStepIconButton({
   delta,
-  ...props
+  ...restProps
 }: CarouselStepIconButtonProps) {
   const { isInfinite, activeIndex, totalCount, jump } = useCarouselControls();
   const nextIndex = activeIndex + delta;
@@ -21,7 +21,7 @@ export default function CarouselStepIconButton({
       onClick={useCallback(() => {
         jump(delta);
       }, [delta, jump])}
-      {...props}
+      {...restProps}
     />
   );
 }

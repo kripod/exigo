@@ -6,11 +6,14 @@ if (typeof window !== 'undefined') {
   import('wicg-inert');
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CarouselSlideProps extends BoxProps {}
+
 export default function CarouselSlide({
   children,
   inert,
   ...restProps
-}: BoxProps) {
+}: CarouselSlideProps) {
   return (
     <Box
       role="group"
