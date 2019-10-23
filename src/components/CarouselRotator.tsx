@@ -34,6 +34,9 @@ export default function CarouselRotator({
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
 
+  const [windowWidth] = useWindowSize();
+  const prevWindowWidth = usePrevious(windowWidth);
+
   // Auto-rotate slides if desired
   useInterval(
     () => {
@@ -56,7 +59,7 @@ export default function CarouselRotator({
     const observer = new IntersectionObserver(
       entries => {
         // Ignore unintentional scrolls (e.g. during window resize)
-        if (isHovered) {
+        if (windowWidth === prevWindowWidth || isHovered) {
           const intersectingEntry = entries.find(entry => entry.isIntersecting);
           if (intersectingEntry) {
             // Scroll events shall not be fired here, so `goTo` cannot be used
@@ -79,14 +82,14 @@ export default function CarouselRotator({
     children,
     controlledActiveIndex,
     isHovered,
+    prevWindowWidth,
     setSlides,
     setUncontrolledActiveIndex,
+    windowWidth,
   ]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const [windowWidth] = useWindowSize();
-  const prevWindowWidth = usePrevious(windowWidth);
   useEffect(() => {
     if (windowWidth !== prevWindowWidth && activeIndex < slides.length) {
       const slide = slides[activeIndex];
