@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 import React, { useState } from 'react';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
@@ -26,11 +27,11 @@ export default function QuizItemCardSet({
       <CarouselRotator
         my={-6}
         // TODO: Use `sx` prop when Chakra switches to Theme UI
-        css={theme => ({
-          '& > *': {
-            padding: `${theme.space[6]} ${theme.space[4]}`,
-          },
-        })}
+        css={theme => css`
+          > * {
+            padding: ${theme.space[6]} ${theme.space[4]};
+          }
+        `}
       >
         {items.map(item => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
