@@ -123,8 +123,9 @@ export default function CarouselRotator({
 
         /* TODO: Leave vendor prefixing to the underlying library */
         ::-webkit-scrollbar {
-          width: 0;
+          display: none;
         }
+        overflow: -moz-scrollbars-none;
         -ms-overflow-style: none;
         scrollbar-width: none;
 
