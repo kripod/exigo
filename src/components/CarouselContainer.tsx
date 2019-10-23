@@ -1,5 +1,5 @@
 import { Box, BoxProps } from '@chakra-ui/core';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import CarouselContext from './CarouselContext';
 import useFocus from '../hooks/useFocus';
 import useHover from '../hooks/useHover';
@@ -19,10 +19,19 @@ export default function CarouselContainer({
   const [isFocused, bindFocus] = useFocus();
   const [isHovered, bindHover] = useHover();
 
+  const [ignoreUserInteracting, setIgnoreUserInteracting] = useState(false);
+
   return (
     <CarouselContext.Provider
       value={[
-        useRef(false),
+        [
+          ignoreUserInteracting,
+          (value: boolean) => {
+            if (value !== ignoreUserInteracting) {
+              setIgnoreUserInteracting(value);
+            }
+          },
+        ],
         isFocused || isHovered,
         useState(initialIndex),
         useState<HTMLElement[]>([]),

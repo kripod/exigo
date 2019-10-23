@@ -39,7 +39,7 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    ignoreUserInteractingRef,
+    [ignoreUserInteracting],
     isUserInteracting,
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
     [, setSlides],
@@ -53,11 +53,11 @@ export default function CarouselRotator({
   // Auto-rotate slides if desired
   useInterval(
     () => {
-      if (!isUserInteracting || ignoreUserInteractingRef.current) {
-        jump(+1);
-      }
+      jump(+1);
     },
-    isPlaying ? playInterval : null,
+    isPlaying && (!isUserInteracting || ignoreUserInteracting)
+      ? playInterval
+      : null,
   );
 
   // Track scroll position

@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 const CarouselContext = createContext<
   [
-    React.MutableRefObject<boolean>,
+    [boolean, (value: boolean) => void],
     boolean,
     [number, React.Dispatch<React.SetStateAction<number>>],
     [HTMLElement[], React.Dispatch<React.SetStateAction<HTMLElement[]>>],
@@ -10,7 +10,7 @@ const CarouselContext = createContext<
     boolean,
   ]
 >([
-  { current: false },
+  [false, () => {}],
   false,
   [0, () => {}],
   [[], () => {}],
