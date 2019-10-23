@@ -27,13 +27,11 @@ export default function useCarouselControls() {
         if (nextIndex < 0 || nextIndex >= slides.length) return prevIndex;
 
         const slide = slides[nextIndex];
-        if (slide.parentElement) {
-          slide.parentElement.scroll({
-            top: slide.offsetTop,
-            left: slide.offsetLeft,
-            behavior: 'smooth',
-          });
-        }
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        slide.parentElement!.scroll({
+          left: slide.offsetLeft,
+          behavior: 'smooth',
+        });
         return nextIndex;
       });
     },
