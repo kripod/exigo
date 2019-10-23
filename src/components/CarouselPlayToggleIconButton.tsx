@@ -16,14 +16,18 @@ export default function CarouselPlayToggleIconButton(
 ) {
   const { isPlaying, togglePlaying } = useCarouselControls();
 
-  const [, [ignoreUserInteracting, setIgnoreUserInteracting]] = useContext(
-    CarouselContext,
-  );
+  const [
+    isContainerFocused,
+    isContainerHovered,
+    [disableAutoPause, setDisableAutoPause],
+  ] = useContext(CarouselContext);
   const [isFocused, bindFocus] = useFocus();
   const [isHovered, bindHover] = useHover();
-  const nextIgnoreUserInteracting = isFocused || isHovered;
-  if (nextIgnoreUserInteracting !== ignoreUserInteracting) {
-    setIgnoreUserInteracting(nextIgnoreUserInteracting);
+  const nextDisableAutoPause =
+    (isFocused && (!isContainerHovered || isHovered)) ||
+    (isHovered && !isContainerFocused);
+  if (nextDisableAutoPause !== disableAutoPause) {
+    setDisableAutoPause(nextDisableAutoPause);
   }
 
   return (

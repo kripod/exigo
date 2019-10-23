@@ -39,8 +39,9 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    isUserInteracting,
-    [ignoreUserInteracting],
+    isFocused,
+    isHovered,
+    [disableAutoPause],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
     [, setSlides],
   ] = useContext(CarouselContext);
@@ -55,7 +56,7 @@ export default function CarouselRotator({
     () => {
       jump(+1);
     },
-    isPlaying && (!isUserInteracting || ignoreUserInteracting)
+    isPlaying && ((!isFocused && !isHovered) || disableAutoPause)
       ? playInterval
       : null,
   );

@@ -12,6 +12,7 @@ export default function useCarouselControls() {
   const [
     ,
     ,
+    ,
     [activeIndex, setActiveIndex],
     [slides],
     [isPlaying, setPlaying],
