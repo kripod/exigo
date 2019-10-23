@@ -1,4 +1,4 @@
-import { IconButton, IconButtonProps } from '@chakra-ui/core';
+import { IconButton, IconButtonProps, useColorMode } from '@chakra-ui/core';
 import React, { useCallback } from 'react';
 import useCarouselControls from '../hooks/useCarouselControls';
 
@@ -11,11 +11,14 @@ export default function CarouselStepIconButton({
   ...props
 }: CarouselStepIconButtonProps) {
   const { jump } = useCarouselControls();
+  const { colorMode } = useColorMode();
+  const isDarkMode = colorMode === 'dark';
 
   // TODO: Disable button if necessary when the carousel is not infinite
   return (
     <IconButton
-      variant="ghost"
+      variantColor={isDarkMode ? 'whiteAlpha' : 'blackAlpha'}
+      color="white"
       size="lg"
       fontSize="3xl"
       isRound
