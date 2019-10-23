@@ -3,20 +3,25 @@ import React, { useRef, useState } from 'react';
 import CarouselContext from './CarouselContext';
 
 export interface CarouselContainerProps extends BoxProps {
-  infinite?: boolean;
+  isInfinite?: boolean;
   autoPlay?: boolean;
   initialIndex?: number;
 }
 
 export default function CarouselContainer({
-  infinite = false,
+  isInfinite = false,
   autoPlay = false,
   initialIndex = 0,
   ...restProps
 }: CarouselContainerProps) {
   return (
     <CarouselContext.Provider
-      value={[infinite, useState(autoPlay), useState(initialIndex), useRef([])]}
+      value={[
+        isInfinite,
+        useState(autoPlay),
+        useState(initialIndex),
+        useRef([]),
+      ]}
     >
       <Box
         as="section"
