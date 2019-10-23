@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 import useCarouselControls from '../hooks/useCarouselControls';
 import useFocus from '../hooks/useFocus';
 import useHover from '../hooks/useHover';
@@ -31,7 +31,7 @@ export default function CarouselPlayToggleIconButton(
       aria-label={`${isPlaying ? 'Stop' : 'Start'} slide rotation`}
       // TODO: Use `pause` and `play` icons once they're available
       icon={isPlaying ? 'view-off' : 'view'}
-      onClick={useCallback(togglePlaying, [])}
+      onClick={togglePlaying}
       {...bindFocus}
       {...bindHover}
       {...props}

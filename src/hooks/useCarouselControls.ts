@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useCallback } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import CarouselContext from '../components/CarouselContext';
 import { mod } from '../utils/math';
@@ -17,41 +17,49 @@ export default function useCarouselControls() {
     [isPlaying, setPlaying],
     isInfinite,
   ] = useContext(CarouselContext);
+
+  const goTo = useCallback(
+    (index: React.SetStateAction<number>) => {
+      setActiveIndex(prevIndex => {
+        const nextIndex =
+          typeof index !== 'function' ? index : index(prevIndex);
+        if (nextIndex < 0 || nextIndex >= slides.length) return prevIndex;
+
+        const slide = slides[nextIndex];
+        if (slide.parentElement) {
+          slide.parentElement.scroll({
+            top: slide.offsetTop,
+            left: slide.offsetLeft,
+            behavior: 'smooth',
+          });
+        }
+        return nextIndex;
+      });
+    },
+    [setActiveIndex, slides],
+  );
+
   const totalCount = slides.length;
-
-  function goTo(index: React.SetStateAction<number>) {
-    setActiveIndex(prevIndex => {
-      const nextIndex = typeof index !== 'function' ? index : index(prevIndex);
-      if (nextIndex < 0 || nextIndex >= totalCount) return prevIndex;
-
-      const slide = slides[nextIndex];
-      if (slide.parentElement) {
-        slide.parentElement.scroll({
-          top: slide.offsetTop,
-          left: slide.offsetLeft,
-          behavior: 'smooth',
-        });
-      }
-      return nextIndex;
-    });
-  }
 
   return {
     isInfinite,
 
     isPlaying,
-    togglePlaying() {
+    togglePlaying: useCallback(() => {
       setPlaying(prevPlaying => !prevPlaying);
-    },
+    }, [setPlaying]),
 
     activeIndex,
     totalCount,
     goTo,
-    jump(delta: number) {
-      goTo(prevIndex => {
-        const sum = prevIndex + delta;
-        return isInfinite ? mod(sum, totalCount) : sum;
-      });
-    },
+    jump: useCallback(
+      (delta: number) => {
+        goTo(prevIndex => {
+          const sum = prevIndex + delta;
+          return isInfinite ? mod(sum, totalCount) : sum;
+        });
+      },
+      [goTo, isInfinite, totalCount],
+    ),
   };
 }
