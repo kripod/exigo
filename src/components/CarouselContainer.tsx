@@ -22,8 +22,8 @@ export default function CarouselContainer({
   return (
     <CarouselContext.Provider
       value={[
-        useState<boolean>(false),
         isFocused || isHovered,
+        useState<boolean>(false),
         useState(initialIndex),
         useState<HTMLElement[]>([]),
         useState(autoPlay),

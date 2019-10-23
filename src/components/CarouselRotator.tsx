@@ -39,8 +39,8 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    [ignoreUserInteracting],
     isUserInteracting,
+    [ignoreUserInteracting],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
     [, setSlides],
   ] = useContext(CarouselContext);
