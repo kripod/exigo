@@ -1,5 +1,6 @@
 import { Box, BoxProps } from '@chakra-ui/core';
 import React from 'react';
+import CarouselPlayToggleIconButton from './CarouselPlayToggleIconButton';
 import CarouselStepIconButton from './CarouselStepIconButton';
 
 export interface CarouselOverlayProps extends BoxProps {
@@ -8,7 +9,11 @@ export interface CarouselOverlayProps extends BoxProps {
 
 export default function CarouselOverlay({
   children = [
-    // TODO: Add play/pause button
+    <CarouselPlayToggleIconButton
+      top={4}
+      left="50%"
+      transform="translateX(-50%)"
+    />,
     <CarouselStepIconButton
       delta={-1}
       aria-label="Previous slide"
