@@ -1,6 +1,6 @@
 import React from 'react';
 import CarouselContainer, { CarouselContainerProps } from './CarouselContainer';
-import CarouselControls from './CarouselControls';
+import CarouselOverlay from './CarouselOverlay';
 import CarouselRotator, { CarouselRotatorProps } from './CarouselRotator';
 
 export interface CarouselProps
@@ -18,7 +18,7 @@ export default function Carousel({
 }: CarouselProps) {
   return (
     <CarouselContainer {...restProps}>
-      <CarouselControls />
+      <CarouselOverlay />
       <CarouselRotator
         playInterval={playInterval}
         activeIndex={activeIndex}
