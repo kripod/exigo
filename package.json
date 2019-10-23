@@ -28,7 +28,7 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet-async": "^1.0.4",
-    "smoothscroll-polyfill": "^0.4.4",
+    "scroll-behavior-polyfill": "^2.0.13",
     "web-api-hooks": "^2.0.1",
     "wicg-inert": "^3.0.0"
   },

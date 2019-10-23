@@ -1,12 +1,9 @@
 import { useContext, useCallback } from 'react';
-import smoothscroll from 'smoothscroll-polyfill';
 import CarouselContext from '../components/CarouselContext';
 import { mod } from '../utils/math';
 
 // TODO: Follow the status of element scrolling methods and remove polyfill
-if (typeof window !== 'undefined') {
-  smoothscroll.polyfill();
-}
+import 'scroll-behavior-polyfill';
 
 export default function useCarouselControls() {
   const [
@@ -28,10 +25,7 @@ export default function useCarouselControls() {
 
         const slide = slides[nextIndex];
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        slide.parentElement!.scroll({
-          left: slide.offsetLeft,
-          behavior: 'smooth',
-        });
+        slide.parentElement!.scrollLeft = slide.offsetLeft;
         return nextIndex;
       });
     },

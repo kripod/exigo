@@ -18,6 +18,7 @@ export default function CarouselRotator({
   children,
   playInterval = 5000,
   activeIndex: controlledActiveIndex,
+  style,
   ...restProps
 }: CarouselRotatorProps) {
   const [
@@ -81,7 +82,10 @@ export default function CarouselRotator({
     if (windowWidth !== prevWindowWidth && activeIndex < slides.length) {
       const slide = slides[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      slide.parentElement!.scrollLeft = slide.offsetLeft;
+      slide.parentElement!.scroll({
+        left: slide.offsetLeft,
+        behavior: 'auto',
+      });
     }
   }, [activeIndex, prevWindowWidth, slides, windowWidth]);
 
@@ -112,11 +116,11 @@ export default function CarouselRotator({
         -ms-overflow-style: none;
         scrollbar-width: none;
 
-        scroll-behavior: smooth;
         @media (prefers-reduced-motion: reduce) {
           scroll-behavior: auto;
         }
       `}
+      style={{ scrollBehavior: 'smooth', ...style }}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
