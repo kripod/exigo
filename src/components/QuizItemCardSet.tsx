@@ -22,37 +22,35 @@ export default function QuizItemCardSet({
   const [responses, setResponses] = useState<{ [id: number]: unknown }>({});
 
   return (
-    <Measure {...restProps}>
-      <CarouselContainer>
-        <CarouselRotator
-          my={-6}
-          // TODO: Use `sx` prop when Chakra switches to Theme UI
-          css={theme => ({
-            '& > *': {
-              padding: `${theme.space[6]} ${theme.space[4]}`,
-            },
-          })}
-        >
-          {items.map(item => {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const Evaluator = evaluatorComponents.get(item.type)!;
+    <Measure as={CarouselContainer} {...restProps}>
+      <CarouselRotator
+        my={-6}
+        // TODO: Use `sx` prop when Chakra switches to Theme UI
+        css={theme => ({
+          '& > *': {
+            padding: `${theme.space[6]} ${theme.space[4]}`,
+          },
+        })}
+      >
+        {items.map(item => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          const Evaluator = evaluatorComponents.get(item.type)!;
 
-            return (
-              <QuizItemCard key={item.id} stem={item.stem}>
-                <Evaluator
-                  {...item}
-                  onChange={response => {
-                    setResponses(prevResponses => ({
-                      ...prevResponses,
-                      [item.id]: response,
-                    }));
-                  }}
-                />
-              </QuizItemCard>
-            );
-          })}
-        </CarouselRotator>
-      </CarouselContainer>
+          return (
+            <QuizItemCard key={item.id} stem={item.stem}>
+              <Evaluator
+                {...item}
+                onChange={response => {
+                  setResponses(prevResponses => ({
+                    ...prevResponses,
+                    [item.id]: response,
+                  }));
+                }}
+              />
+            </QuizItemCard>
+          );
+        })}
+      </CarouselRotator>
     </Measure>
   );
 }
