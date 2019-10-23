@@ -4,16 +4,7 @@ import CarouselStepIconButton from './CarouselStepIconButton';
 
 export default function CarouselOverlay(props: BoxProps) {
   return (
-    <Box
-      position="absolute"
-      top={0}
-      right={0}
-      bottom={0}
-      left={0}
-      zIndex={1}
-      css={{ '& > *': { position: 'absolute' } }}
-      {...props}
-    >
+    <Box css={{ '& > *': { position: 'absolute', zIndex: 1 } }} {...props}>
       {/* TODO: Add play/pause button */}
       <CarouselStepIconButton
         aria-label="Next slide"
