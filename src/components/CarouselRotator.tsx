@@ -4,8 +4,6 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { MarginProps, ResponsiveValue } from 'styled-system';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import useFocus from '../hooks/useFocus';
-import useHover from '../hooks/useHover';
 import { fromEntries } from '../utils/object';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
