@@ -11,7 +11,8 @@ export default function useCarouselControls() {
     ,
     ,
     [activeIndex, setActiveIndex],
-    [slides],
+    [totalCount],
+    slidesRef,
     [isPlaying, setPlaying],
     isInfinite,
   ] = useContext(CarouselContext);
@@ -21,18 +22,16 @@ export default function useCarouselControls() {
       setActiveIndex(prevIndex => {
         const nextIndex =
           typeof index !== 'function' ? index : index(prevIndex);
-        if (nextIndex < 0 || nextIndex >= slides.length) return prevIndex;
+        if (nextIndex < 0 || nextIndex >= totalCount) return prevIndex;
 
-        const slide = slides[nextIndex];
+        const slide = slidesRef.current[nextIndex];
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         slide.parentElement!.scrollLeft = slide.offsetLeft;
         return nextIndex;
       });
     },
-    [setActiveIndex, slides],
+    [setActiveIndex, slidesRef, totalCount],
   );
-
-  const totalCount = slides.length;
 
   return {
     isInfinite,

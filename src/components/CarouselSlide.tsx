@@ -10,35 +10,36 @@ if (typeof window !== 'undefined') {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CarouselSlideProps extends BoxProps {}
 
-export default function CarouselSlide({
-  children,
-  inert,
-  ...restProps
-}: CarouselSlideProps) {
-  return (
-    <Box
-      role="group"
-      aria-roledescription="slide"
-      flex="0 0 100%"
-      css={css`
-        scroll-snap-align: center;
-      `}
-      {...restProps}
-    >
-      {/* TODO: Remove extra `div` once `shouldForwardProp` of `Box` supports `inert` */}
-      <div
-        inert={inert}
+const CarouselSlide = React.forwardRef(
+  ({ children, inert, ...restProps }: CarouselSlideProps, ref) => {
+    return (
+      <Box
+        ref={ref}
+        role="group"
+        aria-roledescription="slide"
+        flex="0 0 100%"
         css={css`
-          height: 100%;
-          > * {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
+          scroll-snap-align: center;
         `}
+        {...restProps}
       >
-        {children}
-      </div>
-    </Box>
-  );
-}
+        {/* TODO: Remove extra `div` once `shouldForwardProp` of `Box` supports `inert` */}
+        <div
+          inert={inert}
+          css={css`
+            height: 100%;
+            > * {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          `}
+        >
+          {children}
+        </div>
+      </Box>
+    );
+  },
+);
+
+export default CarouselSlide;

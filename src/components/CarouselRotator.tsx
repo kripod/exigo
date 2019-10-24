@@ -1,6 +1,7 @@
 import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { InView } from 'react-intersection-observer';
 import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
@@ -26,7 +27,8 @@ export default function CarouselRotator({
     isFocused,
     [disableAutoPause],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
-    [slides, setSlides],
+    [, setTotalCount],
+    slidesRef,
   ] = useContext(CarouselContext);
   const { isPlaying, jump } = useCarouselControls();
   const activeIndex =
@@ -34,8 +36,12 @@ export default function CarouselRotator({
       ? controlledActiveIndex
       : uncontrolledActiveIndex;
 
-  const [windowWidth] = useWindowSize();
-  const prevWindowWidth = usePrevious(windowWidth);
+  // Keep amount of slides updated
+  useEffect(() => {
+    const totalCount = React.Children.count(children);
+    setTotalCount(totalCount);
+    slidesRef.current.splice(totalCount);
+  }, [children, setTotalCount, slidesRef]);
 
   // Auto-rotate slides if desired
   useInterval(
@@ -47,64 +53,23 @@ export default function CarouselRotator({
       : null,
   );
 
-  // Track scroll position
-  const rotatorRef = useRef<HTMLElement>();
-  useEffect(() => {
-    // Skip observation when the component is controlled or not mounted
-    if (controlledActiveIndex != null || !rotatorRef.current) return undefined;
-
-    const nextSlides = [...rotatorRef.current.children];
-    setSlides(nextSlides as HTMLElement[]);
-
-    const observer = new IntersectionObserver(
-      entries => {
-        // Ignore unintentional scrolls (e.g. during window resize)
-        if (windowWidth === prevWindowWidth) {
-          const intersectingEntry = entries.find(
-            entry => entry.intersectionRatio > 0.5,
-          );
-          if (intersectingEntry) {
-            // Scroll events shall not be fired here, so `goTo` cannot be used
-            setUncontrolledActiveIndex(
-              nextSlides.indexOf(intersectingEntry.target),
-            );
-          }
-        }
-      },
-      { threshold: 0.5 },
-    );
-    nextSlides.forEach(slide => {
-      observer.observe(slide);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [
-    children,
-    controlledActiveIndex,
-    prevWindowWidth,
-    setSlides,
-    setUncontrolledActiveIndex,
-    windowWidth,
-  ]);
-
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
+  const [windowWidth] = useWindowSize();
+  const prevWindowWidth = usePrevious(windowWidth);
   useEffect(() => {
-    if (windowWidth !== prevWindowWidth && activeIndex < slides.length) {
-      const slide = slides[activeIndex];
+    if (windowWidth !== prevWindowWidth) {
+      const slide = slidesRef.current[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       slide.parentElement!.scroll({
         left: slide.offsetLeft,
         behavior: 'auto',
       });
     }
-  }, [activeIndex, prevWindowWidth, slides, windowWidth]);
+  }, [activeIndex, prevWindowWidth, slidesRef, windowWidth]);
 
   return (
     <Flex
-      ref={rotatorRef}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={e => {
@@ -138,17 +103,33 @@ export default function CarouselRotator({
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
-        // Labels are lifted up to comply with WAI-ARIA Authoring Practices
-        <CarouselSlide
-          inert={i !== activeIndex ? '' : undefined}
-          aria-label={child.props['aria-label']}
-          aria-labelledby={child.props['aria-labelledby']}
+        <InView
+          threshold={0.5}
+          onChange={inView => {
+            if (inView) setUncontrolledActiveIndex(i);
+          }}
         >
-          {React.cloneElement(child, {
-            'aria-label': undefined,
-            'aria-labelledby': undefined,
-          })}
-        </CarouselSlide>
+          {// eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ({ ref, inView }) => {
+            return (
+              // Labels are lifted up to comply with WAI-ARIA Authoring Practices
+              <CarouselSlide
+                ref={(element: HTMLElement) => {
+                  (ref as (node: Element) => void)(element);
+                  slidesRef.current[i] = element;
+                }}
+                inert={!inView ? '' : undefined}
+                aria-label={child.props['aria-label']}
+                aria-labelledby={child.props['aria-labelledby']}
+              >
+                {React.cloneElement(child, {
+                  'aria-label': undefined,
+                  'aria-labelledby': undefined,
+                })}
+              </CarouselSlide>
+            );
+          }}
+        </InView>
       ))}
     </Flex>
   );

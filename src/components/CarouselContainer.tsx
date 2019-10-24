@@ -1,5 +1,5 @@
 import { Box, BoxProps } from '@chakra-ui/core';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import CarouselContext from './CarouselContext';
 import useFocus from '../hooks/useFocus';
 import useHover from '../hooks/useHover';
@@ -26,7 +26,8 @@ export default function CarouselContainer({
         isFocused,
         useState<boolean>(false),
         useState(initialIndex),
-        useState<HTMLElement[]>([]),
+        useState(initialIndex + 1),
+        useRef<HTMLElement[]>([]),
         useState(autoPlay),
         isInfinite,
       ]}
