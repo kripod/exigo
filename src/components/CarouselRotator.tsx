@@ -86,8 +86,9 @@ export default function CarouselRotator({
       }
       css={css`
         /* Support every version of CSS Scroll Snap */
-        scroll-snap-type: x mandatory;
         scroll-snap-type-x: mandatory;
+        -ms-scroll-snap-type: mandatory;
+        scroll-snap-type: x mandatory;
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
         scroll-snap-stop: always;
