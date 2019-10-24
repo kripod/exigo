@@ -1,9 +1,10 @@
-import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
+import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { InView } from 'react-intersection-observer';
 import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
+import useWindowResizing from '../hooks/useWindowResizing';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
@@ -58,21 +59,22 @@ export default function CarouselRotator({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
+  const rotatorRef = useRef<HTMLElement>();
+  const scrollRatioRef = useRef(0);
   const [windowWidth] = useWindowSize();
-  const prevWindowWidth = usePrevious(windowWidth);
+  const isWindowResizing = useWindowResizing();
   useEffect(() => {
-    if (windowWidth !== prevWindowWidth) {
-      const slide = slidesRef.current[activeIndex];
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      slide.parentElement!.scroll({
-        left: slide.offsetLeft,
-        behavior: 'auto',
-      });
+    if (isWindowResizing) {
+      /* eslint-disable @typescript-eslint/no-non-null-assertion */
+      rotatorRef.current!.scrollLeft =
+        scrollRatioRef.current * rotatorRef.current!.scrollWidth;
+      /* eslint-enable @typescript-eslint/no-non-null-assertion */
     }
-  }, [activeIndex, prevWindowWidth, slidesRef, windowWidth]);
+  }, [isWindowResizing, windowWidth]);
 
   return (
     <Flex
+      ref={rotatorRef}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
@@ -106,6 +108,13 @@ export default function CarouselRotator({
         }
       `}
       style={{ scrollBehavior: 'smooth', ...style }}
+      onScroll={useCallback(() => {
+        if (!isWindowResizing) {
+          scrollRatioRef.current =
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            rotatorRef.current!.scrollLeft / rotatorRef.current!.scrollWidth;
+        }
+      }, [isWindowResizing])}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
