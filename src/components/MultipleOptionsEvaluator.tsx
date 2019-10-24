@@ -17,7 +17,7 @@ export default function MultipleOptionsEvaluator({
   onChange,
 }: MultipleOptionsEvaluatorProps) {
   const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
+  const preferDarkMode = colorMode === 'dark';
 
   const [response, setResponse] = useState<Option['id'][]>([]);
 
@@ -50,10 +50,10 @@ export default function MultipleOptionsEvaluator({
           color = showSolution ? 'red' : 'blue';
         }
 
-        // TODO: embed bgColor = color ?? `${color}.${isDarkMode ? 800 : 100}`;
+        // TODO: embed bgColor = color ?? `${color}.${preferDarkMode ? 800 : 100}`;
         let bgColor;
         if (color) {
-          bgColor = `${color}.${isDarkMode ? 800 : 100}`;
+          bgColor = `${color}.${preferDarkMode ? 800 : 100}`;
         }
 
         return (

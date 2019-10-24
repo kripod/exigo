@@ -21,7 +21,7 @@ export default function QuizItemCard({
   ...restProps
 }: QuizItemCardProps) {
   const { colorMode } = useColorMode();
-  const isDarkMode = colorMode === 'dark';
+  const preferDarkMode = colorMode === 'dark';
 
   return (
     <Card as={Flex} flexDirection="column" boxShadow="lg" {...restProps}>
@@ -46,7 +46,7 @@ export default function QuizItemCard({
         justify="space-between"
         px={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING - 1}
-        bg={`gray.${isDarkMode ? 900 : 50}`}
+        bg={`gray.${preferDarkMode ? 900 : 50}`}
       >
         <Button
           aria-label="Next assessment"
