@@ -1,6 +1,6 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { InView } from 'react-intersection-observer';
 import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
@@ -62,20 +62,18 @@ export default function CarouselRotator({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const rotatorRef = useRef<HTMLElement>();
-  const scrollRatioRef = useRef(0);
   const [windowWidth] = useWindowSize();
   const isWindowResizing = useWindowResizing();
   useEffect(() => {
-    /* eslint-disable @typescript-eslint/no-non-null-assertion */
-    rotatorRef.current!.scrollLeft =
-      scrollRatioRef.current * rotatorRef.current!.scrollWidth;
-    /* eslint-enable @typescript-eslint/no-non-null-assertion */
-  }, [windowWidth]);
+    if (isWindowResizing) {
+      const slide = slidesRef.current[activeIndex];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      slide.parentElement!.scrollLeft = slide.offsetLeft;
+    }
+  }, [activeIndex, isWindowResizing, slidesRef, windowWidth]);
 
   return (
     <Flex
-      ref={rotatorRef}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
@@ -113,13 +111,6 @@ export default function CarouselRotator({
         ...(!isWindowResizing && { scrollBehavior: 'smooth' }),
         ...style,
       }}
-      onScroll={useCallback(() => {
-        if (!isWindowResizing) {
-          scrollRatioRef.current =
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            rotatorRef.current!.scrollLeft / rotatorRef.current!.scrollWidth;
-        }
-      }, [isWindowResizing])}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
