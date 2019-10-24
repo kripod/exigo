@@ -1,6 +1,6 @@
-import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
+import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { InView } from 'react-intersection-observer';
 import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
@@ -56,26 +56,23 @@ export default function CarouselRotator({
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [windowWidth] = useWindowSize();
-  const prevWindowWidth = usePrevious(windowWidth);
   useEffect(() => {
-    if (windowWidth !== prevWindowWidth) {
-      const slide = slidesRef.current[activeIndex];
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      slide.parentElement!.scroll({
-        left: slide.offsetLeft,
-        behavior: 'auto',
-      });
-    }
-  }, [activeIndex, prevWindowWidth, slidesRef, windowWidth]);
+    const slide = slidesRef.current[activeIndex];
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    slide.parentElement!.scroll({
+      left: slide.offsetLeft,
+      behavior: 'auto',
+    });
+  }, [activeIndex, slidesRef, windowWidth]);
 
   return (
     <Flex
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
-      onMouseDown={e => {
+      onMouseDown={useCallback(e => {
         // Disable mouse wheel scrolling between slides
         if (e.button === 1) e.preventDefault();
-      }}
+      }, [])}
       position="relative"
       overflow={
         // Disable user-initiated scrolling when the component is controlled
