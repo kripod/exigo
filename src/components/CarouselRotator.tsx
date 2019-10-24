@@ -64,13 +64,11 @@ export default function CarouselRotator({
   const [windowWidth] = useWindowSize();
   const isWindowResizing = useWindowResizing();
   useEffect(() => {
-    if (isWindowResizing) {
-      /* eslint-disable @typescript-eslint/no-non-null-assertion */
-      rotatorRef.current!.scrollLeft =
-        scrollRatioRef.current * rotatorRef.current!.scrollWidth;
-      /* eslint-enable @typescript-eslint/no-non-null-assertion */
-    }
-  }, [isWindowResizing, windowWidth]);
+    /* eslint-disable @typescript-eslint/no-non-null-assertion */
+    rotatorRef.current!.scrollLeft =
+      scrollRatioRef.current * rotatorRef.current!.scrollWidth;
+    /* eslint-enable @typescript-eslint/no-non-null-assertion */
+  }, [windowWidth]);
 
   return (
     <Flex
@@ -107,7 +105,10 @@ export default function CarouselRotator({
           scroll-behavior: auto;
         }
       `}
-      style={{ scrollBehavior: 'smooth', ...style }}
+      style={{
+        ...(!isWindowResizing && { scrollBehavior: 'smooth' }),
+        ...style,
+      }}
       onScroll={useCallback(() => {
         if (!isWindowResizing) {
           scrollRatioRef.current =
@@ -125,7 +126,7 @@ export default function CarouselRotator({
           }}
         >
           {// eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ({ ref, inView }) => {
+          ({ ref }) => {
             return (
               // Labels are lifted up to comply with WAI-ARIA Authoring Practices
               <CarouselSlide
@@ -133,7 +134,7 @@ export default function CarouselRotator({
                   (ref as (node: Element) => void)(element);
                   slidesRef.current[i] = element;
                 }}
-                inert={!inView ? '' : undefined}
+                inert={i === activeIndex ? '' : undefined}
                 aria-label={child.props['aria-label']}
                 aria-labelledby={child.props['aria-labelledby']}
               >
