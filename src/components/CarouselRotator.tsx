@@ -105,10 +105,11 @@ export default function CarouselRotator({
         scrollbar-width: none;
 
         @media (prefers-reduced-motion: reduce) {
-          scroll-behavior: auto;
+          scroll-behavior: auto !important;
         }
       `}
       style={{
+        // Smooth scroll polyfill only works with inline styles
         ...(!isWindowResizing && { scrollBehavior: 'smooth' }),
         ...style,
       }}
