@@ -9,6 +9,12 @@ import CarouselSlide from './CarouselSlide';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
+(async function loadPolyfill() {
+  if (typeof window.IntersectionObserver === 'undefined') {
+    await import('intersection-observer');
+  }
+})();
+
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
   playInterval?: number;
