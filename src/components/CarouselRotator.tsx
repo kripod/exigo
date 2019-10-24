@@ -2,7 +2,11 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useCallback, useContext, useEffect } from 'react';
 import { InView } from 'react-intersection-observer';
-import { useInterval, useWindowSize } from 'web-api-hooks';
+import {
+  useInterval,
+  usePreferredMotionIntensity,
+  useWindowSize,
+} from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import useWindowResizing from '../hooks/useWindowResizing';
 import CarouselContext from './CarouselContext';
@@ -72,6 +76,9 @@ export default function CarouselRotator({
     }
   }, [activeIndex, isWindowResizing, slidesRef, windowWidth]);
 
+  // TODO: Replace this check with CSS when no polyfill is required
+  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
+
   return (
     <Flex
       aria-atomic={false}
@@ -101,14 +108,11 @@ export default function CarouselRotator({
         }
         -ms-overflow-style: none;
         scrollbar-width: none;
-
-        @media (prefers-reduced-motion: reduce) {
-          scroll-behavior: auto !important;
-        }
       `}
       style={{
         // Smooth scroll polyfill only works with inline styles
-        ...(!isWindowResizing && { scrollBehavior: 'smooth' }),
+        ...(!isWindowResizing &&
+          !preferReducedMotion && { scrollBehavior: 'smooth' }),
         ...style,
       }}
       {...restProps}
