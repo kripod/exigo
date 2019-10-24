@@ -1,4 +1,4 @@
-import { Flex, FlexProps } from '@chakra-ui/core';
+import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useCallback, useContext, useEffect } from 'react';
 import { InView } from 'react-intersection-observer';
@@ -56,14 +56,17 @@ export default function CarouselRotator({
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [windowWidth] = useWindowSize();
+  const prevWindowWidth = usePrevious(windowWidth);
   useEffect(() => {
-    const slide = slidesRef.current[activeIndex];
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    slide.parentElement!.scroll({
-      left: slide.offsetLeft,
-      behavior: 'auto',
-    });
-  }, [activeIndex, slidesRef, windowWidth]);
+    if (windowWidth !== prevWindowWidth) {
+      const slide = slidesRef.current[activeIndex];
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      slide.parentElement!.scroll({
+        left: slide.offsetLeft,
+        behavior: 'auto',
+      });
+    }
+  }, [activeIndex, prevWindowWidth, slidesRef, windowWidth]);
 
   return (
     <Flex
