@@ -98,7 +98,6 @@ export default function CarouselRotator({
         ::-webkit-scrollbar {
           display: none;
         }
-        overflow: -moz-scrollbars-none;
         -ms-overflow-style: none;
         scrollbar-width: none;
 
