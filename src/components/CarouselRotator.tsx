@@ -94,6 +94,13 @@ export default function CarouselRotator({
         scroll-snap-stop: always;
         -webkit-overflow-scrolling: touch;
 
+        /* TODO: Leave vendor prefixing to the underlying library */
+        ::-webkit-scrollbar {
+          display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
         @media (prefers-reduced-motion: reduce) {
           scroll-behavior: auto;
         }
