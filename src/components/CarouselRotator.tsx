@@ -92,6 +92,7 @@ export default function CarouselRotator({
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
         scroll-snap-stop: always;
+        -webkit-overflow-scrolling: touch;
 
         /* TODO: Leave vendor prefixing to the underlying library */
         ::-webkit-scrollbar {
