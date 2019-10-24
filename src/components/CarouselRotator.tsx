@@ -7,13 +7,10 @@ import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
-// TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
+// TODO: Follow browser support for IntersectionObserver and remove polyfill
+import 'intersection-observer';
 
-(async function loadPolyfill() {
-  if (typeof window.IntersectionObserver === 'undefined') {
-    await import('intersection-observer');
-  }
-})();
+// TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
 export interface CarouselRotatorProps extends FlexProps {
   children: React.ReactElement[];
