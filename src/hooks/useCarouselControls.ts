@@ -2,9 +2,6 @@ import { useContext, useCallback } from 'react';
 import CarouselContext from '../components/CarouselContext';
 import { mod } from '../utils/math';
 
-// TODO: Follow the status of element scrolling methods and remove polyfill
-import 'scroll-behavior-polyfill';
-
 export default function useCarouselControls() {
   const [
     ,
