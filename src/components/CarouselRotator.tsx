@@ -1,9 +1,9 @@
-import { Flex, FlexProps } from '@chakra-ui/core';
+import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import { useInterval, useWindowSize } from 'web-api-hooks';
+import React, { useCallback, useContext, useEffect } from 'react';
+import useResizeObserver from 'use-resize-observer';
+import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import useWindowResizing from '../hooks/useWindowResizing';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
@@ -57,20 +57,19 @@ export default function CarouselRotator({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const rotatorRef = useRef<HTMLElement>();
-  const [windowWidth] = useWindowSize();
-  const isWindowResizing = useWindowResizing();
+  const [ref, width] = useResizeObserver();
+  const prevWidth = usePrevious(width);
   useEffect(() => {
-    if (isWindowResizing) {
+    if (width !== prevWidth) {
       const slide = slidesRef.current[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      rotatorRef.current!.scrollLeft = slide.offsetLeft;
+      ref.current!.scrollLeft = slide.offsetLeft;
     }
-  }, [activeIndex, isWindowResizing, slidesRef, windowWidth]);
+  }, [activeIndex, prevWidth, ref, slidesRef, width]);
 
   return (
     <Flex
-      ref={rotatorRef}
+      ref={ref}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
@@ -100,11 +99,11 @@ export default function CarouselRotator({
       `}
       onScroll={useCallback(() => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const { scrollLeft, scrollWidth } = rotatorRef.current!;
+        const { scrollLeft, scrollWidth } = ref.current!;
         setUncontrolledActiveIndex(
           Math.round(totalCount * (scrollLeft / scrollWidth)),
         );
-      }, [setUncontrolledActiveIndex, totalCount])}
+      }, [ref, setUncontrolledActiveIndex, totalCount])}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

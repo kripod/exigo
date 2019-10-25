@@ -29,6 +29,7 @@
     "react-dom": "^16.11.0",
     "react-helmet-async": "^1.0.4",
     "scroll-behavior-polyfill": "^2.0.13",
+    "use-resize-observer": "^4.0.0",
     "web-api-hooks": "^2.1.0",
     "wicg-inert": "^3.0.0"
   },

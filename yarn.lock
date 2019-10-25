@@ -11156,6 +11156,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
+resize-observer-polyfill@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -13109,6 +13114,13 @@ use-persisted-state@^0.3.0:
   integrity sha512-UlWEq0JYg7NbvcRBZ1g6Bwe4SEbYfr1wr/D5mrmfCzSxXSwsPRYygGLlsxHcW58Rf7gGwRPBT23sNVvyVn4WYg==
   dependencies:
     "@use-it/event-listener" "^0.1.2"
+
+use-resize-observer@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-4.0.0.tgz#9976763c37658e84d6e4f1172e7c146816907ece"
+  integrity sha512-q97g2NISwPZ7a1Y2cbcoVePPaq7HuBu44rkWpzKZNmY8bV69MydaFLNsOSBOu7Jk7mdjiRL4C0/rAks8goLdhQ==
+  dependencies:
+    resize-observer-polyfill "^1.5.0"
 
 use-sidecar@^1.0.1:
   version "1.0.1"
