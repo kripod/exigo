@@ -1,11 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import {
-  useInterval,
-  usePreferredMotionIntensity,
-  useWindowSize,
-} from 'web-api-hooks';
+import { useInterval, useWindowSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import useWindowResizing from '../hooks/useWindowResizing';
 import CarouselContext from './CarouselContext';
@@ -26,7 +22,6 @@ export default function CarouselRotator({
   children,
   playInterval = 5000,
   activeIndex: controlledActiveIndex,
-  style,
   ...restProps
 }: CarouselRotatorProps) {
   const [
@@ -73,9 +68,6 @@ export default function CarouselRotator({
     }
   }, [activeIndex, isWindowResizing, slidesRef, windowWidth]);
 
-  // TODO: Replace this check with CSS when no polyfill is required
-  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
-
   return (
     <Flex
       ref={rotatorRef}
@@ -107,12 +99,6 @@ export default function CarouselRotator({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      style={{
-        // Smooth scroll polyfill only works with inline styles
-        ...(!isWindowResizing &&
-          !preferReducedMotion && { scrollBehavior: 'smooth' }),
-        ...style,
-      }}
       onScroll={useCallback(() => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const { scrollLeft, scrollWidth } = rotatorRef.current!;
