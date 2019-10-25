@@ -19,7 +19,7 @@ const CarouselSlide = React.forwardRef(
         aria-roledescription="slide"
         flex="0 0 100%"
         css={css`
-          scroll-snap-align: center;
+          scroll-snap-stop: always;
         `}
         {...restProps}
       >
