@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
+import { useFocus, useHover } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import useFocus from '../hooks/useFocus';
-import useHover from '../hooks/useHover';
 import CarouselContext from './CarouselContext';
 import CarouselIconButton, {
   CarouselIconButtonProps,

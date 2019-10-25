@@ -1,9 +1,9 @@
 import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useCallback, useContext, useEffect } from 'react';
-import { useInterval } from 'web-api-hooks';
+import ResizeObserverPolyfill from '@juggle/resize-observer';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import { useInterval, useSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import useResizeObserver from '../hooks/useResizeObserver';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
@@ -57,7 +57,11 @@ export default function CarouselRotator({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const [rotatorRef, [width]] = useResizeObserver();
+  const rotatorRef = useRef<HTMLElement>(null);
+  const [width] = useSize(
+    rotatorRef,
+    window.ResizeObserver || ResizeObserverPolyfill,
+  );
   const prevWidth = usePrevious(width);
   useEffect(() => {
     if (width !== prevWidth) {
