@@ -1,9 +1,9 @@
 import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useCallback, useContext, useEffect } from 'react';
-import useResizeObserver from 'use-resize-observer';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
+import useResizeObserver from '../hooks/useResizeObserver';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
@@ -57,19 +57,19 @@ export default function CarouselRotator({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const [ref, width] = useResizeObserver();
+  const [rotatorRef, [width]] = useResizeObserver();
   const prevWidth = usePrevious(width);
   useEffect(() => {
     if (width !== prevWidth) {
       const slide = slidesRef.current[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      ref.current!.scrollLeft = slide.offsetLeft;
+      rotatorRef.current!.scrollLeft = slide.offsetLeft;
     }
-  }, [activeIndex, prevWidth, ref, slidesRef, width]);
+  }, [activeIndex, prevWidth, rotatorRef, slidesRef, width]);
 
   return (
     <Flex
-      ref={ref}
+      ref={rotatorRef}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
@@ -99,11 +99,11 @@ export default function CarouselRotator({
       `}
       onScroll={useCallback(() => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const { scrollLeft, scrollWidth } = ref.current!;
+        const { scrollLeft, scrollWidth } = rotatorRef.current!;
         setUncontrolledActiveIndex(
           Math.round(totalCount * (scrollLeft / scrollWidth)),
         );
-      }, [ref, setUncontrolledActiveIndex, totalCount])}
+      }, [rotatorRef, setUncontrolledActiveIndex, totalCount])}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

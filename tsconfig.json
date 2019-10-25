@@ -14,6 +14,6 @@
     "jsx": "react",
 
     // Define Emotion 'css' prop
-    "types": ["@emotion/core", "jest"]
+    "types": ["@emotion/core", "@types/resize-observer-browser", "jest"]
   }
 }

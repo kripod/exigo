@@ -1149,6 +1149,11 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@juggle/resize-observer@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-2.3.0.tgz#c528b369a2959e49aa6aaace5640c8e4748e9084"
+  integrity sha512-vCS2dz1HAG760+vADa7Fol/NhrmdyDa58Nvq39TpdwYjCqTEDFmIFCDGRiKGSw4GPoDRcx/+xwOYlJdMeNUKRw==
+
 "@mikaelkristiansson/domready@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@mikaelkristiansson/domready/-/domready-1.0.9.tgz#b2b85d8ac7bb2797e577050b61aeaf1b26fbd906"
@@ -1581,6 +1586,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/resize-observer-browser@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@types/resize-observer-browser/-/resize-observer-browser-0.1.2.tgz#615d567c094c6500d760289be0ce48c9798672c9"
+  integrity sha512-4mrAenvAObVQthn05TldKpZ/xW236GyCrpyQvH4hmKVWdobpqM8Fub5Kn4lTNZRKANZ3+P1bq8Zp53asvklKTQ==
 
 "@types/smoothscroll-polyfill@^0.3.1":
   version "0.3.1"
@@ -11156,11 +11166,6 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
-resize-observer-polyfill@^1.5.0:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
-  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
-
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -13114,13 +13119,6 @@ use-persisted-state@^0.3.0:
   integrity sha512-UlWEq0JYg7NbvcRBZ1g6Bwe4SEbYfr1wr/D5mrmfCzSxXSwsPRYygGLlsxHcW58Rf7gGwRPBT23sNVvyVn4WYg==
   dependencies:
     "@use-it/event-listener" "^0.1.2"
-
-use-resize-observer@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/use-resize-observer/-/use-resize-observer-4.0.0.tgz#9976763c37658e84d6e4f1172e7c146816907ece"
-  integrity sha512-q97g2NISwPZ7a1Y2cbcoVePPaq7HuBu44rkWpzKZNmY8bV69MydaFLNsOSBOu7Jk7mdjiRL4C0/rAks8goLdhQ==
-  dependencies:
-    resize-observer-polyfill "^1.5.0"
 
 use-sidecar@^1.0.1:
   version "1.0.1"
