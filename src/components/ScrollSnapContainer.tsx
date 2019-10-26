@@ -45,14 +45,8 @@ export default function ScrollSnapContainer({
   );
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
-    const prevPageXOffset = window.pageXOffset;
-    const prevPageYOffset = window.pageYOffset;
-
-    const element = ref.current!.children[shownIndex];
-    element.scrollIntoView();
-
-    window.scroll(prevPageXOffset, prevPageYOffset);
-
+    ref.current!.scrollLeft =
+      (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
 
@@ -72,17 +66,15 @@ export default function ScrollSnapContainer({
           React.Children.count(children),
       );
       if (proposedIndex !== shownIndex) {
-        alert(proposedIndex);
         onProposedIndexChange(proposedIndex);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    children,
     isScrollLeftChanging,
     isWidthChanging,
     onProposedIndexChange,
     scrollLeft,
-    shownIndex,
   ]);
 
   return (
