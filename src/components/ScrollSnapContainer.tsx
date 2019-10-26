@@ -43,6 +43,8 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
+  // Handle resize events firing prior to layout
+  // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     ref.current!.scrollLeft =
@@ -87,9 +89,10 @@ export default function ScrollSnapContainer({
         scroll-snap-type: x mandatory;
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
+        -webkit-overflow-scrolling: touch;
 
-        /* Disable iOS Safari momentum scrolling to avoid certain issues */
-        -webkit-overflow-scrolling: auto;
+        /* Optimize scrolling behavior */
+        will-change: scroll-position;
 
         /* TODO: Leave vendor prefixing to the underlying library */
         ::-webkit-scrollbar {
