@@ -62,7 +62,6 @@ export default function CarouselRotator({
         // Disable mouse wheel scrolling between slides
         if (e.button === 1) e.preventDefault();
       }}
-      position="relative"
       overflow={
         // Disable user-initiated scrolling when the component is controlled
         controlledShownIndex != null ? 'hidden' : 'auto'
