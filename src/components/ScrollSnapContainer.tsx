@@ -2,11 +2,8 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useRef } from 'react';
-import {
-  usePreferredMotionIntensity,
-  useSize,
-  useWindowSize,
-} from 'web-api-hooks';
+import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
+import useChanging from '../hooks/useChanging';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
@@ -42,12 +39,12 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
-  const [windowWidth] = useWindowSize();
+  const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
     ref.current!.scrollLeft = shownChild.offsetLeft;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, windowWidth]);
+  }, [isWidthChanging, width]);
 
   return (
     <Flex
