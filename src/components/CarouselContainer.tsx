@@ -34,6 +34,7 @@ export default function CarouselContainer({
       <Box
         as="section"
         aria-roledescription="carousel"
+        position="relative"
         {...bindHover}
         {...bindFocus}
         {...restProps}

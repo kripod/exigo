@@ -87,7 +87,9 @@ export default function ScrollSnapContainer({
         scroll-snap-type: x mandatory;
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
-        -webkit-overflow-scrolling: touch;
+
+        /* Disable iOS Safari momentum scrolling to avoid certain issues */
+        -webkit-overflow-scrolling: auto;
 
         /* TODO: Leave vendor prefixing to the underlying library */
         ::-webkit-scrollbar {
