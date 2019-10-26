@@ -12,14 +12,22 @@ export default function CarouselStepIconButton({
   delta,
   ...restProps
 }: CarouselStepIconButtonProps) {
-  const { isInfinite, shownIndex, totalCount, jump } = useCarouselControls();
+  const {
+    isInfinite,
+    shownIndex,
+    setShownIndex,
+    totalCount,
+  } = useCarouselControls();
   const nextIndex = shownIndex + delta;
 
   return (
     <CarouselIconButton
       isDisabled={!isInfinite && (nextIndex < 0 || nextIndex >= totalCount)}
       onClick={() => {
-        jump(delta);
+        setShownIndex(prevIndex => {
+          console.log(`prev: ${prevIndex}`);
+          return (prevIndex + delta + totalCount) % totalCount;
+        });
       }}
       {...restProps}
     />

@@ -29,9 +29,9 @@ export default function CarouselRotator({
     isFocused,
     [disableAutoPause],
     [uncontrolledShownIndex, setUncontrolledShownIndex],
-    [, setTotalCount],
+    [totalCount, setTotalCount],
   ] = useContext(CarouselContext);
-  const { isPlaying, jump } = useCarouselControls();
+  const { isPlaying, setShownIndex } = useCarouselControls();
   const shownIndex =
     controlledShownIndex != null
       ? controlledShownIndex
@@ -46,7 +46,7 @@ export default function CarouselRotator({
   // Auto-rotate slides if desired
   useInterval(
     () => {
-      jump(+1);
+      setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
     },
     isPlaying && ((!isHovered && !isFocused) || disableAutoPause)
       ? playInterval
