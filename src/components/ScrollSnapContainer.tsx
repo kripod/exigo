@@ -47,8 +47,8 @@ export default function ScrollSnapContainer({
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
       );
-      alert(proposedIndex);
       if (proposedIndex !== shownIndex) {
+        alert(proposedIndex);
         onProposedIndexChange(proposedIndex);
       }
     }
@@ -77,17 +77,6 @@ export default function ScrollSnapContainer({
           ref.current!.scrollWidth,
       }),
     );
-    setTimeout(() => {
-      alert(
-        JSON.stringify({
-          scrollLeft: ref.current!.scrollLeft,
-          scrollWidth: ref.current!.scrollWidth,
-          targetSLeft:
-            (shownIndex / React.Children.count(children)) *
-            ref.current!.scrollWidth,
-        }),
-      );
-    }, 10000);
 
     ref.current!.scrollLeft =
       (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
