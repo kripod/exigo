@@ -82,6 +82,8 @@ export default function ScrollSnapContainer({
       ref={ref}
       css={css`
         transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
 
         /* Support every version of CSS Scroll Snap */
         scroll-snap-type-x: mandatory;
