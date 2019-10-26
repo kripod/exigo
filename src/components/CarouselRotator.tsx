@@ -4,6 +4,7 @@ import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { useInterval, useSize } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
+import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 
@@ -63,7 +64,7 @@ export default function CarouselRotator({
     window.ResizeObserver || ResizeObserverPolyfill,
   );
   const prevWidth = usePrevious(width);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (width !== prevWidth) {
       const slide = slidesRef.current[activeIndex];
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
