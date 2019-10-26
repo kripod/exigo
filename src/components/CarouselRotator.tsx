@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
@@ -58,10 +58,10 @@ export default function CarouselRotator({
       shownIndex={shownIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
-      onMouseDown={useCallback(e => {
+      onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
-        // TODO: if (e.button === 1) e.preventDefault();
-      }, [])}
+        if (e.button === 1) e.preventDefault();
+      }}
       position="relative"
       overflow={
         // Disable user-initiated scrolling when the component is controlled

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselIconButton, {
   CarouselIconButtonProps,
@@ -18,9 +18,9 @@ export default function CarouselStepIconButton({
   return (
     <CarouselIconButton
       isDisabled={!isInfinite && (nextIndex < 0 || nextIndex >= totalCount)}
-      onClick={useCallback(() => {
+      onClick={() => {
         jump(delta);
-      }, [delta, jump])}
+      }}
       {...restProps}
     />
   );
