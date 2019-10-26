@@ -8,32 +8,29 @@ if (typeof window !== 'undefined') {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CarouselSlideProps
-  extends React.PropsWithRef<JSX.IntrinsicElements['div']> {}
+  extends React.PropsWithoutRef<JSX.IntrinsicElements['div']> {}
 
-const CarouselSlide = React.forwardRef<HTMLDivElement>(
-  ({ children, ...restProps }: CarouselSlideProps, ref) => {
-    return (
-      <div
-        ref={ref}
-        role="group"
-        aria-roledescription="slide"
-        css={css`
-          flex: 0 0 100%;
-          scroll-snap-align: start;
-          scroll-snap-stop: always;
+const CarouselSlide = ({ children, ...restProps }: CarouselSlideProps) => {
+  return (
+    <div
+      role="group"
+      aria-roledescription="slide"
+      css={css`
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
 
-          > * {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        `}
-        {...restProps}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+        > * {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      `}
+      {...restProps}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default CarouselSlide;

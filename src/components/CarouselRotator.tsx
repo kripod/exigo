@@ -1,19 +1,18 @@
-import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
-import { css } from '@emotion/core';
-import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import { useInterval, useSize } from 'web-api-hooks';
+import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
-import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
+import ScrollSnapContainer, {
+  ScrollSnapContainerProps,
+} from './ScrollSnapContainer';
 
 // TODO: Follow the status of element scrolling methods and remove polyfill
 import 'scroll-behavior-polyfill';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
-export interface CarouselRotatorProps extends FlexProps {
+export interface CarouselRotatorProps extends ScrollSnapContainerProps {
   children: React.ReactElement[];
   playInterval?: number;
   activeIndex?: number;
@@ -30,8 +29,7 @@ export default function CarouselRotator({
     isFocused,
     [disableAutoPause],
     [uncontrolledActiveIndex, setUncontrolledActiveIndex],
-    [totalCount, setTotalCount],
-    slidesRef,
+    [, setTotalCount],
   ] = useContext(CarouselContext);
   const { isPlaying, jump } = useCarouselControls();
   const activeIndex =
@@ -43,8 +41,7 @@ export default function CarouselRotator({
   useEffect(() => {
     const nextTotalCount = React.Children.count(children);
     setTotalCount(nextTotalCount);
-    slidesRef.current.splice(nextTotalCount);
-  }, [children, setTotalCount, slidesRef]);
+  }, [children, setTotalCount]);
 
   // Auto-rotate slides if desired
   useInterval(
@@ -56,67 +53,26 @@ export default function CarouselRotator({
       : null,
   );
 
-  // Re-snap scroll position when content of the snapport changes
-  // TODO: Remove when browsers handle this natively
-  const rotatorRef = useRef<HTMLElement>(null);
-  const [width] = useSize(
-    rotatorRef,
-    window.ResizeObserver || ResizeObserverPolyfill,
-  );
-  const prevWidth = usePrevious(width);
-  useLayoutEffect(() => {
-    if (width !== prevWidth) {
-      const slide = slidesRef.current[activeIndex];
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      rotatorRef.current!.scrollLeft = slide.offsetLeft;
-    }
-  }, [activeIndex, prevWidth, slidesRef, width]);
-
   return (
-    <Flex
-      ref={rotatorRef}
+    <ScrollSnapContainer
+      shownIndex={activeIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
         // Disable mouse wheel scrolling between slides
-        if (e.button === 1) e.preventDefault();
+        // TODO: if (e.button === 1) e.preventDefault();
       }, [])}
       position="relative"
       overflow={
         // Disable user-initiated scrolling when the component is controlled
         controlledActiveIndex != null ? 'hidden' : 'auto'
       }
-      css={css`
-        /* Support every version of CSS Scroll Snap */
-        scroll-snap-type-x: mandatory;
-        -ms-scroll-snap-type: mandatory;
-        scroll-snap-type: x mandatory;
-        -ms-scroll-snap-points-x: snapInterval(0, 100%);
-        scroll-snap-points-x: repeat(100%);
-        -webkit-overflow-scrolling: touch;
-
-        /* TODO: Leave vendor prefixing to the underlying library */
-        ::-webkit-scrollbar {
-          display: none;
-        }
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      `}
-      onScroll={useCallback(() => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const { scrollLeft, scrollWidth } = rotatorRef.current!;
-        setUncontrolledActiveIndex(
-          Math.round(totalCount * (scrollLeft / scrollWidth)),
-        );
-      }, [rotatorRef, setUncontrolledActiveIndex, totalCount])}
+      onScrollIndexChange={setUncontrolledActiveIndex}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
         // Labels are lifted up to comply with WAI-ARIA Authoring Practices
         <CarouselSlide
-          ref={(element: HTMLElement) => {
-            slidesRef.current[i] = element;
-          }}
           inert={i !== activeIndex ? '' : undefined}
           aria-label={child.props['aria-label']}
           aria-labelledby={child.props['aria-labelledby']}
@@ -127,6 +83,6 @@ export default function CarouselRotator({
           })}
         </CarouselSlide>
       ))}
-    </Flex>
+    </ScrollSnapContainer>
   );
 }
