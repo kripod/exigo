@@ -66,12 +66,14 @@ export default function ScrollSnapContainer({
       onScroll={
         onScrollIndexChange
           ? () => {
+              /*
               const { scrollLeft, scrollWidth } = ref.current!;
               onScrollIndexChange(
                 Math.round(
                   React.Children.count(children) * (scrollLeft / scrollWidth),
                 ),
               );
+              */
             }
           : undefined
       }
