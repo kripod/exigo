@@ -68,7 +68,7 @@ export default function ScrollSnapContainer({
   );
   // Handle resize events firing prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
-  const isWidthChanging = useChanging(width, 500);
+  const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
     ref.current!.scrollLeft = shownChild.offsetLeft;
