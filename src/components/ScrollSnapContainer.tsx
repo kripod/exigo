@@ -33,7 +33,11 @@ export default function ScrollSnapContainer({
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
-  const [width] = useSize(ref, window.ResizeObserver || ResizeObserverPolyfill);
+  const [width] = useSize(
+    ref,
+    (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
+      ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
+  );
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
     ref.current!.scrollLeft = shownChild.offsetLeft;
