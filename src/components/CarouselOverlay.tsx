@@ -4,7 +4,7 @@ import CarouselPlayToggleIconButton from './CarouselPlayToggleIconButton';
 import CarouselStepIconButton from './CarouselStepIconButton';
 
 export interface CarouselOverlayProps extends BoxProps {
-  children?: React.ReactElement[];
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 export default function CarouselOverlay({

@@ -13,13 +13,13 @@ import 'scroll-behavior-polyfill';
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
 export interface CarouselRotatorProps extends ScrollSnapContainerProps {
-  children: React.ReactElement[];
+  children?: React.ReactElement | React.ReactElement[];
   playInterval?: number;
   shownIndex?: number;
 }
 
 export default function CarouselRotator({
-  children,
+  children = [],
   playInterval = 5000,
   shownIndex: controlledShownIndex,
   ...restProps
