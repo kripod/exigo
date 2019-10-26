@@ -81,9 +81,7 @@ export default function ScrollSnapContainer({
     <Flex
       ref={ref}
       css={css`
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        -webkit-perspective: 1000;
+        will-change: scroll-position;
 
         /* Support every version of CSS Scroll Snap */
         scroll-snap-type-x: mandatory;
