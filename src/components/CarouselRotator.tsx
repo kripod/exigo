@@ -67,7 +67,7 @@ export default function CarouselRotator({
         // Disable user-initiated scrolling when the component is controlled
         controlledActiveIndex != null ? 'hidden' : 'auto'
       }
-      onScrollIndexChange={setUncontrolledActiveIndex}
+      onProposedIndexChange={setUncontrolledActiveIndex}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

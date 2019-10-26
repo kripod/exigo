@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export default function useChanging<T>(value: T) {
+export default function useChanging<T>(value: T, groupingIntervalMs = 150) {
   const [isChanging, setChanging] = useState(false);
 
   useEffect(() => {
     setChanging(true);
-    const timeoutID = setTimeout(() => setChanging(false), 150);
+    const timeoutID = setTimeout(() => setChanging(false), groupingIntervalMs);
     return () => {
       clearTimeout(timeoutID);
     };
-  }, [value]);
+  }, [groupingIntervalMs, value]);
 
   return isChanging;
 }
