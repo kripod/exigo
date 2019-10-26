@@ -39,6 +39,7 @@ export default function CarouselContainer({
           -webkit-transform: translateZ(0);
           -webkit-backface-visibility: hidden;
           -webkit-perspective: 1000;
+          will-change: scroll-position;
         `}
         {...bindHover}
         {...bindFocus}
