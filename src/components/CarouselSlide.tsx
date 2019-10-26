@@ -10,7 +10,10 @@ if (typeof window !== 'undefined') {
 export interface CarouselSlideProps
   extends React.PropsWithoutRef<JSX.IntrinsicElements['div']> {}
 
-const CarouselSlide = ({ children, ...restProps }: CarouselSlideProps) => {
+export default function CarouselSlide({
+  children,
+  ...restProps
+}: CarouselSlideProps) {
   return (
     <div
       role="group"
@@ -31,6 +34,4 @@ const CarouselSlide = ({ children, ...restProps }: CarouselSlideProps) => {
       {children}
     </div>
   );
-};
-
-export default CarouselSlide;
+}
