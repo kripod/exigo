@@ -36,13 +36,37 @@ export default function ScrollSnapContainer({
     });
   }, [preferReducedMotion, shownIndex]);
 
+  // Re-snap scroll position when content of the snapport changes
+  // TODO: Remove when browsers handle this natively
+  const [width] = useSize(
+    ref,
+    (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
+      ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
+  );
+  const isWidthChanging = useChanging(width);
+  useLayoutEffect(() => {
+    const prevPageXOffset = window.pageXOffset;
+    const prevPageYOffset = window.pageYOffset;
+
+    const element = ref.current!.children[shownIndex];
+    element.scrollIntoView();
+
+    window.scroll(prevPageXOffset, prevPageYOffset);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width]);
+
   // Handle scrolling
   const [scrollLeft, setScrollLeft] = useState(0);
   const isScrollLeftChanging = useChanging(scrollLeft);
   useEffect(() => {
     if (isScrollLeftChanging) {
       willScroll.current = false;
-    } else if (onProposedIndexChange && !willScroll.current) {
+    } else if (
+      onProposedIndexChange &&
+      !isWidthChanging &&
+      !willScroll.current
+    ) {
       const proposedIndex = Math.round(
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -55,37 +79,11 @@ export default function ScrollSnapContainer({
   }, [
     children,
     isScrollLeftChanging,
+    isWidthChanging,
     onProposedIndexChange,
     scrollLeft,
     shownIndex,
   ]);
-
-  // Re-snap scroll position when content of the snapport changes
-  // TODO: Remove when browsers handle this natively
-  const [width] = useSize(
-    ref,
-    (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
-      ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
-  );
-  useLayoutEffect(() => {
-    alert(
-      JSON.stringify({
-        scrollLeft: ref.current!.scrollLeft,
-        scrollWidth: ref.current!.scrollWidth,
-        targetSLeft:
-          (shownIndex / React.Children.count(children)) *
-          ref.current!.scrollWidth,
-      }),
-    );
-
-    setTimeout(() => {
-      ref.current!.scrollLeft =
-        (shownIndex / React.Children.count(children)) *
-        ref.current!.scrollWidth;
-    }, 10000);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
 
   return (
     <Flex
