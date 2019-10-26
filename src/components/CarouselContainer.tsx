@@ -1,4 +1,5 @@
 import { Box, BoxProps } from '@chakra-ui/core';
+import { css } from '@emotion/core';
 import React, { useState } from 'react';
 import { useFocus, useHover } from 'web-api-hooks';
 import CarouselContext from './CarouselContext';
@@ -34,6 +35,11 @@ export default function CarouselContainer({
         as="section"
         aria-roledescription="carousel"
         position="relative"
+        css={css`
+          -webkit-transform: translateZ(0);
+          -webkit-backface-visibility: hidden;
+          -webkit-perspective: 1000;
+        `}
         {...bindHover}
         {...bindFocus}
         {...restProps}
