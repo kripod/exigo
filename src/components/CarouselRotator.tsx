@@ -70,7 +70,7 @@ export default function CarouselRotator({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       rotatorRef.current!.scrollLeft = slide.offsetLeft;
     }
-  }, [activeIndex, prevWidth, rotatorRef, slidesRef, width]);
+  }, [activeIndex, prevWidth, slidesRef, width]);
 
   return (
     <Flex
