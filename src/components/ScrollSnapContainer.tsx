@@ -95,11 +95,6 @@ export default function ScrollSnapContainer({
         }
         -ms-overflow-style: none;
         scrollbar-width: none;
-
-        -webkit-transform: translate3d(0, 0, 0);
-        -webkit-backface-visibility: hidden;
-        -webkit-perspective: 1000;
-        will-change: scroll-position;
       `}
       onScroll={() => {
         setScrollLeft(ref.current!.scrollLeft);
