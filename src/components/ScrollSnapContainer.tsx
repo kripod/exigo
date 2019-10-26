@@ -67,9 +67,6 @@ export default function ScrollSnapContainer({
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
   useLayoutEffect(() => {
-    ref.current!.scrollLeft =
-      (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
-
     alert(
       JSON.stringify({
         scrollLeft: ref.current!.scrollLeft,
@@ -90,6 +87,10 @@ export default function ScrollSnapContainer({
         }),
       );
     }, 10000);
+
+    ref.current!.scrollLeft =
+      (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
 
