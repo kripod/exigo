@@ -1,4 +1,3 @@
-import { Box, BoxProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React from 'react';
 
@@ -8,37 +7,31 @@ if (typeof window !== 'undefined') {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CarouselSlideProps extends BoxProps {}
+export interface CarouselSlideProps
+  extends React.PropsWithRef<JSX.IntrinsicElements['div']> {}
 
-const CarouselSlide = React.forwardRef(
-  ({ children, inert, ...restProps }: CarouselSlideProps, ref) => {
+const CarouselSlide = React.forwardRef<HTMLDivElement>(
+  ({ children, ...restProps }: CarouselSlideProps, ref) => {
     return (
-      <Box
+      <div
         ref={ref}
         role="group"
         aria-roledescription="slide"
-        flex="0 0 100%"
         css={css`
+          flex: 0 0 100%;
           scroll-snap-align: start;
           scroll-snap-stop: always;
+
+          > * {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         `}
         {...restProps}
       >
-        {/* TODO: Remove extra `div` once `shouldForwardProp` of `Box` supports `inert` */}
-        <div
-          inert={inert}
-          css={css`
-            height: 100%;
-            > * {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          `}
-        >
-          {children}
-        </div>
-      </Box>
+        {children}
+      </div>
     );
   },
 );
