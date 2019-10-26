@@ -36,7 +36,9 @@ export default function CarouselContainer({
         aria-roledescription="carousel"
         position="relative"
         css={css`
-          will-change: scroll-position;
+          -webkit-transform: translate3d(0, 0, 0);
+          -webkit-backface-visibility: hidden;
+          -webkit-perspective: 1000;
         `}
         {...bindHover}
         {...bindFocus}
