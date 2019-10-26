@@ -48,7 +48,7 @@ export default function ScrollSnapContainer({
     ref.current!.scrollLeft =
       (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
+  }, [isWidthChanging, width]);
 
   // Handle scrolling
   const [scrollLeft, setScrollLeft] = useState(0);
