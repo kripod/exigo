@@ -47,8 +47,8 @@ export default function ScrollSnapContainer({
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
-    ref.current!.scrollLeft =
-      (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
+    const shownChild = ref.current!.children[shownIndex] as HTMLElement;
+    ref.current!.scrollLeft = shownChild.offsetLeft;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWidthChanging, width]);
 
