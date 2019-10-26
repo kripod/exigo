@@ -1,4 +1,4 @@
-import { useContext, useCallback } from 'react';
+import { useContext } from 'react';
 import CarouselContext from '../components/CarouselContext';
 
 export default function useCarouselControls() {
@@ -16,9 +16,9 @@ export default function useCarouselControls() {
     isInfinite,
 
     isPlaying,
-    togglePlaying: useCallback(() => {
+    togglePlaying() {
       setPlaying(prevPlaying => !prevPlaying);
-    }, [setPlaying]),
+    },
 
     shownIndex,
     setShownIndex,
