@@ -78,8 +78,11 @@ export default function ScrollSnapContainer({
       }),
     );
 
-    ref.current!.scrollLeft =
-      (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
+    setTimeout(() => {
+      ref.current!.scrollLeft =
+        (shownIndex / React.Children.count(children)) *
+        ref.current!.scrollWidth;
+    }, 10000);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
