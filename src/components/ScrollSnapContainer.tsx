@@ -8,7 +8,7 @@ import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
   shownIndex?: number;
-  onProposedIndexChange: (index: number) => void;
+  onProposedIndexChange?: (index: number) => void;
 }
 
 export default function ScrollSnapContainer({
@@ -39,7 +39,9 @@ export default function ScrollSnapContainer({
     const proposedIndex = Math.round(
       React.Children.count(children) * (scrollLeft / ref.current.scrollWidth),
     );
-    if (proposedIndex !== shownIndex) onProposedIndexChange(proposedIndex);
+    if (proposedIndex !== shownIndex && onProposedIndexChange) {
+      onProposedIndexChange(proposedIndex);
+    }
   }
 
   // Re-snap scroll position when content of the snapport changes

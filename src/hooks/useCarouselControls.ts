@@ -7,7 +7,7 @@ export default function useCarouselControls() {
     ,
     ,
     ,
-    [activeIndex, setActiveIndex],
+    [shownIndex, setShownIndex],
     [totalCount],
     [isPlaying, setPlaying],
     isInfinite,
@@ -15,14 +15,14 @@ export default function useCarouselControls() {
 
   const goTo = useCallback(
     (index: React.SetStateAction<number>) => {
-      setActiveIndex(prevIndex => {
+      setShownIndex(prevIndex => {
         const nextIndex =
           typeof index !== 'function' ? index : index(prevIndex);
         if (nextIndex < 0 || nextIndex >= totalCount) return prevIndex;
         return nextIndex;
       });
     },
-    [setActiveIndex, totalCount],
+    [setShownIndex, totalCount],
   );
 
   return {
@@ -33,7 +33,7 @@ export default function useCarouselControls() {
       setPlaying(prevPlaying => !prevPlaying);
     }, [setPlaying]),
 
-    activeIndex,
+    shownIndex,
     totalCount,
     goTo,
     jump: useCallback(

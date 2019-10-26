@@ -12,8 +12,8 @@ export default function CarouselStepIconButton({
   delta,
   ...restProps
 }: CarouselStepIconButtonProps) {
-  const { isInfinite, activeIndex, totalCount, jump } = useCarouselControls();
-  const nextIndex = activeIndex + delta;
+  const { isInfinite, shownIndex, totalCount, jump } = useCarouselControls();
+  const nextIndex = shownIndex + delta;
 
   return (
     <CarouselIconButton

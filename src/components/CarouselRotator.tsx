@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
@@ -15,27 +15,27 @@ import 'scroll-behavior-polyfill';
 export interface CarouselRotatorProps extends ScrollSnapContainerProps {
   children: React.ReactElement[];
   playInterval?: number;
-  activeIndex?: number;
+  shownIndex?: number;
 }
 
 export default function CarouselRotator({
   children,
   playInterval = 5000,
-  activeIndex: controlledActiveIndex,
+  shownIndex: controlledShownIndex,
   ...restProps
 }: CarouselRotatorProps) {
   const [
     isHovered,
     isFocused,
     [disableAutoPause],
-    [uncontrolledActiveIndex, setUncontrolledActiveIndex],
+    [uncontrolledShownIndex, setUncontrolledShownIndex],
     [, setTotalCount],
   ] = useContext(CarouselContext);
   const { isPlaying, jump } = useCarouselControls();
-  const activeIndex =
-    controlledActiveIndex != null
-      ? controlledActiveIndex
-      : uncontrolledActiveIndex;
+  const shownIndex =
+    controlledShownIndex != null
+      ? controlledShownIndex
+      : uncontrolledShownIndex;
 
   // Keep amount of slides updated
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function CarouselRotator({
 
   return (
     <ScrollSnapContainer
-      shownIndex={activeIndex}
+      shownIndex={shownIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={useCallback(e => {
@@ -65,15 +65,15 @@ export default function CarouselRotator({
       position="relative"
       overflow={
         // Disable user-initiated scrolling when the component is controlled
-        controlledActiveIndex != null ? 'hidden' : 'auto'
+        controlledShownIndex != null ? 'hidden' : 'auto'
       }
-      onProposedIndexChange={setUncontrolledActiveIndex}
+      onProposedIndexChange={setUncontrolledShownIndex}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
         // Labels are lifted up to comply with WAI-ARIA Authoring Practices
         <CarouselSlide
-          inert={i !== activeIndex ? '' : undefined}
+          inert={i !== shownIndex ? '' : undefined}
           aria-label={child.props['aria-label']}
           aria-labelledby={child.props['aria-labelledby']}
         >
