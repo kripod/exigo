@@ -44,8 +44,8 @@ export default function ScrollSnapContainer({
       willScroll.current = false;
     } else if (onProposedIndexChange && !willScroll.current) {
       const proposedIndex = Math.round(
-        React.Children.count(children) *
-          (scrollLeft / ref.current!.scrollWidth),
+        (scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
       );
       if (proposedIndex !== shownIndex) {
         onProposedIndexChange(proposedIndex);
@@ -69,6 +69,27 @@ export default function ScrollSnapContainer({
   useLayoutEffect(() => {
     ref.current!.scrollLeft =
       (shownIndex / React.Children.count(children)) * ref.current!.scrollWidth;
+
+    alert(
+      JSON.stringify({
+        scrollLeft: ref.current!.scrollLeft,
+        scrollWidth: ref.current!.scrollWidth,
+        targetSLeft:
+          (shownIndex / React.Children.count(children)) *
+          ref.current!.scrollWidth,
+      }),
+    );
+    setTimeout(() => {
+      alert(
+        JSON.stringify({
+          scrollLeft: ref.current!.scrollLeft,
+          scrollWidth: ref.current!.scrollWidth,
+          targetSLeft:
+            (shownIndex / React.Children.count(children)) *
+            ref.current!.scrollWidth,
+        }),
+      );
+    }, 10000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
 
