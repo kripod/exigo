@@ -1149,10 +1149,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@juggle/resize-observer@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-2.3.0.tgz#c528b369a2959e49aa6aaace5640c8e4748e9084"
-  integrity sha512-vCS2dz1HAG760+vADa7Fol/NhrmdyDa58Nvq39TpdwYjCqTEDFmIFCDGRiKGSw4GPoDRcx/+xwOYlJdMeNUKRw==
+"@juggle/resize-observer@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-2.4.0.tgz#8693fc08e49625eabd146751870e95d7a1eb556f"
+  integrity sha512-iBxD3plYdW4+yryivUWtfHy+B2wwQsdET6eviABx9QJKjokf0lBOZH853I31sbccskPsagtulW0ik1SWDek4RQ==
 
 "@mikaelkristiansson/domready@^1.0.9":
   version "1.0.9"
@@ -4669,10 +4669,10 @@ eslint-config-airbnb@^18.0.1:
     object.assign "^4.1.0"
     object.entries "^1.1.0"
 
-eslint-config-prettier@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.4.0.tgz#0a04f147e31d33c6c161b2dd0971418ac52d0477"
-  integrity sha512-YrKucoFdc7SEko5Sxe4r6ixqXPDP1tunGw91POeZTTRKItf/AMFYt/YLEQtZMkR2LVpAVhcAcZgcWpm1oGPW7w==
+eslint-config-prettier@^6.5.0:
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.5.0.tgz#aaf9a495e2a816865e541bfdbb73a65cc162b3eb"
+  integrity sha512-cjXp8SbO9VFGW/Z7mbTydqS9to8Z58E5aYhj3e1+Hx7lS9s6gL5ILKNpCqZAFOVYRcSkWPFYljHrEh8QFEK5EQ==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -4747,10 +4747,10 @@ eslint-plugin-import@^2.18.2:
     read-pkg-up "^2.0.0"
     resolve "^1.11.0"
 
-eslint-plugin-jest@^22.20.0:
-  version "22.20.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.20.0.tgz#a3c3615c516fcbd20d50dbf395ea37361bd9e3b2"
-  integrity sha512-UwHGXaYprxwd84Wer8H7jZS+5C3LeEaU8VD7NqORY6NmPJrs+9Ugbq3wyjqO3vWtSsDaLar2sqEB8COmOZA4zw==
+eslint-plugin-jest@^22.20.1:
+  version "22.20.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.20.1.tgz#183688ec8bd65dec043552fcd2fa63b7e54f326f"
+  integrity sha512-bNkII1QUmb7P9KHXqRoDWwFrY1hkxI2bAXCvuZbKuzywcxjPNrCzRqsOEUe9T4fHVfhat2zRN7dS5n61C8rhoA==
   dependencies:
     "@typescript-eslint/experimental-utils" "^1.13.0"
 
@@ -11950,6 +11950,11 @@ stackframe@^1.1.0:
   resolved "https://registry.yarnpkg.com/stackframe/-/stackframe-1.1.0.tgz#e3fc2eb912259479c9822f7d1f1ff365bd5cbc83"
   integrity sha512-Vx6W1Yvy+AM1R/ckVwcHQHV147pTPBKWCRLrXMuPrFVfvBUc3os7PR1QLIWCMhPpRg5eX9ojzbQIMLGBwyLjqg==
 
+state-hooks@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/state-hooks/-/state-hooks-2.1.0.tgz#16d8a354fb2282c396c23e95f674c4d1f0f55355"
+  integrity sha512-TOqF1rIelos3pW/XrEpNfEPuIT9m0db5F+AFjgGvHhuEaBUSPa8ZpvIaUNwzWMk7jgQoPUmkr3j/f+r2gmRF9A==
+
 state-toggle@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/state-toggle/-/state-toggle-1.0.2.tgz#75e93a61944116b4959d665c8db2d243631d6ddc"
@@ -13262,10 +13267,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-api-hooks@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/web-api-hooks/-/web-api-hooks-2.2.0.tgz#9adb46f3a5cd6e9d70a7500c5bb6090f9e6db6ad"
-  integrity sha512-icwaU9ZzkTSnhsy8ciRMnNXkSltisr+QSKufSQS9/K7xOSE8pQnvdjJlBqcNmjztyXqDcRL6r8BRDITJ0dKCsQ==
+web-api-hooks@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/web-api-hooks/-/web-api-hooks-2.2.2.tgz#67fe40a912b7548ba4f98ec274db8a71fcd97db6"
+  integrity sha512-WWIlXnHmydd/sDsdGqI0yzfyxKV7vj8/l4bP3aLDyVHOBeV5TAqO+4ob70F0yYirZtEnYqdOcjxL3BzUiv8++Q==
   dependencies:
     "@types/resize-observer-browser" "^0.1.2"
     network-information-types "^0.1.0"

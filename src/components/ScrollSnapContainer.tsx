@@ -2,8 +2,8 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useRef, useState, useEffect } from 'react';
+import { useChanging } from 'state-hooks';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
-import useChanging from '../hooks/useChanging';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
