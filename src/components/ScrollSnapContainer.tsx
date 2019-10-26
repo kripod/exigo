@@ -66,14 +66,11 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
-  // Handle resize events firing prior to layout
-  // See: https://openradar.appspot.com/radar?id=5040881597939712
-  const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
     ref.current!.scrollLeft = shownChild.offsetLeft;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isWidthChanging, width]);
+  }, [width]);
 
   return (
     <Flex
