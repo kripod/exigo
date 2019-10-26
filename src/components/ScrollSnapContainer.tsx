@@ -47,6 +47,7 @@ export default function ScrollSnapContainer({
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
       );
+      alert(proposedIndex);
       if (proposedIndex !== shownIndex) {
         onProposedIndexChange(proposedIndex);
       }
