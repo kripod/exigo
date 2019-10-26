@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useChanging from '../hooks/useChanging';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
@@ -22,18 +22,22 @@ export default function ScrollSnapContainer({
 
   // TODO: Replace with https://github.com/w3c/csswg-drafts/issues/1562
   const willScroll = useRef(false);
+  const scrollTarget = useRef(-1);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
   // Handle prop changes
   useLayoutEffect(() => {
-    const shownChild = ref.current!.children[shownIndex] as HTMLElement;
-    willScroll.current = true;
-    ref.current!.scroll({
-      left: shownChild.offsetLeft,
-      ...(!preferReducedMotion && { behavior: 'smooth' }),
-    });
+    if (shownIndex !== scrollTarget.current) {
+      const shownChild = ref.current!.children[shownIndex] as HTMLElement;
+      willScroll.current = true;
+      scrollTarget.current = shownIndex;
+      ref.current!.scroll({
+        left: shownChild.offsetLeft,
+        ...(!preferReducedMotion && { behavior: 'smooth' }),
+      });
+    }
   }, [preferReducedMotion, shownIndex]);
 
   // Re-snap scroll position when content of the snapport changes
@@ -58,11 +62,11 @@ export default function ScrollSnapContainer({
   useEffect(() => {
     if (isScrollLeftChanging) {
       willScroll.current = false;
-    } else if (
-      onProposedIndexChange &&
-      !isWidthChanging &&
-      !willScroll.current
-    ) {
+    } else if (!willScroll.current) {
+      scrollTarget.current = -1;
+    }
+
+    if (onProposedIndexChange && !isWidthChanging && scrollTarget.current < 0) {
       const proposedIndex = Math.round(
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
