@@ -2,12 +2,14 @@ import {
   Box,
   BoxProps,
   Button,
+  ButtonGroup,
   Flex,
   Heading,
   Stack,
   useColorMode,
 } from '@chakra-ui/core';
 import React from 'react';
+import useCarouselControls from '../hooks/useCarouselControls';
 import { QuizItemBase } from '../models/QuizItem';
 import Card from './Card';
 
@@ -22,6 +24,8 @@ export default function QuizItemCard({
 }: QuizItemCardProps) {
   const { colorMode } = useColorMode();
   const preferDarkMode = colorMode === 'dark';
+
+  const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
 
   return (
     <Card as={Flex} flexDirection="column" boxShadow="lg" {...restProps}>
@@ -48,17 +52,35 @@ export default function QuizItemCard({
         py={QUIZ_ITEM_CARD_PADDING - 1}
         bg={`gray.${preferDarkMode ? 900 : 50}`}
       >
-        <Button
-          aria-label="Next assessment"
-          rightIcon="chevron-right"
-          variantColor="blue"
-        >
-          Next
-        </Button>
+        <Stack direction="row-reverse">
+          <Button
+            isDisabled={shownIndex === totalCount - 1}
+            aria-label="Next assessment"
+            rightIcon="chevron-right"
+            variantColor="blue"
+            onClick={() => {
+              setShownIndex(shownIndex + 1);
+            }}
+          >
+            Next
+          </Button>
+          <Button
+            isDisabled={shownIndex === 0}
+            aria-label="Previous assessment"
+            leftIcon="chevron-left"
+            variant="outline"
+            onClick={() => {
+              setShownIndex(shownIndex - 1);
+            }}
+          >
+            Previous
+          </Button>
+        </Stack>
+
         <Button
           aria-label="Surrender current assessment"
           leftIcon={'running' as any}
-          variant="outline"
+          variant="ghost"
         >
           Surrender
         </Button>

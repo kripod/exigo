@@ -1,9 +1,13 @@
 import { theme as defaultTheme } from '@chakra-ui/core';
-import { faChevronRight, faRunning } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faRunning,
+} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { fromEntries } from '../utils/object';
 
-const faIconDefinitions = [faChevronRight, faRunning];
+const faIconDefinitions = [faChevronLeft, faChevronRight, faRunning];
 
 const customIcons = fromEntries(
   faIconDefinitions.map(
