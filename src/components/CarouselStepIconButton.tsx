@@ -24,10 +24,7 @@ export default function CarouselStepIconButton({
     <CarouselIconButton
       isDisabled={!isInfinite && (nextIndex < 0 || nextIndex >= totalCount)}
       onClick={() => {
-        setShownIndex(prevIndex => {
-          console.log(`prev: ${prevIndex}`);
-          return (prevIndex + delta + totalCount) % totalCount;
-        });
+        setShownIndex((nextIndex + totalCount) % totalCount);
       }}
       {...restProps}
     />

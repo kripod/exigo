@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useChanging from '../hooks/useChanging';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
@@ -20,29 +20,44 @@ export default function ScrollSnapContainer({
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
 
+  // TODO: Replace with https://github.com/w3c/csswg-drafts/issues/1562
+  const willScroll = useRef(false);
+
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
   // Handle prop changes
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
+    willScroll.current = true;
     ref.current!.scroll({
       left: shownChild.offsetLeft,
       ...(!preferReducedMotion && { behavior: 'smooth' }),
     });
   }, [preferReducedMotion, shownIndex]);
 
-  // Handle user-initiated changes
-  const [scrollLeft, setScrollLeft] = useState(shownIndex);
+  // Handle scrolling
+  const [scrollLeft, setScrollLeft] = useState(0);
   const isScrollLeftChanging = useChanging(scrollLeft);
-  if (!isScrollLeftChanging && ref.current) {
-    const proposedIndex = Math.round(
-      React.Children.count(children) * (scrollLeft / ref.current.scrollWidth),
-    );
-    if (proposedIndex !== shownIndex && onProposedIndexChange) {
-      onProposedIndexChange(proposedIndex);
+  useEffect(() => {
+    if (isScrollLeftChanging) {
+      willScroll.current = false;
+    } else if (onProposedIndexChange && !willScroll.current) {
+      const proposedIndex = Math.round(
+        React.Children.count(children) *
+          (scrollLeft / ref.current!.scrollWidth),
+      );
+      if (proposedIndex !== shownIndex) {
+        onProposedIndexChange(proposedIndex);
+      }
     }
-  }
+  }, [
+    children,
+    isScrollLeftChanging,
+    onProposedIndexChange,
+    scrollLeft,
+    shownIndex,
+  ]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
