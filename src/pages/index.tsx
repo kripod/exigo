@@ -1,13 +1,12 @@
 import React from 'react';
-import QuizItemCardSet from '../components/QuizItemCardSet';
 import Layout from '../components/Layout';
-
-import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
+import Link from '../components/Link';
 
 export default function IndexPage() {
   return (
     <Layout>
-      <QuizItemCardSet items={multipleChoiceQuizExample.items} mx="auto" />
+      <Link href="/carousel-demo">Carousel demo</Link>
+      <Link href="/quiz">Quiz</Link>
     </Layout>
   );
 }
