@@ -7,6 +7,7 @@ import CarouselRotator, {
 import Layout from '../components/Layout';
 import Measure from '../components/Measure';
 import MultipleOptionsEvaluator from '../components/MultipleOptionsEvaluator';
+import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
@@ -31,7 +32,7 @@ export default function QuizPage({
   return (
     <Layout>
       <Measure mx="auto">
-        <CarouselContainer {...restProps} my={-6}>
+        <CarouselContainer {...restProps} mt={-6}>
           <CarouselRotator
             // TODO: Use `sx` prop when Chakra switches to Theme UI
             css={theme => css`
@@ -59,6 +60,8 @@ export default function QuizPage({
               );
             })}
           </CarouselRotator>
+
+          <QuizActions mt={2} px={4} />
         </CarouselContainer>
       </Measure>
     </Layout>
