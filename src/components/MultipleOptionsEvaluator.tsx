@@ -64,6 +64,7 @@ export default function MultipleOptionsEvaluator({
             value={option.id}
             isDisabled={showSolution}
             isFullWidth
+            position="relative" // TODO: Remove when Chakra UI gets fixed, see: https://github.com/chakra-ui/chakra-ui/issues/212
             px={QUIZ_ITEM_CARD_PADDING}
             py={3}
             color={color}

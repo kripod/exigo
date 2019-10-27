@@ -34,7 +34,6 @@ export default function CarouselContainer({
         as="section"
         aria-roledescription="carousel"
         position="relative"
-        overflowX="hidden"
         {...bindHover}
         {...bindFocus}
         {...restProps}
