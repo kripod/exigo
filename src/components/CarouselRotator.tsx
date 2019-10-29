@@ -25,8 +25,8 @@ export default function CarouselRotator({
   ...restProps
 }: CarouselRotatorProps) {
   const [
-    isHovered,
-    isFocused,
+    [isHovered],
+    [isFocused],
     [disableAutoPause],
     [uncontrolledShownIndex, setUncontrolledShownIndex],
     [totalCount, setTotalCount],

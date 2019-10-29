@@ -1,43 +1,32 @@
 import { Box, BoxProps } from '@chakra-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useFocus, useHover } from 'web-api-hooks';
 import CarouselContext from './CarouselContext';
 
-export interface CarouselContainerProps extends BoxProps {
-  isInfinite?: boolean;
-  autoPlay?: boolean;
-  initialIndex?: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CarouselContainerProps extends BoxProps {}
 
-export default function CarouselContainer({
-  isInfinite = false,
-  autoPlay = false,
-  initialIndex = 0,
-  ...restProps
-}: CarouselContainerProps) {
+export default function CarouselContainer(props: CarouselContainerProps) {
+  const [[, setHovered], [, setFocused]] = useContext(CarouselContext);
+
   const [isHovered, bindHover] = useHover();
+  useEffect(() => {
+    setHovered(isHovered);
+  }, [isHovered, setHovered]);
+
   const [isFocused, bindFocus] = useFocus();
+  useEffect(() => {
+    setFocused(isFocused);
+  }, [isFocused, setFocused]);
 
   return (
-    <CarouselContext.Provider
-      value={[
-        isHovered,
-        isFocused,
-        useState<boolean>(false),
-        useState(initialIndex),
-        useState(initialIndex + 1),
-        useState(autoPlay),
-        isInfinite,
-      ]}
-    >
-      <Box
-        as="section"
-        aria-roledescription="carousel"
-        position="relative"
-        {...bindHover}
-        {...bindFocus}
-        {...restProps}
-      />
-    </CarouselContext.Provider>
+    <Box
+      as="section"
+      aria-roledescription="carousel"
+      position="relative"
+      {...bindHover}
+      {...bindFocus}
+      {...props}
+    />
   );
 }

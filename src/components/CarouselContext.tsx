@@ -2,8 +2,8 @@ import React from 'react';
 
 const CarouselContext = React.createContext<
   [
-    boolean,
-    boolean,
+    [boolean, React.Dispatch<React.SetStateAction<boolean>>],
+    [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
@@ -11,8 +11,8 @@ const CarouselContext = React.createContext<
     boolean,
   ]
 >([
-  /* isHovered: */ false,
-  /* isFocused: */ false,
+  /* isHovered: */ [false, () => {}],
+  /* isFocused: */ [false, () => {}],
   /* [disableAutoPause, setDisableAutoPause]: */ [false, () => {}],
   /* [uncontrolledShownIndex, setUncontrolledShownIndex]: */ [0, () => {}],
   /* [totalCount, setTotalCount]: */ [1, () => {}],

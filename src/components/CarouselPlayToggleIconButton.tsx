@@ -16,8 +16,8 @@ export default function CarouselPlayToggleIconButton(
   const { isPlaying, togglePlaying } = useCarouselControls();
 
   const [
-    isContainerHovered,
-    isContainerFocused,
+    [isContainerHovered],
+    [isContainerFocused],
     [, setDisableAutoPause],
   ] = useContext(CarouselContext);
   const [isHovered, bindHover] = useHover();
