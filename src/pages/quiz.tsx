@@ -8,7 +8,6 @@ import Measure from '../components/Measure';
 import MultipleOptionsEvaluator from '../components/MultipleOptionsEvaluator';
 import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
-import useCarouselControls from '../hooks/useCarouselControls';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 import QuizResponses from '../models/QuizResponses';
@@ -63,13 +62,7 @@ export default function QuizPage({
             </CarouselRotator>
           </CarouselContainer>
 
-          <QuizActions
-            currentResponse={
-              responses[items[useCarouselControls().shownIndex].id]
-            }
-            mt={2}
-            px={4}
-          />
+          <QuizActions items={items} responses={responses} mt={2} px={4} />
         </CarouselProvider>
       </Measure>
     </Layout>

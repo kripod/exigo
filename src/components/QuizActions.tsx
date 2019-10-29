@@ -1,17 +1,22 @@
 import React from 'react';
 import { Button, Stack, StackProps } from '@chakra-ui/core';
 import useCarouselControls from '../hooks/useCarouselControls';
+import QuizItem from '../models/QuizItem';
 import QuizResponses from '../models/QuizResponses';
 
 export interface QuizActionsProps extends StackProps {
-  currentResponse: QuizResponses[keyof QuizResponses];
+  items: QuizItem[];
+  responses: QuizResponses;
 }
 
 export default function QuizActions({
-  currentResponse,
+  items,
+  responses,
   ...restProps
 }: QuizActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
+  const shownItem = items[shownIndex];
+  const currentResponse = responses[shownItem.id];
 
   return (
     <Stack direction="row-reverse" justify="space-between" {...restProps}>
