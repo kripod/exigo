@@ -6,7 +6,7 @@ import { QUIZ_ITEM_CARD_PADDING } from './QuizItemCard';
 
 interface MultipleOptionsEvaluatorProps extends MultipleOptionsQuizItemProps {
   showSolution?: boolean;
-  onChange: (response: Option['id'][] | null) => void;
+  onChange: (response: Option['id'][] | undefined) => void;
 }
 
 export default function MultipleOptionsEvaluator({
@@ -36,7 +36,9 @@ export default function MultipleOptionsEvaluator({
           }
 
           setValues(optionIDs.map(String));
-          onChange(optionIDs.length > 0 ? optionIDs : null);
+
+          if (minCount && optionIDs.length < minCount) onChange(undefined);
+          onChange(optionIDs.length > 0 ? optionIDs : undefined);
         }) as any
       }
       spacing={0}
