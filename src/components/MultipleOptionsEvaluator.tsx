@@ -19,23 +19,23 @@ export default function MultipleOptionsEvaluator({
   const { colorMode } = useColorMode();
   const preferDarkMode = colorMode === 'dark';
 
-  const [response, setResponse] = useState<Option['id'][]>([]);
+  const [values, setValues] = useState<string[]>([]);
 
   return (
     <CheckboxGroup
-      value={response}
+      value={values}
       onChange={
-        ((values: any[]) => {
-          let optionIDs: Option['id'][] = values.map(Number);
+        ((nextValues: string[]) => {
+          const optionIDs: Option['id'][] = nextValues.map(Number);
 
           // TODO: Leverage optional chaining with TypeScript 3.7
           const { minCount, maxCount } = constraints;
-          if (maxCount && values.length > maxCount) {
+          if (maxCount && nextValues.length > maxCount) {
             if (maxCount > 1) return; // TODO: Optionally provide visual feedback
-            optionIDs = optionIDs.slice(-1);
+            optionIDs.splice(0, optionIDs.length - 1);
           }
 
-          setResponse(optionIDs);
+          setValues(optionIDs.map(String));
           onChange(optionIDs);
         }) as any
       }
@@ -46,7 +46,7 @@ export default function MultipleOptionsEvaluator({
         // TODO: solutionIDs?.includes(option.id)
         if (showSolution && solution && solution.includes(option.id)) {
           color = 'green';
-        } else if (response.includes(option.id)) {
+        } else if (values.includes(`${option.id}`)) {
           color = showSolution ? 'red' : 'blue';
         }
 
@@ -61,7 +61,7 @@ export default function MultipleOptionsEvaluator({
           // See: https://github.com/chakra-ui/chakra-ui/issues/52
           <Checkbox
             key={option.id}
-            value={option.id}
+            value={`${option.id}`}
             isDisabled={showSolution}
             isFullWidth
             position="relative" // TODO: Remove when Chakra UI gets fixed, see: https://github.com/chakra-ui/chakra-ui/issues/212
