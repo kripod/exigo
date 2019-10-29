@@ -21,6 +21,7 @@ export default function QuizItemCard({
         py={QUIZ_ITEM_CARD_PADDING + 2}
         fontWeight={500}
         lineHeight={1.5}
+        whiteSpace="pre-line"
         borderBottomWidth={1}
       >
         {stem}
