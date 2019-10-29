@@ -1,21 +1,28 @@
 import React from 'react';
 import { Button, Stack, StackProps } from '@chakra-ui/core';
 import useCarouselControls from '../hooks/useCarouselControls';
+import QuizResponses from '../models/QuizResponses';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface QuizActionsProps extends StackProps {}
+export interface QuizActionsProps extends StackProps {
+  currentResponse: QuizResponses[keyof QuizResponses];
+}
 
-export default function QuizActions(props: QuizActionsProps) {
+export default function QuizActions({
+  currentResponse,
+  ...restProps
+}: QuizActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
 
   return (
-    <Stack direction="row-reverse" justify="space-between" {...props}>
+    <Stack direction="row-reverse" justify="space-between" {...restProps}>
       <Stack direction="row-reverse">
         <Button
           isDisabled={shownIndex === totalCount - 1}
           aria-label="Next assessment"
           rightIcon="chevron-right"
-          variantColor="blue"
+          {...(currentResponse != null
+            ? { variantColor: 'blue' }
+            : { variant: 'outline' })}
           onClick={() => {
             setShownIndex(shownIndex + 1);
           }}

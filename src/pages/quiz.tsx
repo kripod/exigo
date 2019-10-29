@@ -11,6 +11,7 @@ import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
+import QuizResponses from '../models/QuizResponses';
 
 // TODO: Load this from GraphQL template query
 import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
@@ -27,13 +28,18 @@ export default function QuizPage({
   items = multipleChoiceQuizExample.items,
   ...restProps
 }: QuizPageProps) {
-  const [responses, setResponses] = useState<{ [id: number]: unknown }>({});
+  const [shownIndex, setShownIndex] = useState(0);
+  const shownItem = items[shownIndex];
+  console.log(shownItem.id);
+
+  const [responses, setResponses] = useState<QuizResponses>({});
 
   return (
     <Layout>
       <Measure mx="auto">
         <CarouselContainer {...restProps} mt={-6}>
           <CarouselRotator
+            shownIndex={shownIndex}
             // TODO: Use `sx` prop when Chakra switches to Theme UI
             css={theme => css`
               > * {
@@ -61,7 +67,11 @@ export default function QuizPage({
             })}
           </CarouselRotator>
 
-          <QuizActions mt={2} px={4} />
+          <QuizActions
+            currentResponse={responses[shownItem.id]}
+            mt={2}
+            px={4}
+          />
         </CarouselContainer>
       </Measure>
     </Layout>
