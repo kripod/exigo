@@ -26,19 +26,17 @@ export default function MultipleOptionsEvaluator({
       value={values}
       onChange={
         ((nextValues: string[]) => {
-          const optionIDs: Option['id'][] = nextValues.map(Number);
+          const { minCount = 1, maxCount } = constraints;
 
-          // TODO: Leverage optional chaining with TypeScript 3.7
-          const { minCount, maxCount } = constraints;
           if (maxCount && nextValues.length > maxCount) {
             if (maxCount > 1) return; // TODO: Optionally provide visual feedback
-            optionIDs.splice(0, optionIDs.length - 1);
+            nextValues.splice(0, nextValues.length - 1);
           }
 
-          setValues(optionIDs.map(String));
-
-          if (minCount && optionIDs.length < minCount) onChange(undefined);
-          onChange(optionIDs.length > 0 ? optionIDs : undefined);
+          setValues(nextValues);
+          onChange(
+            nextValues.length >= minCount ? nextValues.map(Number) : undefined,
+          );
         }) as any
       }
       spacing={0}
