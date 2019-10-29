@@ -64,13 +64,13 @@ export default function QuizPage({
                 );
               })}
             </CarouselRotator>
-
-            <QuizActions
-              currentResponse={responses[shownItem.id]}
-              mt={2}
-              px={4}
-            />
           </CarouselContainer>
+
+          <QuizActions
+            currentResponse={responses[shownItem.id]}
+            mt={2}
+            px={4}
+          />
         </CarouselProvider>
       </Measure>
     </Layout>
