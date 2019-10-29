@@ -17,6 +17,7 @@
     "browser": true
   },
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
     "emotion/syntax-preference": ["error", "string"]
   },
   "overrides": [
