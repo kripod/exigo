@@ -28,6 +28,7 @@ export default function QuizActions({
           {...(currentResponse != null
             ? { variantColor: 'blue' }
             : { variant: 'outline' })}
+          borderWidth={1}
           onClick={() => {
             setShownIndex(shownIndex + 1);
           }}
