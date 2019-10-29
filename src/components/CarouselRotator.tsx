@@ -15,27 +15,23 @@ import 'scroll-behavior-polyfill';
 export interface CarouselRotatorProps extends ScrollSnapContainerProps {
   children?: React.ReactElement | React.ReactElement[];
   playInterval?: number;
-  shownIndex?: number;
+  isDisabled?: boolean;
 }
 
 export default function CarouselRotator({
   children = [],
   playInterval = 5000,
-  shownIndex: controlledShownIndex,
+  isDisabled = false,
   ...restProps
 }: CarouselRotatorProps) {
   const [
     [isHovered],
     [isFocused],
     [disableAutoPause],
-    [uncontrolledShownIndex, setUncontrolledShownIndex],
+    [shownIndex, setShownIndex],
     [totalCount, setTotalCount],
+    [isPlaying],
   ] = useContext(CarouselContext);
-  const { isPlaying, setShownIndex } = useCarouselControls();
-  const shownIndex =
-    controlledShownIndex != null
-      ? controlledShownIndex
-      : uncontrolledShownIndex;
 
   // Keep amount of slides updated
   useEffect(() => {
@@ -62,11 +58,8 @@ export default function CarouselRotator({
         // Disable mouse wheel scrolling between slides
         if (e.button === 1) e.preventDefault();
       }}
-      overflow={
-        // Disable user-initiated scrolling when the component is controlled
-        controlledShownIndex != null ? 'hidden' : 'auto'
-      }
-      onProposedIndexChange={setUncontrolledShownIndex}
+      overflow={isDisabled ? 'hidden' : 'auto'}
+      onProposedIndexChange={setShownIndex}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

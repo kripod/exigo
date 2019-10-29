@@ -14,7 +14,7 @@ const CarouselContext = React.createContext<
   /* isHovered: */ [false, () => {}],
   /* isFocused: */ [false, () => {}],
   /* [disableAutoPause, setDisableAutoPause]: */ [false, () => {}],
-  /* [uncontrolledShownIndex, setUncontrolledShownIndex]: */ [0, () => {}],
+  /* [shownIndex, setShownIndex]: */ [0, () => {}],
   /* [totalCount, setTotalCount]: */ [1, () => {}],
   /* [isPlaying, setPlaying]: */ [false, () => {}],
   /* isInfinite: */ false,
