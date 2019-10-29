@@ -8,6 +8,7 @@ import Measure from '../components/Measure';
 import MultipleOptionsEvaluator from '../components/MultipleOptionsEvaluator';
 import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
+import useCarouselControls from '../hooks/useCarouselControls';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 import QuizResponses from '../models/QuizResponses';
@@ -26,10 +27,6 @@ interface QuizPageProps {
 export default function QuizPage({
   items = multipleChoiceQuizExample.items,
 }: QuizPageProps) {
-  const [shownIndex, setShownIndex] = useState(0);
-  const shownItem = items[shownIndex];
-  console.log(shownItem.id);
-
   const [responses, setResponses] = useState<QuizResponses>({});
 
   return (
@@ -67,7 +64,9 @@ export default function QuizPage({
           </CarouselContainer>
 
           <QuizActions
-            currentResponse={responses[shownItem.id]}
+            currentResponse={
+              responses[items[useCarouselControls().shownIndex].id]
+            }
             mt={2}
             px={4}
           />
