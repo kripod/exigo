@@ -8,7 +8,7 @@ import CarouselIconButton, {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CarouselPlayToggleIconButtonProps
-  extends Omit<CarouselIconButtonProps, 'aria-label'> {}
+  extends CarouselIconButtonProps {}
 
 export default function CarouselPlayToggleIconButton(
   props: CarouselPlayToggleIconButtonProps,
@@ -20,8 +20,10 @@ export default function CarouselPlayToggleIconButton(
     [isContainerFocused],
     [, setDisableAutoPause],
   ] = useContext(CarouselContext);
+
   const [isHovered, bindHover] = useHover();
   const [isFocused, bindFocus] = useFocus();
+
   const nextDisableAutoPause =
     (isHovered && !isContainerFocused) ||
     (isFocused && (!isContainerHovered || isHovered));

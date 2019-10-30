@@ -1,46 +1,42 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
-  shownIndex?: number;
-  onProposedIndexChange?: (index: number) => void;
+  targetIndex?: number | null;
+  onShownIndexChange: (index: number) => void;
 }
 
 export default function ScrollSnapContainer({
-  shownIndex = 0,
   children,
-  onProposedIndexChange,
+  targetIndex,
+  onShownIndexChange,
   ...restProps
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
 
-  // TODO: Replace with https://github.com/w3c/csswg-drafts/issues/1562
-  const willScroll = useRef(false);
-
-  // TODO: Replace this check with CSS when no polyfill is required
-  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
-
-  // Handle prop changes
+  // Track shown element's index based on scroll position
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [shownIndex, setShownIndex] = useState(0);
   useLayoutEffect(() => {
-    const shownChild = ref.current!.children[shownIndex] as HTMLElement;
-    willScroll.current = true;
-    ref.current!.scroll({
-      left: shownChild.offsetLeft,
-      ...(!preferReducedMotion && { behavior: 'smooth' }),
-    });
-  }, [preferReducedMotion, shownIndex]);
+    const nextIndex = Math.round(
+      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+        React.Children.count(children),
+    );
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
+  }, [children, onShownIndexChange, scrollLeft]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [width] = useSize(
     ref,
-    (typeof window !== 'undefined' ? window.ResizeObserver : undefined) ||
+    (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
   // Handle resize events firing prior to layout
@@ -52,32 +48,20 @@ export default function ScrollSnapContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWidthChanging, width]);
 
-  // Handle scrolling
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const isScrollLeftChanging = useChanging(scrollLeft);
-  useEffect(() => {
-    if (isScrollLeftChanging) {
-      willScroll.current = false;
-    } else if (
-      onProposedIndexChange &&
-      !isWidthChanging &&
-      !willScroll.current
-    ) {
-      const proposedIndex = Math.round(
-        (scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      if (proposedIndex !== shownIndex) {
-        onProposedIndexChange(proposedIndex);
-      }
+  // TODO: Replace this check with CSS when no polyfill is required
+  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
+
+  // Scroll to the desired target each time it changes
+  useLayoutEffect(() => {
+    if (targetIndex != null) {
+      const targetChild = ref.current!.children[targetIndex] as HTMLElement;
+      ref.current!.scroll({
+        left: targetChild.offsetLeft,
+        ...(!preferReducedMotion && { behavior: 'smooth' }),
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isScrollLeftChanging,
-    isWidthChanging,
-    onProposedIndexChange,
-    scrollLeft,
-  ]);
+  }, [targetIndex]);
 
   return (
     <Flex
@@ -89,11 +73,12 @@ export default function ScrollSnapContainer({
         scroll-snap-type: x mandatory;
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
-        -webkit-overflow-scrolling: touch;
 
         /* Optimize scrolling behavior */
         will-change: scroll-position;
+        -webkit-overflow-scrolling: touch;
 
+        /* Hide scrollbar */
         /* TODO: Leave vendor prefixing to the underlying library */
         ::-webkit-scrollbar {
           display: none;

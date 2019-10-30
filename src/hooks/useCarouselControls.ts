@@ -6,22 +6,21 @@ export default function useCarouselControls() {
     ,
     ,
     ,
-    [shownIndex, setShownIndex],
+    [shownIndex],
+    [targetIndex, setTargetIndex],
     [totalCount],
     [isPlaying, setPlaying],
-    isInfinite,
   ] = useContext(CarouselContext);
 
   return {
-    isInfinite,
+    shownIndex,
+    targetIndex,
+    setTargetIndex,
+    totalCount,
 
     isPlaying,
     togglePlaying() {
       setPlaying(prevPlaying => !prevPlaying);
     },
-
-    shownIndex,
-    setShownIndex,
-    totalCount,
   };
 }

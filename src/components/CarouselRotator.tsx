@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
-import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 import ScrollSnapContainer, {
@@ -12,16 +11,15 @@ import 'scroll-behavior-polyfill';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
-export interface CarouselRotatorProps extends ScrollSnapContainerProps {
+export interface CarouselRotatorProps
+  extends Omit<ScrollSnapContainerProps, 'onShownIndexChange'> {
   children?: React.ReactElement | React.ReactElement[];
   playInterval?: number;
-  isDisabled?: boolean;
 }
 
 export default function CarouselRotator({
   children = [],
   playInterval = 5000,
-  isDisabled = false,
   ...restProps
 }: CarouselRotatorProps) {
   const [
@@ -29,6 +27,7 @@ export default function CarouselRotator({
     [isFocused],
     [disableAutoPause],
     [shownIndex, setShownIndex],
+    [targetIndex, setTargetIndex],
     [totalCount, setTotalCount],
     [isPlaying],
   ] = useContext(CarouselContext);
@@ -42,7 +41,7 @@ export default function CarouselRotator({
   // Auto-rotate slides if desired
   useInterval(
     () => {
-      setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
+      setTargetIndex((shownIndex + 1) % totalCount);
     },
     isPlaying && ((!isHovered && !isFocused) || disableAutoPause)
       ? playInterval
@@ -51,15 +50,22 @@ export default function CarouselRotator({
 
   return (
     <ScrollSnapContainer
-      shownIndex={shownIndex}
+      targetIndex={targetIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
       onMouseDown={e => {
         // Disable mouse wheel scrolling between slides
         if (e.button === 1) e.preventDefault();
       }}
-      overflow={isDisabled ? 'hidden' : 'auto'}
-      onProposedIndexChange={setShownIndex}
+      overflow={
+        // Disable user-initiated scrolling when a target is specified
+        targetIndex != null ? 'hidden' : 'auto'
+      }
+      onShownIndexChange={index => {
+        // Clear target as soon as it's reached
+        if (index === targetIndex) setTargetIndex(null);
+        setShownIndex(index);
+      }}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

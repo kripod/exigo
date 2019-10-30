@@ -6,18 +6,18 @@ const CarouselContext = React.createContext<
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
+    [number | null, React.Dispatch<React.SetStateAction<number | null>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
-    boolean,
   ]
 >([
   /* isHovered: */ [false, () => {}],
   /* isFocused: */ [false, () => {}],
   /* [disableAutoPause, setDisableAutoPause]: */ [false, () => {}],
   /* [shownIndex, setShownIndex]: */ [0, () => {}],
-  /* [totalCount, setTotalCount]: */ [1, () => {}],
+  /* [targetIndex, setTargetIndex]: */ [null, () => {}],
+  /* [totalCount, setTotalCount]: */ [0, () => {}],
   /* [isPlaying, setPlaying]: */ [false, () => {}],
-  /* isInfinite: */ false,
 ]);
 
 export default CarouselContext;

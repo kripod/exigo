@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import CarouselContext from './CarouselContext';
 
 export interface CarouselProviderProps {
-  isInfinite?: boolean;
+  children: React.ReactNode;
   autoPlay?: boolean;
   initialIndex?: number;
-  children: React.ReactNode;
 }
 
 export default function CarouselProvider({
-  isInfinite = false,
+  children,
   autoPlay = false,
   initialIndex = 0,
-  children,
 }: CarouselProviderProps) {
   return (
     <CarouselContext.Provider
@@ -21,9 +19,9 @@ export default function CarouselProvider({
         useState<boolean>(false),
         useState<boolean>(false),
         useState(initialIndex),
+        useState<number | null>(null),
         useState(initialIndex + 1),
         useState(autoPlay),
-        isInfinite,
       ]}
     >
       {children}

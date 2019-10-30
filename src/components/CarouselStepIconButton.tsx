@@ -12,19 +12,14 @@ export default function CarouselStepIconButton({
   delta,
   ...restProps
 }: CarouselStepIconButtonProps) {
-  const {
-    isInfinite,
-    shownIndex,
-    setShownIndex,
-    totalCount,
-  } = useCarouselControls();
+  const { shownIndex, setTargetIndex, totalCount } = useCarouselControls();
   const nextIndex = shownIndex + delta;
 
   return (
     <CarouselIconButton
-      isDisabled={!isInfinite && (nextIndex < 0 || nextIndex >= totalCount)}
+      // TODO: Add support for unidirectional behavior (disable at each end)
       onClick={() => {
-        setShownIndex((nextIndex + totalCount) % totalCount);
+        setTargetIndex((nextIndex + totalCount) % totalCount);
       }}
       {...restProps}
     />
