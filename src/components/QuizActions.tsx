@@ -78,7 +78,6 @@ export default function QuizActions({
 
             <PopoverContent>
               <PopoverArrow />
-              <PopoverCloseButton />
               <PopoverHeader fontWeight={600}>Are you sure?</PopoverHeader>
               <PopoverBody>
                 You may not revisit this item after surrendering.
