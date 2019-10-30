@@ -18,6 +18,7 @@ export default function QuizItemCard({
         as="h3"
         size="md"
         mx={QUIZ_ITEM_CARD_PADDING}
+        mb={2}
         py={QUIZ_ITEM_CARD_PADDING + 2}
         fontWeight={600}
         lineHeight={1.5}
