@@ -23,20 +23,14 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
-  const isScrollLeftChanging = useChanging(scrollLeft);
   useEffect(() => {
-    console.log('ea');
-    if (!isScrollLeftChanging) {
-      console.log('eb');
-      const nextIndex = Math.round(
-        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
+    const nextIndex = Math.round(
+      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
+    );
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onShownIndexChange, isScrollLeftChanging]);
+  }, [onShownIndexChange, scrollLeft]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -49,9 +43,11 @@ export default function ScrollSnapContainer({
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
-    console.log('le1');
-    const shownChild = ref.current!.children[shownIndex] as HTMLElement;
-    ref.current!.scrollLeft = shownChild.offsetLeft;
+    if (targetIndex == null) {
+      console.log('le1');
+      const shownChild = ref.current!.children[shownIndex] as HTMLElement;
+      ref.current!.scrollLeft = shownChild.offsetLeft;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWidthChanging, width]);
 
