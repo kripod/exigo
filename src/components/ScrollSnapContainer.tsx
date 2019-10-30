@@ -23,14 +23,21 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
+  const isScrollLeftChanging = useChanging(scrollLeft);
   useEffect(() => {
-    const nextIndex = Math.round(
-      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
-    );
-    setShownIndex(nextIndex);
-    onShownIndexChange(nextIndex);
+    if (!isScrollLeftChanging) {
+      const nextIndex = Math.round(
+        (scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
+      setShownIndex(nextIndex);
+      onShownIndexChange(nextIndex);
+    }
+
+    // Changing the amount children doesn't have an effect on the ratio above
+    // isScrollLeftChanging depends on scrollLeft, making the latter ignorable
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onShownIndexChange, scrollLeft]);
+  }, [onShownIndexChange, isScrollLeftChanging]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -41,15 +48,16 @@ export default function ScrollSnapContainer({
   );
   // Handle resize events firing prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
-  const isWidthChanging = useChanging(width);
+  /* const isWidthChanging = useChanging(width); */
   useLayoutEffect(() => {
+    // Don't override target-oriented scrolling
     if (targetIndex == null) {
       console.log('le1');
       const shownChild = ref.current!.children[shownIndex] as HTMLElement;
       ref.current!.scrollLeft = shownChild.offsetLeft;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isWidthChanging, width]);
+  }, [/* isWidthChanging, */ width]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
