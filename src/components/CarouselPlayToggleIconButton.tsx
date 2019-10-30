@@ -8,7 +8,7 @@ import CarouselIconButton, {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CarouselPlayToggleIconButtonProps
-  extends CarouselIconButtonProps {}
+  extends Omit<CarouselIconButtonProps, 'aria-label'> {}
 
 export default function CarouselPlayToggleIconButton(
   props: CarouselPlayToggleIconButtonProps,
