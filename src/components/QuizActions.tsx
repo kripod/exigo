@@ -1,5 +1,18 @@
-import React from 'react';
-import { Button, Stack, StackProps } from '@chakra-ui/core';
+import React, { useRef } from 'react';
+import {
+  Button,
+  ButtonGroup,
+  Stack,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverFooter,
+  PopoverHeader,
+  PopoverTrigger,
+  StackProps,
+} from '@chakra-ui/core';
 import useCarouselControls from '../hooks/useCarouselControls';
 import QuizItem from '../models/QuizItem';
 import QuizResponses from '../models/QuizResponses';
@@ -17,6 +30,8 @@ export default function QuizActions({
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
   const shownItem = items[shownIndex];
   const currentResponse = responses[shownItem.id];
+
+  const initialPopoverFocusRef = useRef<HTMLElement>(null);
 
   return (
     <Stack direction="row-reverse" justify="space-between" {...restProps}>
@@ -48,13 +63,42 @@ export default function QuizActions({
         </Button>
       </Stack>
 
-      <Button
-        aria-label="Surrender current assessment"
-        leftIcon={'running' as any}
-        variant="ghost"
-      >
-        Surrender
-      </Button>
+      <Popover initialFocusRef={initialPopoverFocusRef} placement="top">
+        {({ onClose }) => (
+          <>
+            <PopoverTrigger>
+              <Button
+                aria-label="Surrender current assessment"
+                leftIcon={'running' as any}
+                variant="ghost"
+              >
+                Surrender
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader fontWeight={600}>Are you sure?</PopoverHeader>
+              <PopoverBody>
+                You may not revisit this item after surrendering.
+              </PopoverBody>
+              <PopoverFooter textAlign="right">
+                <ButtonGroup size="sm">
+                  <Button
+                    ref={initialPopoverFocusRef}
+                    variant="outline"
+                    onClick={onClose}
+                  >
+                    No, keep trying
+                  </Button>
+                  <Button variantColor="red">Yes</Button>
+                </ButtonGroup>
+              </PopoverFooter>
+            </PopoverContent>
+          </>
+        )}
+      </Popover>
     </Stack>
   );
 }
