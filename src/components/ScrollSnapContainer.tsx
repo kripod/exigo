@@ -3,7 +3,11 @@ import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
-import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
+import {
+  usePreferredMotionIntensity,
+  useSize,
+  useWindowSize,
+} from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
@@ -44,14 +48,18 @@ export default function ScrollSnapContainer({
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
       const sw = ref.current!.scrollWidth;
-      alert(sw);
-      setTimeout(() => alert(ref.current!.scrollWidth), 10000);
       scroll(ref.current!, shownIndex);
     }
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width]);
+
+  const [windowWidth] = useWindowSize();
+  useLayoutEffect(() => {
+    alert(windowWidth);
+    setTimeout(() => alert(windowWidth), 10000);
+  }, [windowWidth]);
 
   // Scroll to the desired target when mounting
   useLayoutEffect(() => {
