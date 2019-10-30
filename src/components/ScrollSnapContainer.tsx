@@ -33,19 +33,6 @@ export default function ScrollSnapContainer({
   const ref = useRef<HTMLElement>(null);
   const [shownIndex, setShownIndex] = useState(0);
 
-  // Track shown element's index based on scroll position
-  const [scrollLeft, setScrollLeft] = useState(0);
-  useLayoutEffect(() => {
-    const nextIndex = Math.round(
-      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
-    );
-    setShownIndex(nextIndex);
-    onShownIndexChange(nextIndex);
-
-    // Changing the amount children doesn't have an effect on the ratio above
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onShownIndexChange, scrollLeft]);
-
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [width] = useSize(
@@ -76,16 +63,31 @@ export default function ScrollSnapContainer({
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
-  // Scroll to the desired target each time it changes
+  // Scroll to the desired target initially and then each time it changes
+  const hasRendered = useRef(false);
   useLayoutEffect(() => {
     if (targetIndex != null) {
       scroll(
         ref.current!,
         targetIndex,
-        preferReducedMotion ? 'auto' : 'smooth',
+        preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
       );
     }
+    hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
+
+  // Track shown element's index based on scroll position
+  const [scrollLeft, setScrollLeft] = useState(0);
+  useLayoutEffect(() => {
+    const nextIndex = Math.round(
+      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
+    );
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
+
+    // Changing the amount children doesn't have an effect on the ratio above
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onShownIndexChange, scrollLeft]);
 
   return (
     <Flex
