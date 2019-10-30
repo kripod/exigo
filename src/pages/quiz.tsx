@@ -31,7 +31,7 @@ export default function QuizPage({
   return (
     <Layout>
       <Measure mx="auto">
-        <CarouselProvider>
+        <CarouselProvider isInfinite>
           <CarouselContainer mt={-6}>
             <CarouselRotator
               // TODO: Use `sx` prop when Chakra switches to Theme UI

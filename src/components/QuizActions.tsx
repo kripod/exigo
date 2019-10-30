@@ -37,7 +37,7 @@ export default function QuizActions({
     <Stack direction="row-reverse" justify="space-between" {...restProps}>
       <Stack direction="row-reverse">
         <Button
-          isDisabled={shownIndex === totalCount - 1}
+          isDisabled={totalCount === 1 && currentResponse == null}
           aria-label="Next item"
           rightIcon="chevron-right"
           {...(currentResponse != null
@@ -45,18 +45,18 @@ export default function QuizActions({
             : { variant: 'outline' })}
           borderWidth={1}
           onClick={() => {
-            setShownIndex(shownIndex + 1);
+            setShownIndex((shownIndex + 1) % totalCount);
           }}
         >
           Next
         </Button>
         <Button
-          isDisabled={shownIndex === 0}
+          isDisabled={totalCount === 1}
           aria-label="Previous item"
           leftIcon="chevron-left"
           variant="outline"
           onClick={() => {
-            setShownIndex(shownIndex - 1);
+            setShownIndex((shownIndex - 1 + totalCount) % totalCount);
           }}
         >
           Previous
