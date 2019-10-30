@@ -18,35 +18,43 @@ import QuizItem from '../models/QuizItem';
 import QuizResponses from '../models/QuizResponses';
 
 export interface QuizActionsProps extends StackProps {
-  items: QuizItem[];
+  remainingItems: QuizItem[];
   responses: QuizResponses;
+  onSurrender: (item: QuizItem) => void;
 }
 
 export default function QuizActions({
-  items,
+  remainingItems,
   responses,
+  onSurrender,
   ...restProps
 }: QuizActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
-  const shownItem = items[shownIndex];
+  const shownItem = remainingItems[shownIndex];
   const currentResponse = responses[shownItem.id];
 
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
+
+  function goToNext() {
+    setShownIndex((shownIndex + 1) % totalCount);
+  }
+
+  function goToPrev() {
+    setShownIndex((shownIndex - 1 + totalCount) % totalCount);
+  }
 
   return (
     <Stack direction="row-reverse" justify="space-between" {...restProps}>
       <Stack direction="row-reverse">
         <Button
-          isDisabled={totalCount === 1 && currentResponse == null}
+          isDisabled={remainingItems.length === 1 && currentResponse == null}
           aria-label="Next item"
           rightIcon="chevron-right"
           {...(currentResponse != null
             ? { variantColor: 'blue' }
             : { variant: 'outline' })}
           borderWidth={1}
-          onClick={() => {
-            setShownIndex((shownIndex + 1) % totalCount);
-          }}
+          onClick={goToNext}
         >
           Next
         </Button>
@@ -55,9 +63,7 @@ export default function QuizActions({
           aria-label="Previous item"
           leftIcon="chevron-left"
           variant="outline"
-          onClick={() => {
-            setShownIndex((shownIndex - 1 + totalCount) % totalCount);
-          }}
+          onClick={goToPrev}
         >
           Previous
         </Button>
@@ -91,7 +97,15 @@ export default function QuizActions({
                   >
                     No, keep trying
                   </Button>
-                  <Button variantColor="red">Yes</Button>
+                  <Button
+                    variantColor="red"
+                    onClick={() => {
+                      onSurrender(shownItem);
+                      if (onClose) onClose(); // TODO: onClose?();
+                    }}
+                  >
+                    Yes
+                  </Button>
                 </ButtonGroup>
               </PopoverFooter>
             </PopoverContent>

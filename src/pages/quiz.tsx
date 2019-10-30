@@ -26,6 +26,7 @@ interface QuizPageProps {
 export default function QuizPage({
   items = multipleChoiceQuizExample.items,
 }: QuizPageProps) {
+  const [remainingItems, setRemainingItems] = useState(items);
   const [responses, setResponses] = useState<QuizResponses>({});
 
   return (
@@ -41,7 +42,7 @@ export default function QuizPage({
                 }
               `}
             >
-              {items.map(item => {
+              {remainingItems.map(item => {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 const Evaluator = evaluatorComponents.get(item.type)!;
 
@@ -62,7 +63,21 @@ export default function QuizPage({
             </CarouselRotator>
           </CarouselContainer>
 
-          <QuizActions items={items} responses={responses} mt={2} px={4} />
+          <QuizActions
+            remainingItems={remainingItems}
+            responses={responses}
+            mt={2}
+            px={4}
+            onSurrender={item => {
+              setRemainingItems(prevRemainingItems => {
+                const index = prevRemainingItems.indexOf(item);
+                return [
+                  ...prevRemainingItems.slice(0, index),
+                  ...prevRemainingItems.slice(index + 1),
+                ];
+              });
+            }}
+          />
         </CarouselProvider>
       </Measure>
     </Layout>
