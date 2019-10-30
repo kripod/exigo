@@ -57,8 +57,8 @@ export default function ScrollSnapContainer({
 
   const [windowWidth] = useWindowSize();
   useLayoutEffect(() => {
-    setTimeout(() => alert(windowWidth), 1000);
-    // requestAnimationFrame(() => alert(windowWidth));
+    // setTimeout(() => alert(windowWidth), 1000);
+    requestAnimationFrame(() => alert(windowWidth));
   }, [windowWidth]);
 
   // Scroll to the desired target when mounting
