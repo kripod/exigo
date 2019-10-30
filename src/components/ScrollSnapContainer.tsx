@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
@@ -23,14 +23,15 @@ export default function ScrollSnapContainer({
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
   const [shownIndex, setShownIndex] = useState(0);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const nextIndex = Math.round(
       (ref.current!.scrollLeft / ref.current!.scrollWidth) *
         React.Children.count(children),
     );
     setShownIndex(nextIndex);
     onShownIndexChange(nextIndex);
-  }, [children, onShownIndexChange, scrollLeft]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onShownIndexChange, scrollLeft]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -41,12 +42,12 @@ export default function ScrollSnapContainer({
   );
   // Handle resize events firing prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
-  const isWidthChanging = useChanging(width);
+  // const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     const shownChild = ref.current!.children[shownIndex] as HTMLElement;
     ref.current!.scrollLeft = shownChild.offsetLeft;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isWidthChanging, width]);
+  }, [/* isWidthChanging, */ width]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';

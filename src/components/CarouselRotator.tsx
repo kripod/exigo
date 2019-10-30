@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
@@ -61,11 +61,14 @@ export default function CarouselRotator({
         // Disable user-initiated scrolling when a target is specified
         targetIndex != null ? 'hidden' : 'auto'
       }
-      onShownIndexChange={index => {
-        // Clear target as soon as it's reached
-        if (index === targetIndex) setTargetIndex(null);
-        setShownIndex(index);
-      }}
+      onShownIndexChange={useCallback(
+        index => {
+          // Clear target as soon as it's reached
+          if (index === targetIndex) setTargetIndex(null);
+          setShownIndex(index);
+        },
+        [setShownIndex, setTargetIndex, targetIndex],
+      )}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (
