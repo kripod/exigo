@@ -35,8 +35,8 @@ export default function CarouselRotator({
   // Keep amount of slides updated
   useEffect(() => {
     const nextTotalCount = React.Children.count(children);
-    setTotalCount(nextTotalCount);
-  }, [children, setTotalCount]);
+    if (nextTotalCount !== totalCount) setTotalCount(nextTotalCount);
+  }, [children, setTotalCount, totalCount]);
 
   // Auto-rotate slides if desired
   useInterval(
