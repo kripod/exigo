@@ -19,7 +19,7 @@ export default function QuizItemCard({
         size="md"
         mx={QUIZ_ITEM_CARD_PADDING}
         py={QUIZ_ITEM_CARD_PADDING + 2}
-        fontWeight={500}
+        fontWeight={600}
         lineHeight={1.5}
         whiteSpace="pre-line"
         borderBottomWidth={1}
