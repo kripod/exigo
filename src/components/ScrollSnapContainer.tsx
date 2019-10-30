@@ -59,9 +59,9 @@ export default function ScrollSnapContainer({
       scroll(ref.current!, shownIndex);
     }
 
-    // Changing the target shall not have an effect on scroll restoration
+    // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shownIndex, width]);
+  }, [width]);
 
   // Scroll to the desired target when mounting
   useLayoutEffect(() => {
