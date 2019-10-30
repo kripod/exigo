@@ -38,7 +38,7 @@ export default function QuizActions({
       <Stack direction="row-reverse">
         <Button
           isDisabled={shownIndex === totalCount - 1}
-          aria-label="Next assessment"
+          aria-label="Next item"
           rightIcon="chevron-right"
           {...(currentResponse != null
             ? { variantColor: 'blue' }
@@ -52,7 +52,7 @@ export default function QuizActions({
         </Button>
         <Button
           isDisabled={shownIndex === 0}
-          aria-label="Previous assessment"
+          aria-label="Previous item"
           leftIcon="chevron-left"
           variant="outline"
           onClick={() => {
@@ -68,7 +68,7 @@ export default function QuizActions({
           <>
             <PopoverTrigger>
               <Button
-                aria-label="Surrender current assessment"
+                aria-label="Surrender current item"
                 leftIcon={'running' as any}
                 variant="ghost"
               >
