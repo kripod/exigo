@@ -1,6 +1,7 @@
 import { Image } from '@chakra-ui/core';
 import React from 'react';
 import Carousel from '../components/Carousel';
+import CarouselProvider from '../components/CarouselProvider';
 import Layout from '../components/Layout';
 
 const images = [
@@ -24,12 +25,14 @@ const images = [
 export default function CarouselDemoPage() {
   return (
     <Layout>
-      <Carousel isInfinite autoPlay maxWidth="xl" mx="auto">
-        {Array.from({ length: 10 }).map((_, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Image key={i} {...images[i % images.length]} />
-        ))}
-      </Carousel>
+      <CarouselProvider isInfinite autoPlay>
+        <Carousel maxWidth="xl" mx="auto">
+          {Array.from({ length: 10 }).map((_, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Image key={i} {...images[i % images.length]} />
+          ))}
+        </Carousel>
+      </CarouselProvider>
     </Layout>
   );
 }
