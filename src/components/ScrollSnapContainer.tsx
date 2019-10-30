@@ -43,6 +43,9 @@ export default function ScrollSnapContainer({
   useLayoutEffect(() => {
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
+      const sw = ref.current!.scrollWidth;
+      alert(sw);
+      setTimeout(() => alert(ref.current!.scrollWidth), 10000);
       scroll(ref.current!, shownIndex);
     }
 
