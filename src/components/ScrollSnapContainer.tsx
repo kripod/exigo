@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
@@ -23,21 +23,16 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
-  const isScrollLeftChanging = useChanging(scrollLeft);
-  useEffect(() => {
-    if (!isScrollLeftChanging) {
-      const nextIndex = Math.round(
-        (scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
+  useLayoutEffect(() => {
+    const nextIndex = Math.round(
+      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
+    );
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
 
     // Changing the amount children doesn't have an effect on the ratio above
-    // isScrollLeftChanging depends on scrollLeft, making the latter ignorable
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onShownIndexChange, isScrollLeftChanging]);
+  }, [onShownIndexChange, scrollLeft]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -50,8 +45,8 @@ export default function ScrollSnapContainer({
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
       console.log('le1');
-      const shownChild = ref.current!.children[shownIndex] as HTMLElement;
-      ref.current!.scrollLeft = shownChild.offsetLeft;
+      const targetChild = ref.current!.children[shownIndex] as HTMLElement;
+      ref.current!.scrollLeft = targetChild.offsetLeft;
     }
 
     // Changing the target shall not have an effect on scroll restoration
@@ -60,6 +55,17 @@ export default function ScrollSnapContainer({
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
+
+  // Scroll to the desired target when mounting
+  useLayoutEffect(() => {
+    if (targetIndex != null) {
+      const targetChild = ref.current!.children[targetIndex] as HTMLElement;
+      ref.current!.scrollLeft = targetChild.offsetLeft;
+    }
+
+    // This shall not execute over subsequent rerenders
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Scroll to the desired target each time it changes
   useLayoutEffect(() => {
