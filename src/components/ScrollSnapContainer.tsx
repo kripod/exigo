@@ -46,9 +46,6 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
-  // Handle resize events firing prior to layout
-  // See: https://openradar.appspot.com/radar?id=5040881597939712
-  /* const isWidthChanging = useChanging(width); */
   useLayoutEffect(() => {
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
@@ -56,8 +53,10 @@ export default function ScrollSnapContainer({
       const shownChild = ref.current!.children[shownIndex] as HTMLElement;
       ref.current!.scrollLeft = shownChild.offsetLeft;
     }
+
+    // Changing the target shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [/* isWidthChanging, */ width]);
+  }, [shownIndex, width]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
@@ -73,8 +72,7 @@ export default function ScrollSnapContainer({
         ...(!preferReducedMotion && { behavior: 'smooth' }),
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetIndex]);
+  }, [preferReducedMotion, targetIndex]);
 
   return (
     <Flex
