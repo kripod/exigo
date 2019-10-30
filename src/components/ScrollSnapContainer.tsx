@@ -11,6 +11,18 @@ export interface ScrollSnapContainerProps extends FlexProps {
   onShownIndexChange: (index: number) => void;
 }
 
+function scroll(
+  container: HTMLElement,
+  targetIndex: number,
+  behavior: ScrollOptions['behavior'] = 'auto',
+) {
+  const targetChild = container.children[targetIndex] as HTMLElement;
+  container.scroll({
+    left: targetChild.offsetLeft,
+    behavior,
+  });
+}
+
 export default function ScrollSnapContainer({
   children,
   targetIndex,
@@ -44,39 +56,34 @@ export default function ScrollSnapContainer({
   useLayoutEffect(() => {
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
-      console.log('le1');
-      const targetChild = ref.current!.children[shownIndex] as HTMLElement;
-      ref.current!.scrollLeft = targetChild.offsetLeft;
+      scroll(ref.current!, shownIndex);
     }
 
     // Changing the target shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shownIndex, width]);
 
-  // TODO: Replace this check with CSS when no polyfill is required
-  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
-
   // Scroll to the desired target when mounting
   useLayoutEffect(() => {
     if (targetIndex != null) {
-      const targetChild = ref.current!.children[targetIndex] as HTMLElement;
-      ref.current!.scrollLeft = targetChild.offsetLeft;
+      scroll(ref.current!, targetIndex);
     }
 
     // This shall not execute over subsequent rerenders
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // TODO: Replace this check with CSS when no polyfill is required
+  const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
+
   // Scroll to the desired target each time it changes
   useLayoutEffect(() => {
-    console.log('le2a');
     if (targetIndex != null) {
-      console.log('le2b');
-      const targetChild = ref.current!.children[targetIndex] as HTMLElement;
-      ref.current!.scroll({
-        left: targetChild.offsetLeft,
-        ...(!preferReducedMotion && { behavior: 'smooth' }),
-      });
+      scroll(
+        ref.current!,
+        targetIndex,
+        preferReducedMotion ? 'auto' : 'smooth',
+      );
     }
   }, [preferReducedMotion, targetIndex]);
 
