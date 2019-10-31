@@ -7,15 +7,22 @@ export default function useCarouselControls() {
     ,
     ,
     [shownIndex],
-    [targetIndex, setTargetIndex],
+    [, setTargetIndex],
     [totalCount],
     [isPlaying, setPlaying],
   ] = useContext(CarouselContext);
 
   return {
     shownIndex,
-    targetIndex,
-    setTargetIndex,
+    setShownIndex(value: React.SetStateAction<number>) {
+      setTargetIndex(prevTargetIndex => {
+        const prevIndex =
+          prevTargetIndex != null ? prevTargetIndex : shownIndex;
+        return typeof value === 'function'
+          ? value(prevIndex)
+          : value + prevIndex;
+      });
+    },
     totalCount,
 
     isPlaying,

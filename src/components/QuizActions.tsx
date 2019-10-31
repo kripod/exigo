@@ -6,7 +6,6 @@ import {
   Popover,
   PopoverArrow,
   PopoverBody,
-  PopoverCloseButton,
   PopoverContent,
   PopoverFooter,
   PopoverHeader,
@@ -29,18 +28,18 @@ export default function QuizActions({
   onSurrender,
   ...restProps
 }: QuizActionsProps) {
-  const { shownIndex, setTargetIndex, totalCount } = useCarouselControls();
+  const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
   const shownItem = remainingItems[shownIndex];
   const currentResponse = responses[shownItem.id];
 
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
 
   function goToNext() {
-    setTargetIndex((shownIndex + 1) % totalCount);
+    setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
   }
 
   function goToPrev() {
-    setTargetIndex((shownIndex - 1 + totalCount) % totalCount);
+    setShownIndex(prevIndex => (prevIndex - 1 + totalCount) % totalCount);
   }
 
   return (
