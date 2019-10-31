@@ -82,11 +82,14 @@ export default function ScrollSnapContainer({
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
   useLayoutEffect(() => {
-    const nextIndex = Math.round(
-      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
-    );
-    setShownIndex(nextIndex);
-    onShownIndexChange(nextIndex);
+    if (!isWidthChanging) {
+      const nextIndex = Math.round(
+        (scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
+      setShownIndex(nextIndex);
+      onShownIndexChange(nextIndex);
+    }
 
     // Changing the amount children doesn't have an effect on the ratio above
     // eslint-disable-next-line react-hooks/exhaustive-deps
