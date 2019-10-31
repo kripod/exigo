@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
 import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
@@ -17,12 +17,10 @@ function scroll(
   behavior: ScrollOptions['behavior'] = 'auto',
 ) {
   const targetChild = container.children[targetIndex] as HTMLElement;
-  const { offsetLeft } = targetChild;
   container.scroll({
-    left: offsetLeft,
+    left: targetChild.offsetLeft,
     behavior,
   });
-  return [targetChild, offsetLeft] as const;
 }
 
 export default function ScrollSnapContainer({
@@ -42,35 +40,18 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
+  // Handle occasional reflow prior to layout
+  // See: https://openradar.appspot.com/radar?id=5040881597939712
+  const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
     // Don't override target-oriented scrolling
-    if (targetIndex != null) return;
-
-    const [targetChild, prevOffsetLeft] = scroll(ref.current!, shownIndex);
-
-    // Handle occasional reflow prior to layout
-    // See: https://openradar.appspot.com/radar?id=5040881597939712
-
-    if (!window.requestAnimationFrame) return;
-
-    let frameCount = 0;
-    function step() {
-      if (targetIndex != null || frameCount > 99) return;
-
-      const { offsetLeft } = targetChild;
-      if (offsetLeft !== prevOffsetLeft) {
-        ref.current!.scrollLeft = offsetLeft;
-      } else {
-        frameCount += 1;
-        requestAnimationFrame(step);
-      }
+    if (targetIndex == null) {
+      scroll(ref.current!, shownIndex);
     }
-
-    requestAnimationFrame(step);
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
+  }, [width, isWidthChanging]);
 
   // Scroll to the desired target when mounting
   useLayoutEffect(() => {
