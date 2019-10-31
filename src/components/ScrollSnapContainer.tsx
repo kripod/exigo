@@ -44,8 +44,10 @@ export default function ScrollSnapContainer({
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
+    alert('snap a');
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
+      alert('snap b');
       scroll(ref.current!, shownIndex);
     }
 
@@ -53,23 +55,15 @@ export default function ScrollSnapContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, isWidthChanging]);
 
-  // Scroll to the desired target when mounting
-  useLayoutEffect(() => {
-    if (targetIndex != null) {
-      scroll(ref.current!, targetIndex);
-    }
-
-    // This shall not execute over subsequent rerenders
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
   // Scroll to the desired target initially and then each time it changes
   const hasRendered = useRef(false);
   useLayoutEffect(() => {
+    alert('scroll to target a');
     if (targetIndex != null) {
+      alert('scroll to target b');
       scroll(
         ref.current!,
         targetIndex,
@@ -83,6 +77,7 @@ export default function ScrollSnapContainer({
   const [scrollLeft, setScrollLeft] = useState(0);
   useLayoutEffect(() => {
     if (!isWidthChanging) {
+      alert('track');
       const nextIndex = Math.round(
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
