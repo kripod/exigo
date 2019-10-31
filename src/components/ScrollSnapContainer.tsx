@@ -44,8 +44,9 @@ export default function ScrollSnapContainer({
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
   useLayoutEffect(() => {
-    // Don't override target-oriented scrolling and wait for reflow
-    if (targetIndex == null && isWidthChanging) {
+    alert(`snap a ${isWidthChanging}`);
+    // Don't override target-oriented scrolling
+    if (targetIndex == null) {
       alert('snap b');
       scroll(ref.current!, shownIndex);
     }
