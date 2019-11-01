@@ -44,10 +44,8 @@ export default function ScrollSnapContainer({
   const isWidthChanging = useChanging(width);
   const isRestoringScrollPosition = useRef(false);
   useLayoutEffect(() => {
-    alert(`snap a ${isWidthChanging}`);
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
-      alert('snap b');
       isRestoringScrollPosition.current = true;
       scroll(ref.current!, shownIndex);
     }
@@ -62,9 +60,7 @@ export default function ScrollSnapContainer({
   // Scroll to the desired target initially and then each time it changes
   const hasRendered = useRef(false);
   useLayoutEffect(() => {
-    alert('scroll to target a');
     if (targetIndex != null) {
-      alert('scroll to target b');
       scroll(
         ref.current!,
         targetIndex,
@@ -80,7 +76,6 @@ export default function ScrollSnapContainer({
     if (isRestoringScrollPosition.current) {
       isRestoringScrollPosition.current = false;
     } else {
-      alert('track');
       const nextIndex = Math.round(
         (scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
