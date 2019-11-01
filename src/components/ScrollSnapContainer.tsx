@@ -118,7 +118,7 @@ export default function ScrollSnapContainer({
         scrollbar-width: none;
       `}
       onTouchMove={increaseScrollingTimeout}
-      onScroll={/* handleScroll */}
+      /* onScroll={handleScroll} */
       {...restProps}
     >
       {children}
