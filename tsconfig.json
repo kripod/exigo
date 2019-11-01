@@ -11,9 +11,6 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "jsx": "react",
-
-    // Define Emotion 'css' prop
-    "types": ["@emotion/core", "@types/resize-observer-browser", "jest"]
+    "jsx": "react"
   }
 }
