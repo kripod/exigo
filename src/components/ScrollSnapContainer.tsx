@@ -16,8 +16,9 @@ function scroll(
   targetIndex: number,
   behavior: ScrollOptions['behavior'] = 'auto',
 ) {
+  const targetChild = container.children[targetIndex] as HTMLElement;
   container.scroll({
-    left: (targetIndex / container.children.length) * container.scrollWidth,
+    left: targetChild.offsetLeft,
     behavior,
   });
 }
@@ -41,7 +42,7 @@ export default function ScrollSnapContainer({
   );
   // Handle occasional reflow prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
-  // const isWidthChanging = useChanging(width);
+  const isWidthChanging = useChanging(width);
   const disableScrollPositionTracking = useRef(false);
   useLayoutEffect(() => {
     if (targetIndex != null) {
@@ -53,7 +54,7 @@ export default function ScrollSnapContainer({
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width /* isWidthChanging */]);
+  }, [width, isWidthChanging]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
