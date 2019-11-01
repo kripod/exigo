@@ -8,7 +8,7 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-const IS_RESIZING_DEBOUNCE_DELAY_MS = 150;
+const IS_SCROLLING_DEBOUNCE_DELAY_MS = 150;
 
 function scroll(
   container: HTMLElement,
@@ -38,9 +38,10 @@ export default function ScrollSnapContainer({
   const [shownIndex, setShownIndex] = useState(0);
 
   // Track shown element's index based on scroll position
-  const ignoreScroll = useRef(false);
+  const trackScrolling = useRef(false);
+  const scrollingTimeoutID = useRef(0);
   function handleScroll() {
-    if (!ignoreScroll.current) {
+    if (trackScrolling.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -63,16 +64,7 @@ export default function ScrollSnapContainer({
   const [windowWidth] = useWindowSize();
 
   useEffect(() => {
-    ignoreScroll.current = true;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
-
-    const timeoutID = setTimeout(() => {
-      ignoreScroll.current = false;
-      handleScroll();
-    }, IS_RESIZING_DEBOUNCE_DELAY_MS);
-    return () => {
-      clearTimeout(timeoutID);
-    };
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,6 +109,17 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
+      onTouchMove={() => {
+        trackScrolling.current = true;
+        // TODO: Move this to useChanging(scrollLeft)
+        clearTimeout(scrollingTimeoutID.current);
+        scrollingTimeoutID.current = setTimeout(
+          (() => {
+            trackScrolling.current = false;
+          }) as TimerHandler,
+          IS_SCROLLING_DEBOUNCE_DELAY_MS,
+        );
+      }}
       onScroll={handleScroll}
       {...restProps}
     >
