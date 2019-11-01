@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/exigo',
   siteMetadata: {
     title: 'Exigo',
     description: '', // TODO
