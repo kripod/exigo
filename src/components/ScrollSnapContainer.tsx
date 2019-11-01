@@ -3,7 +3,11 @@ import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useRef, useState } from 'react';
 import { useChanging } from 'state-hooks';
-import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
+import {
+  usePreferredMotionIntensity,
+  useSize,
+  useWindowSize,
+} from 'web-api-hooks';
 import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
@@ -43,6 +47,7 @@ export default function ScrollSnapContainer({
   // Handle occasional reflow prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   // const isWidthChanging = useChanging(width);
+  const [windowWidth] = useWindowSize();
   const disableScrollPositionTracking = useRef(false);
   useLayoutEffect(() => {
     (window.requestAnimationFrame || (fn => fn(0)))(() => {
@@ -56,7 +61,7 @@ export default function ScrollSnapContainer({
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width /* isWidthChanging */]);
+  }, [width /* isWidthChanging */, windowWidth]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
