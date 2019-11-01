@@ -45,12 +45,14 @@ export default function ScrollSnapContainer({
   // const isWidthChanging = useChanging(width);
   const disableScrollPositionTracking = useRef(false);
   useLayoutEffect(() => {
-    if (targetIndex != null) {
-      scroll(ref.current!, targetIndex);
-    } else {
-      disableScrollPositionTracking.current = true;
-      scroll(ref.current!, shownIndex);
-    }
+    (window.requestAnimationFrame || (fn => fn(0)))(() => {
+      if (targetIndex != null) {
+        scroll(ref.current!, targetIndex);
+      } else {
+        disableScrollPositionTracking.current = true;
+        scroll(ref.current!, shownIndex);
+      }
+    });
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
