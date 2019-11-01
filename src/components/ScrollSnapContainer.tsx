@@ -8,10 +8,7 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-export interface ScrollSnapContainerProps extends FlexProps {
-  targetIndex?: number | null;
-  onShownIndexChange: (index: number) => void;
-}
+const IS_RESIZING_DEBOUNCE_DELAY_MS = 150;
 
 function scroll(
   container: HTMLElement,
@@ -25,6 +22,11 @@ function scroll(
   });
 }
 
+export interface ScrollSnapContainerProps extends FlexProps {
+  targetIndex?: number | null;
+  onShownIndexChange: (index: number) => void;
+}
+
 export default function ScrollSnapContainer({
   children,
   targetIndex,
@@ -35,6 +37,21 @@ export default function ScrollSnapContainer({
   const ref = useRef<HTMLElement>(null);
   const [shownIndex, setShownIndex] = useState(0);
 
+  // Track shown element's index based on scroll position
+  const ignoreScroll = useRef(false);
+  function handleScroll() {
+    if (!ignoreScroll.current) {
+      const nextIndex = Math.round(
+        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
+      if (nextIndex !== shownIndex) {
+        setShownIndex(nextIndex);
+        onShownIndexChange(nextIndex);
+      }
+    }
+  }
+
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [width] = useSize(
@@ -44,8 +61,18 @@ export default function ScrollSnapContainer({
   );
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
+
   useEffect(() => {
+    ignoreScroll.current = true;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
+
+    const timeoutID = setTimeout(() => {
+      ignoreScroll.current = false;
+      handleScroll();
+    }, IS_RESIZING_DEBOUNCE_DELAY_MS);
+    return () => {
+      clearTimeout(timeoutID);
+    };
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,18 +93,6 @@ export default function ScrollSnapContainer({
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
-
-  // Track shown element's index based on scroll position
-  function handleSwipe() {
-    const nextIndex = Math.round(
-      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-        React.Children.count(children),
-    );
-    if (nextIndex !== shownIndex) {
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
-  }
 
   return (
     <Flex
@@ -102,7 +117,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onTouchMove={handleSwipe}
+      onScroll={handleScroll}
       {...restProps}
     >
       {children}
