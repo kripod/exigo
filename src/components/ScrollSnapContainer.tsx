@@ -42,13 +42,9 @@ export default function ScrollSnapContainer({
   // Handle occasional reflow prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
-  const isRestoringScrollPosition = useRef(false);
   useLayoutEffect(() => {
     // Don't override target-oriented scrolling
-    if (targetIndex == null) {
-      isRestoringScrollPosition.current = true;
-      scroll(ref.current!, shownIndex);
-    }
+    scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,16 +69,11 @@ export default function ScrollSnapContainer({
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
   useLayoutEffect(() => {
-    if (isRestoringScrollPosition.current || isWidthChanging) {
-      isRestoringScrollPosition.current = false;
-    } else {
-      const nextIndex = Math.round(
-        (scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
+    const nextIndex = Math.round(
+      (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
+    );
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
 
     // Changing the amount children doesn't have an effect on the ratio above
     // eslint-disable-next-line react-hooks/exhaustive-deps
