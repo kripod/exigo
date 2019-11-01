@@ -45,7 +45,6 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
-    alert('width change');
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
 
     // Changing indexes shall not have an effect on scroll restoration
@@ -64,10 +63,21 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
       );
-      setShownIndex(targetIndex); // TODO: Remove in favor of scroll tracking
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
+
+  // Track shown element's index based on scroll position
+  function handleSwipe() {
+    const nextIndex = Math.round(
+      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+        React.Children.count(children),
+    );
+    if (nextIndex !== shownIndex) {
+      setShownIndex(nextIndex);
+      onShownIndexChange(nextIndex);
+    }
+  }
 
   return (
     <Flex
@@ -92,20 +102,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={() => {
-        alert('scroll');
-        // Track shown element's index based on scroll position
-        /*
-        const nextIndex = Math.round(
-          (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-            React.Children.count(children),
-        );
-        if (nextIndex !== shownIndex) {
-          setShownIndex(nextIndex);
-          onShownIndexChange(nextIndex);
-        }
-        */
-      }}
+      onTouchMove={handleSwipe}
       {...restProps}
     >
       {children}
