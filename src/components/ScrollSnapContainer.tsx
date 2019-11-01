@@ -73,7 +73,7 @@ export default function ScrollSnapContainer({
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
   useLayoutEffect(() => {
-    if (isRestoringScrollPosition.current) {
+    if (isRestoringScrollPosition.current || isWidthChanging) {
       isRestoringScrollPosition.current = false;
     } else {
       const nextIndex = Math.round(
