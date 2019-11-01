@@ -45,6 +45,7 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
+    alert('width change');
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
 
     // Changing indexes shall not have an effect on scroll restoration
@@ -92,6 +93,7 @@ export default function ScrollSnapContainer({
         scrollbar-width: none;
       `}
       onScroll={() => {
+        alert('scroll');
         // Track shown element's index based on scroll position
         /*
         const nextIndex = Math.round(
