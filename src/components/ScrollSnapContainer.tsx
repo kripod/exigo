@@ -37,11 +37,19 @@ export default function ScrollSnapContainer({
   const ref = useRef<HTMLElement>(null);
   const [shownIndex, setShownIndex] = useState(0);
 
-  // Track shown element's index based on scroll position
-  const trackScrolling = useRef(false);
   const scrollingTimeoutID = useRef(0);
+  function increaseScrollingTimeout() {
+    window.clearTimeout(scrollingTimeoutID.current);
+    scrollingTimeoutID.current = window.setTimeout(() => {
+      scrollingTimeoutID.current = 0;
+    }, IS_SCROLLING_DEBOUNCE_DELAY_MS);
+  }
+
+  // Track shown element's index based on scroll position
+
   function handleScroll() {
-    if (trackScrolling.current) {
+    if (scrollingTimeoutID.current > 0) {
+      increaseScrollingTimeout();
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -109,17 +117,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onTouchMove={() => {
-        trackScrolling.current = true;
-        // TODO: Move this to useChanging(scrollLeft)
-        clearTimeout(scrollingTimeoutID.current);
-        scrollingTimeoutID.current = setTimeout(
-          (() => {
-            trackScrolling.current = false;
-          }) as TimerHandler,
-          IS_SCROLLING_DEBOUNCE_DELAY_MS,
-        );
-      }}
+      onTouchMove={increaseScrollingTimeout}
       onScroll={handleScroll}
       {...restProps}
     >
