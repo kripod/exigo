@@ -92,6 +92,7 @@ export default function ScrollSnapContainer({
       `}
       onScroll={() => {
         // Track shown element's index based on scroll position
+        /*
         const nextIndex = Math.round(
           (ref.current!.scrollLeft / ref.current!.scrollWidth) *
             React.Children.count(children),
@@ -100,6 +101,7 @@ export default function ScrollSnapContainer({
           setShownIndex(nextIndex);
           onShownIndexChange(nextIndex);
         }
+        */
       }}
       {...restProps}
     >
