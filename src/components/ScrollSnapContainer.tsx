@@ -16,9 +16,8 @@ function scroll(
   targetIndex: number,
   behavior: ScrollOptions['behavior'] = 'auto',
 ) {
-  const targetChild = container.children[targetIndex] as HTMLElement;
   container.scroll({
-    left: targetChild.offsetLeft,
+    left: (targetIndex / container.children.length) * container.scrollWidth,
     behavior,
   });
 }
