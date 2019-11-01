@@ -7,7 +7,6 @@ import {
   useSize,
   useWindowSize,
 } from 'web-api-hooks';
-import useLayoutEffect from '../hooks/useIsomorphicLayoutEffect';
 
 export interface ScrollSnapContainerProps extends FlexProps {
   targetIndex?: number | null;
@@ -63,7 +62,7 @@ export default function ScrollSnapContainer({
 
   // Scroll to the desired target initially and then each time it changes
   const hasRendered = useRef(false);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (targetIndex != null) {
       scroll(
         ref.current!,
@@ -76,7 +75,7 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
-  useLayoutEffect(() => {
+  useEffect(() => {
     const nextIndex = Math.round(
       (scrollLeft / ref.current!.scrollWidth) * React.Children.count(children),
     );
