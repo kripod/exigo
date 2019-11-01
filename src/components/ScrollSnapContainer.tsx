@@ -112,7 +112,7 @@ export default function ScrollSnapContainer({
         if (disableScrollPositionTracking.current) {
           disableScrollPositionTracking.current = false;
         } else {
-          setScrollLeft(ref.current!.scrollLeft);
+          // setScrollLeft(ref.current!.scrollLeft);
         }
       }}
       {...restProps}
