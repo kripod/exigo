@@ -2,7 +2,6 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useRef, useState } from 'react';
-import { useChanging } from 'state-hooks';
 import {
   usePreferredMotionIntensity,
   useSize,
@@ -44,24 +43,20 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
-  // Handle occasional reflow prior to layout
-  // See: https://openradar.appspot.com/radar?id=5040881597939712
-  // const isWidthChanging = useChanging(width);
+  // Handle device orientation changes on iOS
   const [windowWidth] = useWindowSize();
   const disableScrollPositionTracking = useRef(false);
   useLayoutEffect(() => {
-    (window.requestAnimationFrame || (fn => fn(0)))(() => {
-      if (targetIndex != null) {
-        scroll(ref.current!, targetIndex);
-      } else {
-        disableScrollPositionTracking.current = true;
-        scroll(ref.current!, shownIndex);
-      }
-    });
+    if (targetIndex != null) {
+      scroll(ref.current!, targetIndex);
+    } else {
+      disableScrollPositionTracking.current = true;
+      scroll(ref.current!, shownIndex);
+    }
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width /* isWidthChanging */, windowWidth]);
+  }, [width, windowWidth]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
