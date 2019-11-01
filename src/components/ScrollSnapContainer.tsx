@@ -69,24 +69,6 @@ export default function ScrollSnapContainer({
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
 
-  // Track shown element's index based on scroll position
-  const [scrollLeft, setScrollLeft] = useState(0);
-  useEffect(() => {
-    if (disableScrollPositionTracking.current) {
-      disableScrollPositionTracking.current = false;
-    } else {
-      const nextIndex = Math.round(
-        (scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
-
-    // Changing the amount children doesn't have an effect on the ratio above
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onShownIndexChange, scrollLeft]);
-
   return (
     <Flex
       ref={ref}
@@ -111,7 +93,19 @@ export default function ScrollSnapContainer({
         scrollbar-width: none;
       `}
       onScroll={() => {
-        setScrollLeft(ref.current!.scrollLeft);
+        // Track shown element's index based on scroll position
+        if (disableScrollPositionTracking.current) {
+          disableScrollPositionTracking.current = false;
+        } else {
+          const nextIndex = Math.round(
+            (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+              React.Children.count(children),
+          );
+          if (nextIndex !== shownIndex) {
+            setShownIndex(nextIndex);
+            onShownIndexChange(nextIndex);
+          }
+        }
       }}
       {...restProps}
     >
