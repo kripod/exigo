@@ -44,9 +44,7 @@ export default function ScrollSnapContainer({
   );
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
-  const disableScrollPositionTracking = useRef(false);
   useEffect(() => {
-    disableScrollPositionTracking.current = true;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
 
     // Changing indexes shall not have an effect on scroll restoration
@@ -94,17 +92,13 @@ export default function ScrollSnapContainer({
       `}
       onScroll={() => {
         // Track shown element's index based on scroll position
-        if (disableScrollPositionTracking.current) {
-          disableScrollPositionTracking.current = false;
-        } else {
-          const nextIndex = Math.round(
-            (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-              React.Children.count(children),
-          );
-          if (nextIndex !== shownIndex) {
-            setShownIndex(nextIndex);
-            onShownIndexChange(nextIndex);
-          }
+        const nextIndex = Math.round(
+          (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+            React.Children.count(children),
+        );
+        if (nextIndex !== shownIndex) {
+          setShownIndex(nextIndex);
+          onShownIndexChange(nextIndex);
         }
       }}
       {...restProps}
