@@ -17,3 +17,4 @@ script:
 deploy:
   provider: pages:git
   edge: true
+  local_dir: public
