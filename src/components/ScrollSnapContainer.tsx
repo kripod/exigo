@@ -43,16 +43,19 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
-  // Handle device orientation changes on iOS
   const [windowWidth] = useWindowSize();
   const disableScrollPositionTracking = useRef(false);
   useLayoutEffect(() => {
-    if (targetIndex != null) {
-      scroll(ref.current!, targetIndex);
-    } else {
-      disableScrollPositionTracking.current = true;
-      scroll(ref.current!, shownIndex);
-    }
+    disableScrollPositionTracking.current = true;
+    // Handle device orientation changes properly on iOS
+    const requestAnimationFrame = window.requestAnimationFrame || (fn => fn(0));
+    requestAnimationFrame(() => {
+      if (targetIndex != null) {
+        scroll(ref.current!, targetIndex);
+      } else {
+        scroll(ref.current!, shownIndex);
+      }
+    });
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
