@@ -63,6 +63,7 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
       );
+      setShownIndex(targetIndex); // TODO: Remove in favor of scroll tracking
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
