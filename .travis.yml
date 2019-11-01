@@ -18,3 +18,5 @@ deploy:
   provider: pages:git
   edge: true
   local_dir: public
+  on:
+    condition: $TRAVIS_OS_NAME = linux
