@@ -42,11 +42,13 @@ export default function ScrollSnapContainer({
   // Handle occasional reflow prior to layout
   // See: https://openradar.appspot.com/radar?id=5040881597939712
   const isWidthChanging = useChanging(width);
+  const isRestoringScrollPosition = useRef(false);
   useLayoutEffect(() => {
     alert(`snap a ${isWidthChanging}`);
     // Don't override target-oriented scrolling
     if (targetIndex == null) {
       alert('snap b');
+      isRestoringScrollPosition.current = true;
       scroll(ref.current!, shownIndex);
     }
 
@@ -75,7 +77,9 @@ export default function ScrollSnapContainer({
   // Track shown element's index based on scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
   useLayoutEffect(() => {
-    if (!isWidthChanging) {
+    if (isRestoringScrollPosition.current) {
+      isRestoringScrollPosition.current = false;
+    } else {
       alert('track');
       const nextIndex = Math.round(
         (scrollLeft / ref.current!.scrollWidth) *
