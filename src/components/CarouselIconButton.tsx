@@ -1,4 +1,5 @@
 import { IconButton, IconButtonProps } from '@chakra-ui/core';
+import { css } from '@emotion/core';
 import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -12,6 +13,9 @@ export default function CarouselIconButton(props: CarouselIconButtonProps) {
       size="lg"
       fontSize="3xl"
       isRound
+      css={css`
+        touch-action: manipulation;
+      `}
       {...props}
     />
   );
