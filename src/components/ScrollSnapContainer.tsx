@@ -1,7 +1,7 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   usePreferredMotionIntensity,
   useSize,
@@ -43,19 +43,16 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
+  // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   const disableScrollPositionTracking = useRef(false);
-  useLayoutEffect(() => {
+  useEffect(() => {
     disableScrollPositionTracking.current = true;
-    // Handle device orientation changes properly on iOS
-    const requestAnimationFrame = window.requestAnimationFrame || (fn => fn(0));
-    requestAnimationFrame(() => {
-      if (targetIndex != null) {
-        scroll(ref.current!, targetIndex);
-      } else {
-        scroll(ref.current!, shownIndex);
-      }
-    });
+    if (targetIndex != null) {
+      scroll(ref.current!, targetIndex);
+    } else {
+      scroll(ref.current!, shownIndex);
+    }
 
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
