@@ -62,16 +62,12 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
       );
+      setShownIndex(targetIndex); // TODO: Remove
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
 
-  // Track shown element's index based on scroll position
-  const [nextIndex, setNextIndex] = useState(0);
-  useEffect(() => {
-    setShownIndex(nextIndex);
-    onShownIndexChange(nextIndex);
-  }, [nextIndex, onShownIndexChange]);
+  // TODO: Track shown element's index based on scroll position
 
   return (
     <Flex
@@ -96,14 +92,6 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={() => {
-        setNextIndex(
-          Math.round(
-            (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-              React.Children.count(children),
-          ),
-        );
-      }}
       {...restProps}
     >
       {children}
