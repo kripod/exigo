@@ -12,13 +12,13 @@ export default function CarouselStepIconButton({
   delta,
   ...restProps
 }: CarouselStepIconButtonProps) {
-  const { setTargetIndex, totalCount } = useCarouselControls();
+  const { setShownIndex, totalCount } = useCarouselControls();
 
   return (
     <CarouselIconButton
       // TODO: Add support for unidirectional behavior (disable at each end)
       onClick={() => {
-        setTargetIndex(
+        setShownIndex(
           prevIndex => (prevIndex + delta + totalCount) % totalCount,
         );
       }}
