@@ -2,7 +2,11 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useEffect, useRef } from 'react';
-import { usePreferredMotionIntensity, useSize } from 'web-api-hooks';
+import {
+  usePreferredMotionIntensity,
+  useSize,
+  useWindowSize,
+} from 'web-api-hooks';
 
 function scroll(
   container: HTMLElement,
@@ -47,11 +51,13 @@ export default function ScrollSnapContainer({
     (typeof window !== 'undefined' && window.ResizeObserver) ||
       ((ResizeObserverPolyfill as unknown) as typeof ResizeObserver),
   );
+  // Handle device orientation changes properly on iOS
+  const [windowWidth] = useWindowSize();
   useEffect(() => {
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width]);
+  }, [width, windowWidth]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
