@@ -63,11 +63,11 @@ export default function CarouselRotator({
       }
       onShownIndexChange={useCallback(
         index => {
-          // Clear target as soon as it's reached
-          if (index === targetIndex) setTargetIndex(null);
+          // Clear target as soon as a change happens
+          setTargetIndex(null);
           setShownIndex(index);
         },
-        [setShownIndex, setTargetIndex, targetIndex],
+        [setShownIndex, setTargetIndex],
       )}
       {...restProps}
     >

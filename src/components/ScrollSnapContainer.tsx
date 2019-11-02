@@ -2,13 +2,12 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
+import { useChanging } from 'state-hooks';
 import {
   usePreferredMotionIntensity,
   useSize,
   useWindowSize,
 } from 'web-api-hooks';
-
-const IS_SCROLLING_DEBOUNCE_DELAY_MS = 150;
 
 function scroll(
   container: HTMLElement,
@@ -37,31 +36,6 @@ export default function ScrollSnapContainer({
   const ref = useRef<HTMLElement>(null);
   const [shownIndex, setShownIndex] = useState(0);
 
-  const scrollingTimeoutID = useRef(0);
-  function increaseScrollingTimeout() {
-    window.clearTimeout(scrollingTimeoutID.current);
-    scrollingTimeoutID.current = window.setTimeout(() => {
-      scrollingTimeoutID.current = 0;
-    }, IS_SCROLLING_DEBOUNCE_DELAY_MS);
-  }
-
-  // Track shown element's index based on scroll position
-
-  function handleScroll() {
-    if (scrollingTimeoutID.current > 0) {
-      increaseScrollingTimeout();
-      const nextIndex = Math.round(
-        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
-      alert(nextIndex);
-      if (nextIndex !== shownIndex) {
-        setShownIndex(nextIndex);
-        onShownIndexChange(nextIndex);
-      }
-    }
-  }
-
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
   const [width] = useSize(
@@ -71,13 +45,12 @@ export default function ScrollSnapContainer({
   );
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
-
+  const isWidthChanging = useChanging(width);
   useEffect(() => {
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
-
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, windowWidth]);
+  }, [width, windowWidth, isWidthChanging]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
@@ -94,6 +67,18 @@ export default function ScrollSnapContainer({
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
+
+  // Track shown element's index based on scroll position
+  function handleScroll() {
+    const nextIndex = Math.round(
+      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+        React.Children.count(children),
+    );
+    if (nextIndex !== shownIndex) {
+      setShownIndex(nextIndex);
+      onShownIndexChange(nextIndex);
+    }
+  }
 
   return (
     <Flex
@@ -118,7 +103,6 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onTouchMove={increaseScrollingTimeout}
       onScroll={handleScroll}
       {...restProps}
     >
