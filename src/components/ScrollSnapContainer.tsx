@@ -34,6 +34,7 @@ export default function ScrollSnapContainer({
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
   const [shownIndex, setShownIndex] = useState(0);
+  const isScrollObserverEnabled = useRef(false);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -45,6 +46,7 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
+    isScrollObserverEnabled.current = false;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,6 +59,7 @@ export default function ScrollSnapContainer({
   const hasRendered = useRef(false);
   useEffect(() => {
     if (targetIndex != null) {
+      isScrollObserverEnabled.current = true;
       scroll(
         ref.current!,
         targetIndex,
@@ -66,7 +69,19 @@ export default function ScrollSnapContainer({
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
 
-  // TODO: Track shown element's index based on scroll position
+  // Track shown element's index based on scroll position
+  function handleScroll() {
+    if (isScrollObserverEnabled.current) {
+      const nextIndex = Math.round(
+        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
+      if (nextIndex !== shownIndex) {
+        setShownIndex(nextIndex);
+        onShownIndexChange(nextIndex);
+      }
+    }
+  }
 
   return (
     <Flex
@@ -91,16 +106,10 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={() => {
-        const nextIndex = Math.round(
-          (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-            React.Children.count(children),
-        );
-        if (nextIndex !== shownIndex) {
-          setShownIndex(nextIndex);
-          onShownIndexChange(nextIndex);
-        }
+      onTouchStart={() => {
+        isScrollObserverEnabled.current = true;
       }}
+      onScroll={handleScroll}
       {...restProps}
     >
       {children}
