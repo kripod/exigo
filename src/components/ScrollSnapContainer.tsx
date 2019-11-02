@@ -8,7 +8,7 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-const IS_RESIZING_DEBOUNCE_INTERVAL_MS = 150;
+const IS_RESIZING_DEBOUNCE_INTERVAL_MS = 250;
 
 function scroll(
   container: HTMLElement,
