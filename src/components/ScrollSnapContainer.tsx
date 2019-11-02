@@ -51,9 +51,6 @@ export default function ScrollSnapContainer({
   const [windowWidth] = useWindowSize();
   useEffect(() => {
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
-    if (targetIndex == null) {
-      alert(`restored to shownIndex: ${shownIndex}`);
-    }
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
@@ -90,6 +87,7 @@ export default function ScrollSnapContainer({
       scrollingTimeoutID.current = window.setTimeout(() => {
         scrollingTimeoutID.current = 0;
         allowScrolling.current = false;
+        scroll(ref.current!, shownIndex); // Fix scroll positioning on iOS
         onTargetIndexChange(null);
       }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
     }
@@ -98,7 +96,7 @@ export default function ScrollSnapContainer({
   return (
     <Flex
       ref={ref}
-      overflow={
+      overflowX={
         // Disable user-initiated scrolling when a target is specified
         targetIndex != null ? 'hidden' : 'auto'
       }
