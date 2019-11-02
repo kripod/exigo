@@ -80,6 +80,7 @@ export default function ScrollSnapContainer({
         React.Children.count(children),
     );
     if (nextIndex !== shownIndex) {
+      alert('handle scroll');
       onShownIndexChange(nextIndex);
       onTargetIndexChange(null);
     }
