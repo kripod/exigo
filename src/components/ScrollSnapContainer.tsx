@@ -74,6 +74,7 @@ export default function ScrollSnapContainer({
   const allowScrolling = useRef(false);
   function handleScroll() {
     if (allowScrolling.current) {
+      alert('scroll');
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -87,7 +88,6 @@ export default function ScrollSnapContainer({
       scrollingTimeoutID.current = window.setTimeout(() => {
         scrollingTimeoutID.current = 0;
         allowScrolling.current = false;
-        scroll(ref.current!, shownIndex); // Fix scroll positioning on iOS
         onTargetIndexChange(null);
       }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
     }
