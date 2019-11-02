@@ -43,7 +43,7 @@ export default function ScrollSnapContainer({
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
-  const isScrollObserverDisabled = useRef(false);
+  const isScrollObserverEnabled = useRef(false);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -55,7 +55,7 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
-    isScrollObserverDisabled.current = true;
+    isScrollObserverEnabled.current = false;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,6 +67,7 @@ export default function ScrollSnapContainer({
   // Scroll to the desired target each time it changes
   useEffect(() => {
     if (targetIndex != null) {
+      isScrollObserverEnabled.current = true;
       scroll(
         ref.current!,
         targetIndex,
@@ -77,17 +78,18 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   function handleScroll() {
-    if (isScrollObserverDisabled.current) {
-      isScrollObserverDisabled.current = false;
-    } else {
-      const nextIndex = Math.round(
-        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-          React.Children.count(children),
-      );
+    const nextIndex = Math.round(
+      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+        React.Children.count(children),
+    );
+    if (isScrollObserverEnabled.current) {
       if (nextIndex !== shownIndex) {
         onShownIndexChange(nextIndex);
         onTargetIndexChange(null);
       }
+    } else if (nextIndex === shownIndex) {
+      // Re-enable observer once the scroll position has been restored
+      isScrollObserverEnabled.current = true;
     }
   }
 
