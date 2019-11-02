@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
@@ -34,9 +34,8 @@ export default function CarouselRotator({
 
   // Keep amount of slides updated
   useEffect(() => {
-    const nextTotalCount = React.Children.count(children);
-    if (nextTotalCount !== totalCount) setTotalCount(nextTotalCount);
-  }, [children, setTotalCount, totalCount]);
+    setTotalCount(React.Children.count(children));
+  });
 
   // Auto-rotate slides if desired
   useInterval(
@@ -50,6 +49,7 @@ export default function CarouselRotator({
 
   return (
     <ScrollSnapContainer
+      shownIndex={shownIndex}
       targetIndex={targetIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
@@ -57,18 +57,8 @@ export default function CarouselRotator({
         // Disable mouse wheel scrolling between slides
         if (e.button === 1) e.preventDefault();
       }}
-      overflow={
-        // Disable user-initiated scrolling when a target is specified
-        targetIndex != null ? 'hidden' : 'auto'
-      }
-      onShownIndexChange={useCallback(
-        index => {
-          // Clear target as soon as a change happens
-          setTargetIndex(null);
-          setShownIndex(index);
-        },
-        [setShownIndex, setTargetIndex],
-      )}
+      onShownIndexChange={setShownIndex}
+      onTargetIndexChange={setTargetIndex}
       {...restProps}
     >
       {React.Children.map(children, (child, i) => (

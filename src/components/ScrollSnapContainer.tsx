@@ -1,12 +1,14 @@
 import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   usePreferredMotionIntensity,
   useSize,
   useWindowSize,
 } from 'web-api-hooks';
+
+const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
 
 function scroll(
   container: HTMLElement,
@@ -21,26 +23,22 @@ function scroll(
 }
 
 export interface ScrollSnapContainerProps extends FlexProps {
-  targetIndex?: number | null;
+  shownIndex: number;
+  targetIndex: number | null;
   onShownIndexChange: (index: number) => void;
+  onTargetIndexChange: (index: null) => void;
 }
 
 export default function ScrollSnapContainer({
   children,
+  shownIndex,
   targetIndex,
   onShownIndexChange,
+  onTargetIndexChange,
   ...restProps
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
-  const [shownIndex, setShownIndex] = useState(0);
-
-  // Track shown element's index based on scroll position
-  const [nextIndex, setNextIndex] = useState(0);
-  useEffect(() => {
-    setShownIndex(nextIndex);
-    // TODO: onShownIndexChange(nextIndex);
-  }, [nextIndex, onShownIndexChange]);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -60,22 +58,43 @@ export default function ScrollSnapContainer({
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
-  // Scroll to the desired target initially and then each time it changes
-  const hasRendered = useRef(false);
+  // Scroll to the desired target each time it changes
   useEffect(() => {
     if (targetIndex != null) {
       scroll(
         ref.current!,
         targetIndex,
-        preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
+        preferReducedMotion ? 'auto' : 'smooth',
       );
     }
-    hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
+
+  // Track shown element's index based on scroll position
+  const scrollingTimeoutID = useRef(0);
+  function handleScroll() {
+    const nextIndex = Math.round(
+      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+        React.Children.count(children),
+    );
+    if (nextIndex !== shownIndex) {
+      onShownIndexChange(nextIndex);
+    }
+
+    // Clear target as soon as auto-scrolling has finished
+    window.clearTimeout(scrollingTimeoutID.current);
+    scrollingTimeoutID.current = window.setTimeout(() => {
+      scrollingTimeoutID.current = 0;
+      onTargetIndexChange(null);
+    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+  }
 
   return (
     <Flex
       ref={ref}
+      overflow={
+        // Disable user-initiated scrolling when a target is specified
+        targetIndex != null ? 'hidden' : 'auto'
+      }
       css={css`
         /* Support every version of CSS Scroll Snap */
         scroll-snap-type-x: mandatory;
@@ -96,14 +115,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={() => {
-        setNextIndex(
-          Math.round(
-            (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-              React.Children.count(children),
-          ),
-        );
-      }}
+      onScroll={handleScroll}
       {...restProps}
     >
       {children}
