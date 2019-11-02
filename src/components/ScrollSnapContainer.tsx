@@ -8,6 +8,8 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
+const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
+
 function scroll(
   container: HTMLElement,
   targetIndex: number,
@@ -43,7 +45,16 @@ export default function ScrollSnapContainer({
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
-  const isScrollObserverEnabled = useRef(false);
+
+  const isScrollObserverDisabled = useRef(false);
+  const scrollingTimeoutID = useRef(0);
+  function restartScrollingTimeout() {
+    window.clearTimeout(scrollingTimeoutID.current);
+    scrollingTimeoutID.current = window.setTimeout(() => {
+      scrollingTimeoutID.current = 0;
+      isScrollObserverDisabled.current = false;
+    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+  }
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -55,7 +66,7 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
-    isScrollObserverEnabled.current = false;
+    isScrollObserverDisabled.current = true;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,7 +78,7 @@ export default function ScrollSnapContainer({
   // Scroll to the desired target each time it changes
   useEffect(() => {
     if (targetIndex != null) {
-      isScrollObserverEnabled.current = true;
+      isScrollObserverDisabled.current = false;
       scroll(
         ref.current!,
         targetIndex,
@@ -78,18 +89,17 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   function handleScroll() {
-    const nextIndex = Math.round(
-      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-        React.Children.count(children),
-    );
-    if (isScrollObserverEnabled.current) {
+    if (isScrollObserverDisabled.current) {
+      restartScrollingTimeout();
+    } else {
+      const nextIndex = Math.round(
+        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
       if (nextIndex !== shownIndex) {
         onShownIndexChange(nextIndex);
         onTargetIndexChange(null);
       }
-    } else if (nextIndex === shownIndex) {
-      // Re-enable observer once the scroll position has been restored
-      isScrollObserverEnabled.current = true;
     }
   }
 
