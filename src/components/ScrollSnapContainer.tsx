@@ -109,10 +109,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onTouchStart={() => {
-        isScrollObserverEnabled.current = true;
-      }}
-      onScroll={handleScroll}
+      onScroll={() => {}}
       {...restProps}
     >
       {children}
