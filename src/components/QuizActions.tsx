@@ -28,18 +28,18 @@ export default function QuizActions({
   onSurrender,
   ...restProps
 }: QuizActionsProps) {
-  const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
+  const { shownIndex, setTargetIndex, totalCount } = useCarouselControls();
   const shownItem = remainingItems[shownIndex];
   const currentResponse = responses[shownItem.id];
 
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
 
   function goToNext() {
-    setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
+    setTargetIndex(prevIndex => (prevIndex + 1) % totalCount);
   }
 
   function goToPrev() {
-    setShownIndex(prevIndex => (prevIndex - 1 + totalCount) % totalCount);
+    setTargetIndex(prevIndex => (prevIndex - 1 + totalCount) % totalCount);
   }
 
   return (

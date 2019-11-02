@@ -24,9 +24,9 @@ function scroll(
 
 export interface ScrollSnapContainerProps extends FlexProps {
   shownIndex: number;
-  targetIndex: number | null;
+  targetIndex: number;
   onShownIndexChange: (index: number) => void;
-  onTargetIndexChange: (index: null) => void;
+  onTargetIndexChange: (index: number) => void;
 }
 
 export default function ScrollSnapContainer({
@@ -50,7 +50,7 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
-    scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
+    scroll(ref.current!, targetIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
@@ -63,7 +63,7 @@ export default function ScrollSnapContainer({
     scrollingTimeoutID.current = window.setTimeout(() => {
       scrollingTimeoutID.current = 0;
       allowScrolling.current = false;
-      onTargetIndexChange(null);
+      onTargetIndexChange(shownIndex);
     }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
   }
 
@@ -79,8 +79,6 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion ? 'auto' : 'smooth',
       );
-      onShownIndexChange(targetIndex); // TODO: Remove
-      onTargetIndexChange(null);
     }
   }, [
     onShownIndexChange,
@@ -91,7 +89,6 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   function handleScroll() {
-    /*
     if (allowScrolling.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
@@ -102,7 +99,6 @@ export default function ScrollSnapContainer({
       }
       restartScrollingTimeout();
     }
-    */
   }
 
   return (

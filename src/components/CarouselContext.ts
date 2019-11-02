@@ -6,7 +6,7 @@ const CarouselContext = React.createContext<
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
-    [number | null, React.Dispatch<React.SetStateAction<number | null>>],
+    [number, React.Dispatch<React.SetStateAction<number>>],
     [number, React.Dispatch<React.SetStateAction<number>>],
     [boolean, React.Dispatch<React.SetStateAction<boolean>>],
   ]
@@ -15,7 +15,7 @@ const CarouselContext = React.createContext<
   /* isFocused: */ [false, () => {}],
   /* [disableAutoPause, setDisableAutoPause]: */ [false, () => {}],
   /* [shownIndex, setShownIndex]: */ [0, () => {}],
-  /* [targetIndex, setTargetIndex]: */ [null, () => {}],
+  /* [targetIndex, setTargetIndex]: */ [0, () => {}],
   /* [totalCount, setTotalCount]: */ [1, () => {}],
   /* [isPlaying, setPlaying]: */ [false, () => {}],
 ]);

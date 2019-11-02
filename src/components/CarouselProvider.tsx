@@ -19,7 +19,7 @@ export default function CarouselProvider({
         useState<boolean>(false),
         useState<boolean>(false),
         useState(initialIndex),
-        useState<number | null>(null),
+        useState(initialIndex),
         useState(initialIndex + 1),
         useState(autoPlay),
       ]}
