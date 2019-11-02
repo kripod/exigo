@@ -8,6 +8,11 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
+// TODO: Follow the status of element scrolling methods and remove polyfill
+import 'scroll-behavior-polyfill';
+
+// TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
+
 function scroll(
   container: HTMLElement,
   targetIndex: number,
