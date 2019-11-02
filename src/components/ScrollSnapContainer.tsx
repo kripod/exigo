@@ -108,7 +108,10 @@ export default function ScrollSnapContainer({
   return (
     <Flex
       ref={ref}
-      overflowX="auto"
+      overflowX={
+        // Disable user-initiated scrolling when a target is specified
+        targetIndex != null ? 'hidden' : 'auto'
+      }
       css={css`
         /* Support every version of CSS Scroll Snap */
         scroll-snap-type-x: mandatory;
@@ -119,6 +122,7 @@ export default function ScrollSnapContainer({
 
         /* Optimize scrolling behavior */
         will-change: scroll-position;
+        -webkit-overflow-scrolling: touch;
 
         /* Hide scrollbar */
         /* TODO: Leave vendor prefixing to the underlying library */
