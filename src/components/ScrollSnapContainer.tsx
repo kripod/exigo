@@ -8,18 +8,20 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
-
 function scroll(
   container: HTMLElement,
   targetIndex: number,
   behavior: ScrollOptions['behavior'] = 'auto',
 ) {
+  /* eslint-disable no-param-reassign */
   const targetChild = container.children[targetIndex] as HTMLElement;
+  container.style.overflowX = 'hidden';
   container.scroll({
     left: targetChild.offsetLeft,
     behavior,
   });
+  container.style.overflowX = 'auto';
+  /* eslint-enable no-param-reassign */
 }
 
 export interface ScrollSnapContainerProps extends FlexProps {
@@ -82,16 +84,14 @@ export default function ScrollSnapContainer({
     );
     if (nextIndex !== shownIndex) {
       onShownIndexChange(nextIndex);
+      onTargetIndexChange(null);
     }
   }
 
   return (
     <Flex
       ref={ref}
-      overflowX={
-        // Disable user-initiated scrolling when a target is specified
-        targetIndex != null ? 'hidden' : 'auto'
-      }
+      overflowX="auto"
       css={css`
         /* Support every version of CSS Scroll Snap */
         scroll-snap-type-x: mandatory;
