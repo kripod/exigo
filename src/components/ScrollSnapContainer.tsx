@@ -92,6 +92,7 @@ export default function ScrollSnapContainer({
         scroll-snap-points-x: repeat(100%);
 
         /* Optimize scrolling behavior */
+        touch-action: pan-x;
         will-change: scroll-position;
         -webkit-overflow-scrolling: touch;
 
