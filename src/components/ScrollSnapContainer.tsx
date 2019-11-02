@@ -2,7 +2,6 @@ import { Flex, FlexProps } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
-import { useChanging } from 'state-hooks';
 import {
   usePreferredMotionIntensity,
   useSize,
@@ -45,12 +44,11 @@ export default function ScrollSnapContainer({
   );
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
-  const isWidthChanging = useChanging(width);
   useEffect(() => {
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, windowWidth, isWidthChanging]);
+  }, [width, windowWidth]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
@@ -69,16 +67,11 @@ export default function ScrollSnapContainer({
   }, [preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
-  function handleScroll() {
-    const nextIndex = Math.round(
-      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-        React.Children.count(children),
-    );
-    if (nextIndex !== shownIndex) {
-      setShownIndex(nextIndex);
-      onShownIndexChange(nextIndex);
-    }
-  }
+  const [nextIndex, setNextIndex] = useState(0);
+  useEffect(() => {
+    setShownIndex(nextIndex);
+    onShownIndexChange(nextIndex);
+  }, [nextIndex, onShownIndexChange]);
 
   return (
     <Flex
@@ -104,7 +97,14 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={handleScroll}
+      onScroll={() => {
+        setNextIndex(
+          Math.round(
+            (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+              React.Children.count(children),
+          ),
+        );
+      }}
       {...restProps}
     >
       {children}
