@@ -51,6 +51,9 @@ export default function ScrollSnapContainer({
   const [windowWidth] = useWindowSize();
   useEffect(() => {
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
+    if (targetIndex == null) {
+      alert(`restored to shownIndex: ${shownIndex}`);
+    }
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
@@ -66,27 +69,30 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion ? 'auto' : 'smooth',
       );
-      onShownIndexChange(targetIndex);
     }
   }, [onShownIndexChange, preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
   const scrollingTimeoutID = useRef(0);
+  const allowScrolling = useRef(false);
   function handleScroll() {
-    const nextIndex = Math.round(
-      (ref.current!.scrollLeft / ref.current!.scrollWidth) *
-        React.Children.count(children),
-    );
-    if (nextIndex !== shownIndex) {
-      onShownIndexChange(nextIndex);
-    }
+    if (allowScrolling.current) {
+      const nextIndex = Math.round(
+        (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+          React.Children.count(children),
+      );
+      if (nextIndex !== shownIndex) {
+        onShownIndexChange(nextIndex);
+      }
 
-    // Clear target as soon as auto-scrolling has finished
-    window.clearTimeout(scrollingTimeoutID.current);
-    scrollingTimeoutID.current = window.setTimeout(() => {
-      scrollingTimeoutID.current = 0;
-      onTargetIndexChange(null);
-    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+      // Clear target as soon as auto-scrolling has finished
+      window.clearTimeout(scrollingTimeoutID.current);
+      scrollingTimeoutID.current = window.setTimeout(() => {
+        scrollingTimeoutID.current = 0;
+        allowScrolling.current = false;
+        onTargetIndexChange(null);
+      }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+    }
   }
 
   return (
@@ -116,7 +122,10 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      /* onScroll={handleScroll} */
+      onTouchMove={() => {
+        allowScrolling.current = true;
+      }}
+      onScroll={handleScroll}
       {...restProps}
     >
       {children}
