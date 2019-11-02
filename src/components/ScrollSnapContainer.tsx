@@ -13,8 +13,10 @@ function scroll(
   targetIndex: number,
   behavior: ScrollOptions['behavior'] = 'auto',
 ) {
-  /* eslint-disable no-param-reassign */
   const targetChild = container.children[targetIndex] as HTMLElement;
+  /* eslint-disable no-param-reassign */
+  // Fix momentum-based scrolling issues on iOS
+  // See: https://www.popmotion.io/blog/20170704-manually-set-scroll-while-ios-momentum-scroll-bounces/
   container.style.overflowX = 'hidden';
   container.scroll({
     left: targetChild.offsetLeft,
