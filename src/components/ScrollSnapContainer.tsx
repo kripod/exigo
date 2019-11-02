@@ -54,6 +54,7 @@ export default function ScrollSnapContainer({
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
       );
+      alert(nextIndex);
       if (nextIndex !== shownIndex) {
         setShownIndex(nextIndex);
         onShownIndexChange(nextIndex);
@@ -118,7 +119,7 @@ export default function ScrollSnapContainer({
         scrollbar-width: none;
       `}
       onTouchMove={increaseScrollingTimeout}
-      /* onScroll={handleScroll} */
+      onScroll={handleScroll}
       {...restProps}
     >
       {children}
