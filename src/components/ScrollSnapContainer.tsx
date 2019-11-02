@@ -55,26 +55,36 @@ export default function ScrollSnapContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
 
+  // Track scrolling and clear target as soon as auto-scrolling has finished
+  const scrollingTimeoutID = useRef(0);
+  const allowScrolling = useRef(false);
+  function restartScrollingTimeout() {
+    window.clearTimeout(scrollingTimeoutID.current);
+    scrollingTimeoutID.current = window.setTimeout(() => {
+      scrollingTimeoutID.current = 0;
+      allowScrolling.current = false;
+      onTargetIndexChange(null);
+    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+  }
+
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
   // Scroll to the desired target each time it changes
   useEffect(() => {
     if (targetIndex != null) {
+      allowScrolling.current = true;
       scroll(
         ref.current!,
         targetIndex,
         preferReducedMotion ? 'auto' : 'smooth',
       );
     }
-  }, [onShownIndexChange, preferReducedMotion, targetIndex]);
+  }, [preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
-  const scrollingTimeoutID = useRef(0);
-  const allowScrolling = useRef(false);
   function handleScroll() {
     if (allowScrolling.current) {
-      alert('scroll');
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -82,14 +92,7 @@ export default function ScrollSnapContainer({
       if (nextIndex !== shownIndex) {
         onShownIndexChange(nextIndex);
       }
-
-      // Clear target as soon as auto-scrolling has finished
-      window.clearTimeout(scrollingTimeoutID.current);
-      scrollingTimeoutID.current = window.setTimeout(() => {
-        scrollingTimeoutID.current = 0;
-        allowScrolling.current = false;
-        onTargetIndexChange(null);
-      }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+      restartScrollingTimeout();
     }
   }
 
