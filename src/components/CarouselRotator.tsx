@@ -1,18 +1,16 @@
+import { FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
-import ScrollSnapContainer, {
-  ScrollSnapContainerProps,
-} from './ScrollSnapContainer';
+import ScrollSnapContainer from './ScrollSnapContainer';
 
 // TODO: Follow the status of element scrolling methods and remove polyfill
 import 'scroll-behavior-polyfill';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
-export interface CarouselRotatorProps
-  extends Omit<ScrollSnapContainerProps, 'onShownIndexChange'> {
+export interface CarouselRotatorProps extends FlexProps {
   children?: React.ReactElement | React.ReactElement[];
   playInterval?: number;
 }
