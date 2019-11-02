@@ -8,8 +8,6 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-const IS_RESIZING_DEBOUNCE_INTERVAL_MS = 150;
-
 function scroll(
   container: HTMLElement,
   targetIndex: number,
@@ -45,7 +43,7 @@ export default function ScrollSnapContainer({
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
-  const isScrollObserverDisabled = useRef(false);
+  const isScrollObserverEnabled = useRef(false);
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -57,14 +55,8 @@ export default function ScrollSnapContainer({
   // Handle device orientation changes properly on iOS
   const [windowWidth] = useWindowSize();
   useEffect(() => {
-    isScrollObserverDisabled.current = true;
+    isScrollObserverEnabled.current = false;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
-    const timeoutID = window.setTimeout(() => {
-      isScrollObserverDisabled.current = false;
-    }, IS_RESIZING_DEBOUNCE_INTERVAL_MS);
-    return () => {
-      window.clearTimeout(timeoutID);
-    };
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
@@ -75,7 +67,7 @@ export default function ScrollSnapContainer({
   // Scroll to the desired target each time it changes
   useEffect(() => {
     if (targetIndex != null) {
-      isScrollObserverDisabled.current = false;
+      isScrollObserverEnabled.current = true;
       scroll(
         ref.current!,
         targetIndex,
@@ -86,7 +78,7 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   function handleScroll() {
-    if (!isScrollObserverDisabled.current) {
+    if (isScrollObserverEnabled.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
@@ -122,6 +114,9 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
+      onTouchMove={() => {
+        isScrollObserverEnabled.current = true;
+      }}
       onScroll={handleScroll}
       {...restProps}
     >
