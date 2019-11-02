@@ -8,7 +8,7 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
+const IS_RESIZING_DEBOUNCE_INTERVAL_MS = 150;
 
 function scroll(
   container: HTMLElement,
@@ -45,16 +45,7 @@ export default function ScrollSnapContainer({
 }: ScrollSnapContainerProps) {
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
-
   const isScrollObserverDisabled = useRef(false);
-  const scrollingTimeoutID = useRef(0);
-  function restartScrollingTimeout() {
-    window.clearTimeout(scrollingTimeoutID.current);
-    scrollingTimeoutID.current = window.setTimeout(() => {
-      scrollingTimeoutID.current = 0;
-      isScrollObserverDisabled.current = false;
-    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
-  }
 
   // Re-snap scroll position when content of the snapport changes
   // TODO: Remove when browsers handle this natively
@@ -68,6 +59,12 @@ export default function ScrollSnapContainer({
   useEffect(() => {
     isScrollObserverDisabled.current = true;
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
+    const timeoutID = window.setTimeout(() => {
+      isScrollObserverDisabled.current = false;
+    }, IS_RESIZING_DEBOUNCE_INTERVAL_MS);
+    return () => {
+      window.clearTimeout(timeoutID);
+    };
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, windowWidth]);
@@ -89,9 +86,7 @@ export default function ScrollSnapContainer({
 
   // Track shown element's index based on scroll position
   function handleScroll() {
-    if (isScrollObserverDisabled.current) {
-      restartScrollingTimeout();
-    } else {
+    if (!isScrollObserverDisabled.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
