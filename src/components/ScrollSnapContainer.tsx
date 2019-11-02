@@ -71,12 +71,7 @@ export default function ScrollSnapContainer({
         preferReducedMotion ? 'auto' : 'smooth',
       );
     }
-  }, [
-    onShownIndexChange,
-    onTargetIndexChange,
-    preferReducedMotion,
-    targetIndex,
-  ]);
+  }, [preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
   function handleScroll() {
