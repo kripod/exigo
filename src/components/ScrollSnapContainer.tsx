@@ -62,7 +62,6 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion || !hasRendered.current ? 'auto' : 'smooth',
       );
-      setShownIndex(targetIndex); // TODO: Remove
     }
     hasRendered.current = true;
   }, [preferReducedMotion, targetIndex]);
@@ -92,6 +91,16 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
+      onScroll={() => {
+        const nextIndex = Math.round(
+          (ref.current!.scrollLeft / ref.current!.scrollWidth) *
+            React.Children.count(children),
+        );
+        if (nextIndex !== shownIndex) {
+          setShownIndex(nextIndex);
+          onShownIndexChange(nextIndex);
+        }
+      }}
       {...restProps}
     >
       {children}
