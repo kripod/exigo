@@ -79,11 +79,13 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion ? 'auto' : 'smooth',
       );
+      onShownIndexChange(targetIndex); // TODO: Remove
     }
-  }, [preferReducedMotion, targetIndex]);
+  }, [onShownIndexChange, preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
   function handleScroll() {
+    /*
     if (allowScrolling.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
@@ -94,6 +96,7 @@ export default function ScrollSnapContainer({
       }
       restartScrollingTimeout();
     }
+    */
   }
 
   return (
