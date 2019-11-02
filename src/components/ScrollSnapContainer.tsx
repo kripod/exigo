@@ -66,8 +66,9 @@ export default function ScrollSnapContainer({
         targetIndex,
         preferReducedMotion ? 'auto' : 'smooth',
       );
+      onShownIndexChange(targetIndex);
     }
-  }, [preferReducedMotion, targetIndex]);
+  }, [onShownIndexChange, preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
   const scrollingTimeoutID = useRef(0);
@@ -115,7 +116,7 @@ export default function ScrollSnapContainer({
         -ms-overflow-style: none;
         scrollbar-width: none;
       `}
-      onScroll={handleScroll}
+      /* onScroll={handleScroll} */
       {...restProps}
     >
       {children}
