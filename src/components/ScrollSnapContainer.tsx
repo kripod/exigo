@@ -13,6 +13,11 @@ import 'scroll-behavior-polyfill';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
 
+let isWebKit = false;
+if (typeof CSS !== 'undefined' && CSS.supports('-webkit-touch-callout: none')) {
+  isWebKit = true;
+}
+
 function scroll(
   container: HTMLElement,
   targetIndex: number,
@@ -22,12 +27,12 @@ function scroll(
   /* eslint-disable no-param-reassign */
   // Fix momentum-based scrolling issues on iOS
   // See: https://www.popmotion.io/blog/20170704-manually-set-scroll-while-ios-momentum-scroll-bounces/
-  container.style.overflowX = 'hidden';
+  if (isWebKit) container.style.overflowX = 'hidden';
   container.scroll({
     left: targetChild.offsetLeft,
     behavior,
   });
-  container.style.overflowX = 'auto';
+  if (isWebKit) container.style.overflowX = 'auto';
   /* eslint-enable no-param-reassign */
 }
 
