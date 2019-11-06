@@ -14,7 +14,7 @@ export default function CarouselIconButton(props: CarouselIconButtonProps) {
       fontSize="3xl"
       isRound
       css={css`
-        touch-action: manipulation;
+        touch-action: none;
       `}
       {...props}
     />
