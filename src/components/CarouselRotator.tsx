@@ -8,6 +8,8 @@ import ScrollSnapContainer from './ScrollSnapContainer';
 export interface CarouselRotatorProps extends FlexProps {
   children?: React.ReactElement | React.ReactElement[];
   playInterval?: number;
+  ignoreTargetChange?: boolean;
+  onScrollEnd?(): void;
 }
 
 export default function CarouselRotator({

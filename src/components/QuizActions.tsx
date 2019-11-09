@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -19,12 +19,14 @@ import QuizResponses from '../models/QuizResponses';
 export interface QuizActionsProps extends StackProps {
   remainingItems: QuizItem[];
   responses: QuizResponses;
+  isSurrendering?: boolean;
   onSurrender: (item: QuizItem) => void;
 }
 
 export default function QuizActions({
   remainingItems,
   responses,
+  isSurrendering = false,
   onSurrender,
   ...restProps
 }: QuizActionsProps) {
@@ -53,7 +55,7 @@ export default function QuizActions({
             ? { variantColor: 'blue' }
             : { variant: 'outline' })}
           borderWidth={1}
-          onClick={goToNext}
+          onClick={!isSurrendering ? goToNext : undefined}
         >
           Next
         </Button>
@@ -62,7 +64,7 @@ export default function QuizActions({
           aria-label="Previous item"
           leftIcon="chevron-left"
           variant="outline"
-          onClick={goToPrev}
+          onClick={!isSurrendering ? goToPrev : undefined}
         >
           Previous
         </Button>
@@ -99,6 +101,7 @@ export default function QuizActions({
                   <Button
                     variantColor="red"
                     onClick={() => {
+                      goToNext();
                       onSurrender(shownItem);
                       if (onClose) onClose(); // TODO: onClose?();
                     }}

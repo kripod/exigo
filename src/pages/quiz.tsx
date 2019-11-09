@@ -29,12 +29,27 @@ export default function QuizPage({
   const [remainingItems, setRemainingItems] = useState(items);
   const [responses, setResponses] = useState<QuizResponses>({});
 
+  const [surrenderedItem, setSurrenderedItem] = useState<QuizItem>();
+
   return (
     <Layout>
       <Measure mx="auto">
         <CarouselProvider>
           <CarouselContainer mt={-6}>
             <CarouselRotator
+              ignoreTargetChange={surrenderedItem != null}
+              onScrollEnd={() => {
+                if (surrenderedItem != null) {
+                  setSurrenderedItem(undefined);
+                  setRemainingItems(prevRemainingItems => {
+                    const index = prevRemainingItems.indexOf(surrenderedItem);
+                    return [
+                      ...prevRemainingItems.slice(0, index),
+                      ...prevRemainingItems.slice(index + 1),
+                    ];
+                  });
+                }
+              }}
               // TODO: Use `sx` prop when Chakra switches to Theme UI
               css={theme => css`
                 > * {
@@ -66,17 +81,10 @@ export default function QuizPage({
           <QuizActions
             remainingItems={remainingItems}
             responses={responses}
+            isSurrendering={surrenderedItem != null}
             mt={2}
             px={4}
-            onSurrender={item => {
-              setRemainingItems(prevRemainingItems => {
-                const index = prevRemainingItems.indexOf(item);
-                return [
-                  ...prevRemainingItems.slice(0, index),
-                  ...prevRemainingItems.slice(index + 1),
-                ];
-              });
-            }}
+            onSurrender={setSurrenderedItem}
           />
         </CarouselProvider>
       </Measure>

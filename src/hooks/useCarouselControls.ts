@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import CarouselContext from '../components/CarouselContext';
 
 export default function useCarouselControls() {
@@ -6,7 +6,7 @@ export default function useCarouselControls() {
     ,
     ,
     ,
-    [shownIndex],
+    [shownIndex, setShownIndex],
     [, setTargetIndex],
     [totalCount],
     [isPlaying, setPlaying],
@@ -14,20 +14,27 @@ export default function useCarouselControls() {
 
   return {
     shownIndex,
-    setShownIndex(value: React.SetStateAction<number>) {
-      setTargetIndex(prevTargetIndex => {
-        const prevIndex =
-          prevTargetIndex != null ? prevTargetIndex : shownIndex;
-        return typeof value === 'function'
-          ? value(prevIndex)
-          : value + prevIndex;
-      });
-    },
+    setShownIndex: useCallback(
+      (value: React.SetStateAction<number>) => {
+        // Avoid adding a dependency to `shownIndex`
+        setShownIndex(prevShownIndex => {
+          setTargetIndex(prevTargetIndex => {
+            const prevIndex =
+              prevTargetIndex != null ? prevTargetIndex : prevShownIndex;
+            return typeof value === 'function'
+              ? value(prevIndex)
+              : value + prevIndex;
+          });
+          return prevShownIndex;
+        });
+      },
+      [setShownIndex, setTargetIndex],
+    ),
     totalCount,
 
     isPlaying,
-    togglePlaying() {
+    togglePlaying: useCallback(() => {
       setPlaying(prevPlaying => !prevPlaying);
-    },
+    }, [setPlaying]),
   };
 }

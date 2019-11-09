@@ -1,4 +1,7 @@
-import { Flex, FlexProps } from '@chakra-ui/core';
+// TODO: Follow the status of element scrolling methods and remove polyfill
+import 'scroll-behavior-polyfill';
+
+import { Flex, FlexProps, usePrevious } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import ResizeObserverPolyfill from '@juggle/resize-observer';
 import React, { useEffect, useRef } from 'react';
@@ -8,10 +11,11 @@ import {
   useWindowSize,
 } from 'web-api-hooks';
 
-// TODO: Follow the status of element scrolling methods and remove polyfill
-import 'scroll-behavior-polyfill';
+import useCarouselControls from '../hooks/useCarouselControls';
 
 // TODO: https://www.w3.org/TR/wai-aria-practices-1.1/#tabbed-carousel-elements
+
+const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
 
 let isWebKit = false;
 if (typeof CSS !== 'undefined' && CSS.supports('-webkit-touch-callout: none')) {
@@ -39,18 +43,25 @@ function scroll(
 export interface ScrollSnapContainerProps extends FlexProps {
   shownIndex: number;
   targetIndex: number | null;
+  ignoreTargetChange?: boolean;
   onShownIndexChange: (index: number) => void;
   onTargetIndexChange: (index: null) => void;
+  onScrollEnd?: () => void;
 }
 
 export default function ScrollSnapContainer({
   children,
   shownIndex,
   targetIndex,
+  ignoreTargetChange = false,
   onShownIndexChange,
   onTargetIndexChange,
+  onScrollEnd,
   ...restProps
 }: ScrollSnapContainerProps) {
+  // TODO: Move quiz-specific surrender logic outside of this generic component
+  const { totalCount } = useCarouselControls();
+
   /* eslint-disable @typescript-eslint/no-non-null-assertion */
   const ref = useRef<HTMLElement>(null);
   const isScrollObserverEnabled = useRef(false);
@@ -69,14 +80,18 @@ export default function ScrollSnapContainer({
     scroll(ref.current!, targetIndex != null ? targetIndex : shownIndex);
     // Changing indexes shall not have an effect on scroll restoration
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, windowWidth]);
+  }, [width, windowWidth, totalCount]);
 
   // TODO: Replace this check with CSS when no polyfill is required
   const preferReducedMotion = usePreferredMotionIntensity() === 'reduce';
 
   // Scroll to the desired target each time it changes
+  const prevIgnoreTargetChange = usePrevious(ignoreTargetChange);
   useEffect(() => {
-    if (targetIndex != null) {
+    if (
+      !(ignoreTargetChange && prevIgnoreTargetChange) &&
+      targetIndex != null
+    ) {
       isScrollObserverEnabled.current = true;
       scroll(
         ref.current!,
@@ -84,17 +99,28 @@ export default function ScrollSnapContainer({
         preferReducedMotion ? 'auto' : 'smooth',
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preferReducedMotion, targetIndex]);
 
   // Track shown element's index based on scroll position
+  const scrollingTimeoutID = useRef(0);
   function handleScroll() {
+    window.clearTimeout(scrollingTimeoutID.current);
+    scrollingTimeoutID.current = window.setTimeout(() => {
+      scrollingTimeoutID.current = 0;
+      if (onScrollEnd) onScrollEnd(); // TODO: onScrollEnd?();
+    }, IS_SCROLLING_DEBOUNCE_INTERVAL_MS);
+
     if (isScrollObserverEnabled.current) {
       const nextIndex = Math.round(
         (ref.current!.scrollLeft / ref.current!.scrollWidth) *
           React.Children.count(children),
       );
       if (nextIndex !== shownIndex) {
-        onShownIndexChange(nextIndex);
+        onShownIndexChange(
+          // Restore carousel scroll position after surrendering
+          !ignoreTargetChange ? nextIndex : Math.max(0, nextIndex - 1),
+        );
         onTargetIndexChange(null);
       }
     }
@@ -111,6 +137,9 @@ export default function ScrollSnapContainer({
         scroll-snap-type: x mandatory;
         -ms-scroll-snap-points-x: snapInterval(0, 100%);
         scroll-snap-points-x: repeat(100%);
+
+        /* Disable scrolling when necessary */
+        touch-action: ${ignoreTargetChange ? 'none' : 'auto'};
 
         /* Optimize scrolling behavior */
         overscroll-behavior: contain;
