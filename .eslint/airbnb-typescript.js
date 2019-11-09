@@ -13,6 +13,9 @@ const {
 } = require('eslint-config-airbnb-base/rules/errors');
 const { rules: baseES6Rules } = require('eslint-config-airbnb-base/rules/es6');
 const {
+  rules: baseImportsRules,
+} = require('eslint-config-airbnb-base/rules/imports');
+const {
   rules: baseStyleRules,
 } = require('eslint-config-airbnb-base/rules/style');
 const {
@@ -41,6 +44,22 @@ module.exports = {
   rules: {
     // Allow .tsx files to have JSX
     'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.tsx'] }],
+
+    // Append `ts` and `tsx` extensions to Airbnb 'import/no-extraneous-dependencies' rule
+    'import/no-extraneous-dependencies': [
+      baseImportsRules['import/no-extraneous-dependencies'][0],
+      {
+        ...baseImportsRules['import/no-extraneous-dependencies'][1],
+        devDependencies: baseImportsRules[
+          'import/no-extraneous-dependencies'
+        ][1].devDependencies.map(
+          glob =>
+            glob
+              .replace(/\.(jsx?)$/, '.{$1}') // Wrap file extensions in braces
+              .replace(/((\.*)js(x?))/g, '$1,$2ts$3'), // `jsx?` => `jsx?,tsx?`
+        ),
+      },
+    ],
 
     'brace-style': 'off',
     '@typescript-eslint/brace-style': baseStyleRules['brace-style'],
@@ -74,7 +93,7 @@ module.exports = {
 
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': [
-      'error',
+      baseVariablesRules['no-use-before-define'][0],
       {
         ...baseVariablesRules['no-use-before-define'][1],
         typedefs: true,
