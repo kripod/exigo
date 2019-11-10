@@ -12,24 +12,11 @@
     "prettier/@typescript-eslint",
     "prettier/react"
   ],
-  "plugins": ["emotion"],
   "env": {
     "browser": true
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
-    "emotion/syntax-preference": ["error", "string"],
     "react/jsx-props-no-spreading": "off"
-  },
-  "overrides": [
-    {
-      "files": ["**/*.test.{ts,tsx}"],
-      "rules": {
-        "import/no-extraneous-dependencies": [
-          "error",
-          { "optionalDependencies": false }
-        ]
-      }
-    }
-  ]
+  }
 }

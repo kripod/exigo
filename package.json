@@ -48,7 +48,6 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-typescript": "^6.1.0",
     "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-emotion": "^10.0.14",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.0.3",
     "eslint-plugin-jsx-a11y": "^6.2.3",
