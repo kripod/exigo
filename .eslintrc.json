@@ -18,7 +18,8 @@
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
-    "emotion/syntax-preference": ["error", "string"]
+    "emotion/syntax-preference": ["error", "string"],
+    "react/jsx-props-no-spreading": "off"
   },
   "overrides": [
     {

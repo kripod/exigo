@@ -9,7 +9,8 @@ export interface QuizItemBase {
 type QuizItem = QuizItemBase &
   (
     | ({ type: QuizItemType.MULTIPLE_OPTIONS } & MultipleOptionsQuizItemProps)
-    | ({ type: QuizItemType.MULTIPLE_OPTIONS } & MultipleOptionsQuizItemProps)); // TODO
+    | ({ type: QuizItemType.MULTIPLE_OPTIONS } & MultipleOptionsQuizItemProps)
+  ); // TODO
 
 // eslint-disable-next-line no-undef
 export default QuizItem;
