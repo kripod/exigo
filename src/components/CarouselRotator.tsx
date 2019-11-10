@@ -1,6 +1,7 @@
 import { FlexProps } from '@chakra-ui/core';
 import React, { useContext, useEffect } from 'react';
 import { useInterval } from 'web-api-hooks';
+
 import CarouselContext from './CarouselContext';
 import CarouselSlide from './CarouselSlide';
 import ScrollSnapContainer from './ScrollSnapContainer';

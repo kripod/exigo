@@ -1,5 +1,6 @@
 import { Checkbox, CheckboxGroup, Text, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
+
 import MultipleOptionsQuizItemProps from '../models/MultipleOptionsQuizItemProps';
 import Option from '../models/Option';
 import { toCardinal } from '../utils/number';

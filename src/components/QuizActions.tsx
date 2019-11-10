@@ -1,8 +1,6 @@
-import React, { useRef } from 'react';
 import {
   Button,
   ButtonGroup,
-  Stack,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -10,8 +8,11 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
+  Stack,
   StackProps,
 } from '@chakra-ui/core';
+import React, { useRef } from 'react';
+
 import useCarouselControls from '../hooks/useCarouselControls';
 import QuizItem from '../models/QuizItem';
 import QuizResponses from '../models/QuizResponses';

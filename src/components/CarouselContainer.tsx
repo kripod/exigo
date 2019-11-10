@@ -1,6 +1,7 @@
 import { Box, BoxProps } from '@chakra-ui/core';
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useFocus, useHover } from 'web-api-hooks';
+
 import CarouselContext from './CarouselContext';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

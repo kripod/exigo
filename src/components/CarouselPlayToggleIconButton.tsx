@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useFocus, useHover } from 'web-api-hooks';
+
 import useCarouselControls from '../hooks/useCarouselControls';
 import CarouselContext from './CarouselContext';
 import CarouselIconButton, {

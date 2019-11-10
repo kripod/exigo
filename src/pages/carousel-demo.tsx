@@ -1,5 +1,6 @@
 import { Image } from '@chakra-ui/core';
 import React from 'react';
+
 import Carousel from '../components/Carousel';
 import Layout from '../components/Layout';
 

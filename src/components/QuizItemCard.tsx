@@ -1,5 +1,6 @@
 import { Box, BoxProps, Flex, Heading } from '@chakra-ui/core';
 import React from 'react';
+
 import { QuizItemBase } from '../models/QuizItem';
 import Card from './Card';
 

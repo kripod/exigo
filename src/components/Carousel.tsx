@@ -1,8 +1,9 @@
 import React from 'react';
+
 import CarouselContainer, { CarouselContainerProps } from './CarouselContainer';
 import CarouselOverlay from './CarouselOverlay';
-import CarouselRotator, { CarouselRotatorProps } from './CarouselRotator';
 import CarouselProvider, { CarouselProviderProps } from './CarouselProvider';
+import CarouselRotator, { CarouselRotatorProps } from './CarouselRotator';
 
 export interface CarouselProps
   extends CarouselRotatorProps,

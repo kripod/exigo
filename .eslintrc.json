@@ -1,5 +1,6 @@
 {
   "root": true,
+  "plugins": ["simple-import-sort"],
   "extends": [
     "airbnb-typescript",
     "airbnb/hooks",
@@ -17,6 +18,12 @@
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+
+    // Disable other sorting rules
+    "sort-imports": "off",
+    "import/order": "off",
+
+    "simple-import-sort/sort": "error"
   }
 }

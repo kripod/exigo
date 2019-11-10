@@ -1,5 +1,6 @@
 import { css } from '@emotion/core';
 import React, { useState } from 'react';
+
 import CarouselContainer from '../components/CarouselContainer';
 import CarouselProvider from '../components/CarouselProvider';
 import CarouselRotator from '../components/CarouselRotator';
@@ -8,12 +9,11 @@ import Measure from '../components/Measure';
 import MultipleOptionsEvaluator from '../components/MultipleOptionsEvaluator';
 import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
+// TODO: Load this from GraphQL template query
+import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 import QuizResponses from '../models/QuizResponses';
-
-// TODO: Load this from GraphQL template query
-import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
 
 const evaluatorComponents = new Map([
   [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],

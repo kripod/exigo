@@ -5,6 +5,7 @@ import {
   faRunning,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+
 import { fromEntries } from '../utils/object';
 
 const faIconDefinitions = [faChevronLeft, faChevronRight, faRunning];

@@ -1,5 +1,6 @@
 import { Box, BoxProps } from '@chakra-ui/core';
 import React from 'react';
+
 import CarouselPlayToggleIconButton from './CarouselPlayToggleIconButton';
 import CarouselStepIconButton from './CarouselStepIconButton';
 
