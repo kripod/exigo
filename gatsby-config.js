@@ -21,6 +21,14 @@ module.exports = {
         /* eslint-enable */
       },
     },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/,
+        },
+      },
+    },
     '@rhysforyou/gatsby-plugin-react-helmet-async',
     'gatsby-plugin-typescript',
     'gatsby-plugin-emotion',
