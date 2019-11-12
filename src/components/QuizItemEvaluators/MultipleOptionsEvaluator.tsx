@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, Text, useColorMode } from '@chakra-ui/core';
+import { Box, Checkbox, CheckboxGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
 
 import Option from '../../models/Option';
@@ -41,9 +41,9 @@ export default function MultipleOptionsEvaluator({
 
   return (
     <>
-      <Text as="p" color="gray.500" mx={QUIZ_ITEM_CARD_PADDING}>
+      <Box as="p" color="gray.500" mx={QUIZ_ITEM_CARD_PADDING}>
         {instruction}
-      </Text>
+      </Box>
 
       <CheckboxGroup
         value={values}
