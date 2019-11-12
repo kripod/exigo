@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button, Flex, useColorMode } from '@chakra-ui/core';
+import { Box, BoxProps, Flex, IconButton, useColorMode } from '@chakra-ui/core';
 import React from 'react';
 
 import Logo from '../assets/logo.svg';
@@ -7,6 +7,7 @@ import Link from './Link';
 
 export default function Header(props: BoxProps) {
   const { colorMode, toggleColorMode } = useColorMode();
+  const preferDarkMode = colorMode === 'dark';
 
   return (
     <Box as="header" boxShadow="md" px={4} py={2} {...props}>
@@ -14,9 +15,15 @@ export default function Header(props: BoxProps) {
         <Link href="/" aria-label="Homepage" py={2}>
           <Logo alt="" height="2em" />
         </Link>
-        <Button onClick={toggleColorMode}>
-          Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-        </Button>
+
+        <IconButton
+          variant="ghost"
+          aria-label={`Switch to ${
+            preferDarkMode ? 'light' : 'dark'
+          } color scheme`}
+          icon={preferDarkMode ? 'sun' : 'moon'}
+          onClick={toggleColorMode}
+        />
       </Container>
     </Box>
   );
