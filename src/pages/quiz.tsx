@@ -9,14 +9,16 @@ import Measure from '../components/Measure';
 import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
 import MultipleOptionsEvaluator from '../components/QuizItemEvaluators/MultipleOptionsEvaluator';
+import NumericEvaluator from '../components/QuizItemEvaluators/NumericEvaluator';
 // TODO: Load this from GraphQL template query
 import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
 import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 import QuizResponses from '../models/QuizResponses';
 
-const evaluatorComponents = new Map([
+const evaluatorComponents = new Map<QuizItemType, (props: any) => JSX.Element>([
   [QuizItemType.MULTIPLE_OPTIONS, MultipleOptionsEvaluator],
+  [QuizItemType.NUMERIC, NumericEvaluator],
 ]);
 
 interface QuizPageProps {
@@ -65,7 +67,7 @@ export default function QuizPage({
                   <QuizItemCard key={item.id} stem={item.stem}>
                     <Evaluator
                       {...item}
-                      onChange={response => {
+                      onChange={(response: unknown) => {
                         setResponses(prevResponses => ({
                           ...prevResponses,
                           [item.id]: response,

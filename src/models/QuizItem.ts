@@ -1,4 +1,5 @@
 import MultipleOptionsQuizItemProps from './QuizItemProps/MultipleOptionsQuizItemProps';
+import NumericQuizItemProps from './QuizItemProps/NumericQuizItemProps';
 import QuizItemType from './QuizItemType';
 
 export interface QuizItemBase {
@@ -9,8 +10,7 @@ export interface QuizItemBase {
 type QuizItem = QuizItemBase &
   (
     | ({ type: QuizItemType.MULTIPLE_OPTIONS } & MultipleOptionsQuizItemProps)
-    | ({ type: QuizItemType.MULTIPLE_OPTIONS } & MultipleOptionsQuizItemProps)
-  ); // TODO
+    | ({ type: QuizItemType.NUMERIC } & NumericQuizItemProps)
+  );
 
-// eslint-disable-next-line no-undef
 export default QuizItem;

@@ -1,6 +1,6 @@
 enum QuizItemType {
   MULTIPLE_OPTIONS = 1,
-  // FREE_RESPONSE,
+  NUMERIC = 2,
 }
 
 export default QuizItemType;

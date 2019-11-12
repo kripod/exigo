@@ -3,6 +3,12 @@
   "title": "2016 SCOP MS 6",
   "items": [
     {
+      "id": 0,
+      "type": 2,
+      "stem": "In which year was the city of Budapest officially created?",
+      "solution": 1873
+    },
+    {
       "id": 1,
       "type": 1,
       "stem": "A popular method for solving systems of linear equations works one of these objects into reduced \"row-echelon form.\" If one of these objects is square, its trace is simply the sum of values along a diagonal, and these mathematical arrangements have an inverse if and only if their determinant is not zero.",
