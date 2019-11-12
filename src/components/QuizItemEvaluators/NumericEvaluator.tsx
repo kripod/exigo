@@ -57,7 +57,12 @@ export default function NumericEvaluator({
           max={maxValue}
           value={value}
           mx={QUIZ_ITEM_CARD_PADDING}
-          onChange={setValue as any}
+          onChange={
+            ((nextValue: number) => {
+              setValue(nextValue);
+              onChange(nextValue);
+            }) as any
+          }
         >
           <NumberInputField
             // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
