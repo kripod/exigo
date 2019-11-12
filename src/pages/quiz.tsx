@@ -6,9 +6,9 @@ import CarouselProvider from '../components/CarouselProvider';
 import CarouselRotator from '../components/CarouselRotator';
 import Layout from '../components/Layout';
 import Measure from '../components/Measure';
-import MultipleOptionsEvaluator from '../components/MultipleOptionsEvaluator';
 import QuizActions from '../components/QuizActions';
 import QuizItemCard from '../components/QuizItemCard';
+import MultipleOptionsEvaluator from '../components/QuizItemEvaluators/MultipleOptionsEvaluator';
 // TODO: Load this from GraphQL template query
 import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
 import QuizItem from '../models/QuizItem';
