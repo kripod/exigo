@@ -1,10 +1,10 @@
 import {
+  Box,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
-  Text,
   useColorMode,
 } from '@chakra-ui/core';
 import React, { useState } from 'react';
@@ -44,31 +44,33 @@ export default function NumericEvaluator({
 
   return (
     <>
-      <Text as="p" color="gray.500" mx={QUIZ_ITEM_CARD_PADDING}>
-        {instruction}
-      </Text>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label>
+        <Box as="p" color="gray.500" mx={QUIZ_ITEM_CARD_PADDING} pb={3}>
+          {instruction}
+        </Box>
 
-      <NumberInput
-        precision={precision}
-        step={stepSize}
-        min={minValue}
-        max={maxValue}
-        value={value}
-        defaultValue={undefined}
-        mx={QUIZ_ITEM_CARD_PADDING}
-        onChange={setValue as any}
-      >
-        <NumberInputField
-          // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
-          placeholder={`e.g. ${
-            precision > 0 ? `0.${'0'.repeat(precision)}` : '0'
-          }}`}
-        />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+        <NumberInput
+          precision={precision}
+          step={stepSize}
+          min={minValue}
+          max={maxValue}
+          value={value}
+          mx={QUIZ_ITEM_CARD_PADDING}
+          onChange={setValue as any}
+        >
+          <NumberInputField
+            // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
+            placeholder={`e.g. ${
+              precision > 0 ? `0.${'0'.repeat(precision)}` : '0'
+            }}`}
+          />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </label>
     </>
   );
 }
