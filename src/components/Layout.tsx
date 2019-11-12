@@ -37,7 +37,7 @@ export default function Layout({ children }: LayoutProps) {
         />
       </Helmet>
 
-      <Header mb={16}>{/* TODO */}</Header>
+      <Header mb={6} />
 
       <main>{children}</main>
 
