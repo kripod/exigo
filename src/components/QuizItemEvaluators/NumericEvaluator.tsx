@@ -59,7 +59,10 @@ export default function NumericEvaluator({
         onChange={setValue as any}
       >
         <NumberInputField
-          placeholder={precision > 0 ? `0.${'0'.repeat(precision)}` : '0'}
+          // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
+          placeholder={`e.g. ${
+            precision > 0 ? `0.${'0'.repeat(precision)}` : '0'
+          }}`}
         />
         <NumberInputStepper>
           <NumberIncrementStepper />
