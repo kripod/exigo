@@ -1,4 +1,4 @@
-import MultipleOptionsQuizItemProps from './MultipleOptionsQuizItemProps';
+import MultipleOptionsQuizItemProps from './QuizItemProps/MultipleOptionsQuizItemProps';
 import QuizItemType from './QuizItemType';
 
 export interface QuizItemBase {
