@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
 import Option from '../../models/Option';
+import QuizItemEvaluatorProps from '../../models/QuizItemEvaluatorProps';
 import MultipleOptionsQuizItemProps from '../../models/QuizItemProps/MultipleOptionsQuizItemProps';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { toCardinal } from '../../utils/number';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 
-interface MultipleOptionsEvaluatorProps extends MultipleOptionsQuizItemProps {
-  showSolution?: boolean;
-  onChange: (response: Option['id'][] | undefined) => void;
-}
+export interface MultipleOptionsEvaluatorProps
+  extends QuizItemEvaluatorProps<Option['id'][]>,
+    MultipleOptionsQuizItemProps {}
 
 export default function MultipleOptionsEvaluator({
   options,

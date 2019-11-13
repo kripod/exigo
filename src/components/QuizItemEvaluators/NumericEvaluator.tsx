@@ -10,14 +10,14 @@ import {
 import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
+import QuizItemEvaluatorProps from '../../models/QuizItemEvaluatorProps';
 import NumericQuizItemProps from '../../models/QuizItemProps/NumericQuizItemProps';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 
-interface NumericEvaluatorProps extends NumericQuizItemProps {
-  showSolution?: boolean;
-  onChange: (response: number | undefined) => void;
-}
+export interface NumericEvaluatorProps
+  extends QuizItemEvaluatorProps<number>,
+    NumericQuizItemProps {}
 
 export default function NumericEvaluator({
   precision = 0,
