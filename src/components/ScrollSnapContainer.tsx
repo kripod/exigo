@@ -142,7 +142,7 @@ export default function ScrollSnapContainer({
         touch-action: ${ignoreTargetChange ? 'none' : 'auto'};
 
         /* Optimize scrolling behavior */
-        overscroll-behavior: contain;
+        overscroll-behavior-x: contain;
         will-change: scroll-position;
         -webkit-overflow-scrolling: touch;
 

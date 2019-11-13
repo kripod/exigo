@@ -49,6 +49,10 @@ export default function CarouselRotator({
       targetIndex={targetIndex}
       aria-atomic={false}
       aria-live={isPlaying ? 'off' : 'polite'}
+      onMouseDown={e => {
+        // Disable mouse wheel scrolling between slides
+        if (e.button === 1) e.preventDefault();
+      }}
       onShownIndexChange={setShownIndex}
       onTargetIndexChange={setTargetIndex}
       {...restProps}
