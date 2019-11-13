@@ -57,7 +57,12 @@ export default function QuizPage({
             >
               {remainingItems.map(item => {
                 return (
-                  <QuizItemCard key={item.id} stem={item.stem}>
+                  <QuizItemCard
+                    key={item.id}
+                    stem={item.stem}
+                    shownIndex={items.findIndex(({ id }) => id === item.id)}
+                    totalCount={items.length}
+                  >
                     <QuizItemEvaluator
                       {...item}
                       onChange={response => {
