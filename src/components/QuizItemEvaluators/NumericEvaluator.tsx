@@ -9,7 +9,9 @@ import {
 } from '@chakra-ui/core';
 import React, { useState } from 'react';
 
+import InputFeedback from '../../models/InputFeedback';
 import NumericQuizItemProps from '../../models/QuizItemProps/NumericQuizItemProps';
+import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 
 interface NumericEvaluatorProps extends NumericQuizItemProps {
@@ -22,7 +24,7 @@ export default function NumericEvaluator({
   stepSize = 1,
   constraints = {},
   solution,
-  showSolution, // TODO
+  showSolution,
   onChange,
 }: NumericEvaluatorProps) {
   const { colorMode } = useColorMode();
@@ -42,11 +44,17 @@ export default function NumericEvaluator({
     instruction = 'Specify a value below.';
   }
 
+  let feedback = InputFeedback.NONE;
+  if (showSolution && value != null) {
+    feedback =
+      value === solution ? InputFeedback.CORRECT : InputFeedback.INCORRECT;
+  }
+
   return (
-    <>
+    <Box mx={QUIZ_ITEM_CARD_PADDING}>
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label>
-        <Box as="p" color="gray.500" mx={QUIZ_ITEM_CARD_PADDING} pb={3}>
+        <Box as="p" color="gray.500" pb={3}>
           {instruction}
         </Box>
 
@@ -56,9 +64,12 @@ export default function NumericEvaluator({
           min={minValue}
           max={maxValue}
           value={value}
-          mx={QUIZ_ITEM_CARD_PADDING}
+          isReadOnly={showSolution}
+          bg={getInputFeedbackProps(feedback, preferDarkMode).backgroundColor}
           onChange={
-            ((nextValue: number) => {
+            ((nextString: string) => {
+              const nextValue =
+                nextString.length > 0 ? Number(nextString) : undefined;
               setValue(nextValue);
               onChange(nextValue);
             }) as any
@@ -68,7 +79,7 @@ export default function NumericEvaluator({
             // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
             placeholder={`e.g. ${
               precision > 0 ? `0.${'0'.repeat(precision)}` : '0'
-            }}`}
+            }`}
           />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -76,6 +87,15 @@ export default function NumericEvaluator({
           </NumberInputStepper>
         </NumberInput>
       </label>
-    </>
+
+      {showSolution && value !== solution && (
+        <Box as="p" mt={5}>
+          The solution is:{' '}
+          <Box as="span" fontWeight={600}>
+            {solution}
+          </Box>
+        </Box>
+      )}
+    </Box>
   );
 }
