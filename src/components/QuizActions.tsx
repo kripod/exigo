@@ -40,8 +40,6 @@ export default function QuizActions({
 
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
   const isSolutionShown = shownItem.solution != null;
-  const isCheckAnswerButtonDisabled =
-    isSolutionShown || currentResponse == null;
 
   function goToNext() {
     setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
@@ -58,9 +56,8 @@ export default function QuizActions({
           isDisabled={remainingItems.length === 1 && currentResponse == null}
           aria-label="Next item"
           rightIcon="chevron-right"
-          {...(isSolutionShown
-            ? { variantColor: 'blue' }
-            : { variant: 'outline' })}
+          variantColor="blue"
+          {...(!isSolutionShown && { variant: 'outline' })}
           borderWidth={1}
           onClick={!disableNavigation ? goToNext : undefined}
         >
@@ -68,11 +65,12 @@ export default function QuizActions({
         </Button>
 
         <Button
-          isDisabled={isCheckAnswerButtonDisabled}
+          isDisabled={isSolutionShown || currentResponse == null}
           aria-label="Check answer"
           rightIcon={'glasses' as any}
-          variant="outline"
-          {...(!isCheckAnswerButtonDisabled && { variantColor: 'blue' })}
+          {...(isSolutionShown
+            ? { variant: 'outline' }
+            : { variantColor: 'blue' })}
           borderWidth={1}
           onClick={() => onCheckAnswer(shownItem)}
         >
