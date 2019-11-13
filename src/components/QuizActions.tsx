@@ -50,35 +50,20 @@ export default function QuizActions({
   }
 
   return (
-    <Stack direction="row-reverse" justify="space-between" {...restProps}>
-      <Stack direction="row-reverse">
-        <Button
-          isDisabled={remainingItems.length === 1 && currentResponse == null}
-          aria-label="Next item"
-          rightIcon="chevron-right"
-          variantColor="blue"
-          {...(!isSolutionShown && { variant: 'outline' })}
-          borderWidth={1}
-          onClick={!disableNavigation ? goToNext : undefined}
-        >
-          Next
-        </Button>
-
+    <Stack direction="row" justify="space-between" {...restProps}>
+      <Stack direction="row">
         <Button
           isDisabled={isSolutionShown || currentResponse == null}
           aria-label="Check answer"
-          rightIcon={'glasses' as any}
-          {...(isSolutionShown
-            ? { variant: 'outline' }
-            : { variantColor: 'blue' })}
+          leftIcon={'glasses' as any}
+          {...(!isSolutionShown && { variantColor: 'blue' })}
+          variant="outline"
           borderWidth={1}
           onClick={() => onCheckAnswer(shownItem)}
         >
           Check
         </Button>
-      </Stack>
 
-      <Flex direction="row-reverse">
         <Popover initialFocusRef={initialPopoverFocusRef} placement="top">
           {({ onClose }) => (
             <>
@@ -88,7 +73,6 @@ export default function QuizActions({
                   aria-label="Surrender current item"
                   leftIcon={'running' as any}
                   variant="ghost"
-                  ml={2}
                 >
                   Surrender
                 </Button>
@@ -125,7 +109,9 @@ export default function QuizActions({
             </>
           )}
         </Popover>
+      </Stack>
 
+      <Stack direction="row">
         <Button
           isDisabled={totalCount === 1}
           aria-label="Previous item"
@@ -135,7 +121,17 @@ export default function QuizActions({
         >
           Previous
         </Button>
-      </Flex>
+
+        <Button
+          isDisabled={remainingItems.length === 1 && currentResponse == null}
+          aria-label="Next item"
+          rightIcon="chevron-right"
+          variant="outline"
+          onClick={!disableNavigation ? goToNext : undefined}
+        >
+          Next
+        </Button>
+      </Stack>
     </Stack>
   );
 }
