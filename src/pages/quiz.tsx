@@ -73,7 +73,7 @@ export default function QuizPage({
           <QuizActions
             remainingItems={remainingItems}
             responses={responses}
-            isSurrendering={surrenderedItem != null}
+            disableNavigation={surrenderedItem != null}
             mt={2}
             px={4}
             onSurrender={setSurrenderedItem}

@@ -2,6 +2,7 @@ import { theme as defaultTheme } from '@chakra-ui/core';
 import {
   faChevronLeft,
   faChevronRight,
+  faGlasses,
   faMoon,
   faRunning,
   faSun,
@@ -13,6 +14,7 @@ import { fromEntries } from '../utils/object';
 const faIconDefinitions = [
   faChevronLeft,
   faChevronRight,
+  faGlasses,
   faMoon,
   faRunning,
   faSun,

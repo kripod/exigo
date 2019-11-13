@@ -1,6 +1,7 @@
 import {
   Button,
   ButtonGroup,
+  Flex,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -20,14 +21,14 @@ import QuizResponses from '../models/QuizResponses';
 export interface QuizActionsProps extends StackProps {
   remainingItems: QuizItem[];
   responses: QuizResponses;
-  isSurrendering?: boolean;
+  disableNavigation?: boolean;
   onSurrender: (item: QuizItem) => void;
 }
 
 export default function QuizActions({
   remainingItems,
   responses,
-  isSurrendering = false,
+  disableNavigation = false,
   onSurrender,
   ...restProps
 }: QuizActionsProps) {
@@ -56,65 +57,81 @@ export default function QuizActions({
             ? { variantColor: 'blue' }
             : { variant: 'outline' })}
           borderWidth={1}
-          onClick={!isSurrendering ? goToNext : undefined}
+          onClick={!disableNavigation ? goToNext : undefined}
         >
           Next
         </Button>
+
+        <Button
+          isDisabled={currentResponse == null}
+          aria-label="Check response"
+          rightIcon={'glasses' as any}
+          variant="outline"
+          {...(currentResponse != null && { variantColor: 'blue' })}
+          borderWidth={1}
+          onClick={undefined} // TODO
+        >
+          Check
+        </Button>
+      </Stack>
+
+      <Flex direction="row-reverse">
+        <Popover initialFocusRef={initialPopoverFocusRef} placement="top">
+          {({ onClose }) => (
+            <>
+              <PopoverTrigger>
+                <Button
+                  aria-label="Surrender current item"
+                  leftIcon={'running' as any}
+                  variant="ghost"
+                  ml={2}
+                >
+                  Surrender
+                </Button>
+              </PopoverTrigger>
+
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverHeader fontWeight={600}>Are you sure?</PopoverHeader>
+                <PopoverBody>
+                  You may not revisit this item after surrendering.
+                </PopoverBody>
+                <PopoverFooter textAlign="right">
+                  <ButtonGroup size="sm">
+                    <Button
+                      ref={initialPopoverFocusRef}
+                      variant="outline"
+                      onClick={onClose}
+                    >
+                      No, keep trying
+                    </Button>
+                    <Button
+                      variantColor="red"
+                      onClick={() => {
+                        goToNext();
+                        onSurrender(shownItem);
+                        if (onClose) onClose(); // TODO: onClose?();
+                      }}
+                    >
+                      Yes
+                    </Button>
+                  </ButtonGroup>
+                </PopoverFooter>
+              </PopoverContent>
+            </>
+          )}
+        </Popover>
+
         <Button
           isDisabled={totalCount === 1}
           aria-label="Previous item"
           leftIcon="chevron-left"
           variant="outline"
-          onClick={!isSurrendering ? goToPrev : undefined}
+          onClick={!disableNavigation ? goToPrev : undefined}
         >
           Previous
         </Button>
-      </Stack>
-
-      <Popover initialFocusRef={initialPopoverFocusRef} placement="top">
-        {({ onClose }) => (
-          <>
-            <PopoverTrigger>
-              <Button
-                aria-label="Surrender current item"
-                leftIcon={'running' as any}
-                variant="ghost"
-              >
-                Surrender
-              </Button>
-            </PopoverTrigger>
-
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverHeader fontWeight={600}>Are you sure?</PopoverHeader>
-              <PopoverBody>
-                You may not revisit this item after surrendering.
-              </PopoverBody>
-              <PopoverFooter textAlign="right">
-                <ButtonGroup size="sm">
-                  <Button
-                    ref={initialPopoverFocusRef}
-                    variant="outline"
-                    onClick={onClose}
-                  >
-                    No, keep trying
-                  </Button>
-                  <Button
-                    variantColor="red"
-                    onClick={() => {
-                      goToNext();
-                      onSurrender(shownItem);
-                      if (onClose) onClose(); // TODO: onClose?();
-                    }}
-                  >
-                    Yes
-                  </Button>
-                </ButtonGroup>
-              </PopoverFooter>
-            </PopoverContent>
-          </>
-        )}
-      </Popover>
+      </Flex>
     </Stack>
   );
 }
