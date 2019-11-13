@@ -1,8 +1,10 @@
 import { Box, Checkbox, CheckboxGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
 
+import InputFeedback from '../../models/InputFeedback';
 import Option from '../../models/Option';
 import MultipleOptionsQuizItemProps from '../../models/QuizItemProps/MultipleOptionsQuizItemProps';
+import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { toCardinal } from '../../utils/number';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 
@@ -66,18 +68,14 @@ export default function MultipleOptionsEvaluator({
         mt={3}
       >
         {options.map(option => {
-          let color;
+          let feedback = InputFeedback.NONE;
           // TODO: solutionIDs?.includes(option.id)
           if (showSolution && solution && solution.includes(option.id)) {
-            color = 'green';
+            feedback = InputFeedback.CORRECT;
           } else if (values.includes(`${option.id}`)) {
-            color = showSolution ? 'red' : 'blue';
-          }
-
-          // TODO: embed bgColor = color ?? `${color}.${preferDarkMode ? 800 : 100}`;
-          let bgColor;
-          if (color) {
-            bgColor = `${color}.${preferDarkMode ? 800 : 100}`;
+            feedback = showSolution
+              ? InputFeedback.INCORRECT
+              : InputFeedback.SELECTED;
           }
 
           return (
@@ -91,8 +89,7 @@ export default function MultipleOptionsEvaluator({
               position="relative" // TODO: Remove when Chakra UI gets fixed, see: https://github.com/chakra-ui/chakra-ui/issues/212
               px={QUIZ_ITEM_CARD_PADDING}
               py={3}
-              color={color}
-              bg={bgColor}
+              {...getInputFeedbackProps(feedback, preferDarkMode)}
             >
               {option.text}
             </Checkbox>
