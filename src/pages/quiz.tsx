@@ -89,8 +89,7 @@ export default function QuizPage({
                   {
                     ...item,
                     // TODO: Load solution from the server if desired
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    solution: items.find(({ id }) => id === item.id)!.solution,
+                    solution: items.find(({ id }) => id === item.id)?.solution,
                   },
                   ...prevRemainingItems.slice(index + 1),
                 ];

@@ -17,7 +17,7 @@ export default function CarouselStepIconButton({
 
   return (
     <CarouselIconButton
-      // TODO: Add support for unidirectional behavior (disable at each end)
+      // TODO: Add support for unidirectional behavior (disable as reaching end)
       onClick={() => {
         setShownIndex(
           prevIndex => (prevIndex + delta + totalCount) % totalCount,

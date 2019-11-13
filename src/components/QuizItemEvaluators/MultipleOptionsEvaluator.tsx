@@ -68,8 +68,7 @@ export default function MultipleOptionsEvaluator({
       >
         {options.map(option => {
           let feedback = InputFeedback.NONE;
-          // TODO: solutionIDs?.includes(option.id)
-          if (solution && solution.includes(option.id)) {
+          if (solution?.includes(option.id)) {
             feedback = InputFeedback.CORRECT;
           } else if (values.includes(`${option.id}`)) {
             feedback =

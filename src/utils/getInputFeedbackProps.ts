@@ -15,7 +15,6 @@ export default function getInputFeedbackProps(
     fontWeight = 600;
   }
 
-  // TODO: backgroundColor = color ?? `${color}.${preferDarkMode ? 800 : 100}`;
   let backgroundColor;
   if (color) {
     backgroundColor = `${color}.${preferDarkMode ? 800 : 100}`;
