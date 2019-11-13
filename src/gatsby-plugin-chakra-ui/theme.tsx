@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-import { fromEntries } from '../utils/object';
+import { fromEntries } from '../utils/Object';
 
 const faIconDefinitions = [
   faChevronLeft,
