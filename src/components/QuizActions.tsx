@@ -64,7 +64,7 @@ export default function QuizActions({
 
         <Button
           isDisabled={currentResponse == null}
-          aria-label="Check response"
+          aria-label="Check answer"
           rightIcon={'glasses' as any}
           variant="outline"
           {...(currentResponse != null && { variantColor: 'blue' })}
