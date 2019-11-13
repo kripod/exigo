@@ -27,7 +27,7 @@ export default function QuizPage({
   );
   const [responses, setResponses] = useState<QuizAnswers>({});
 
-  const [surrenderedItem, setSurrenderedItem] = useState<QuizItem>();
+  const [itemUnderRemoval, setItemUnderRemoval] = useState<QuizItem>();
 
   return (
     <Layout>
@@ -35,12 +35,12 @@ export default function QuizPage({
         <CarouselProvider>
           <CarouselContainer mt={-6}>
             <CarouselRotator
-              ignoreTargetChange={surrenderedItem != null}
+              ignoreTargetChange={itemUnderRemoval != null}
               onScrollEnd={() => {
-                if (surrenderedItem != null) {
-                  setSurrenderedItem(undefined);
+                if (itemUnderRemoval != null) {
+                  setItemUnderRemoval(undefined);
                   setRemainingItems(prevRemainingItems => {
-                    const index = prevRemainingItems.indexOf(surrenderedItem);
+                    const index = prevRemainingItems.indexOf(itemUnderRemoval);
                     return [
                       ...prevRemainingItems.slice(0, index),
                       ...prevRemainingItems.slice(index + 1),
@@ -76,7 +76,7 @@ export default function QuizPage({
           <QuizActions
             remainingItems={remainingItems}
             responses={responses}
-            disableNavigation={surrenderedItem != null}
+            disableNavigation={itemUnderRemoval != null}
             mt={2}
             px={4}
             onCheckAnswer={item =>
@@ -95,7 +95,7 @@ export default function QuizPage({
                 ];
               })
             }
-            onSurrender={setSurrenderedItem}
+            onSurrender={setItemUnderRemoval}
           />
         </CarouselProvider>
       </Measure>
