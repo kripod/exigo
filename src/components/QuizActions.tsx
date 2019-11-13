@@ -38,6 +38,7 @@ export default function QuizActions({
   const shownItem = remainingItems[shownIndex];
   const currentResponse = responses[shownItem.id];
 
+  const nextButtonRef = useRef<HTMLElement>(null);
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
   const isSolutionShown = shownItem.solution != null;
 
@@ -59,7 +60,11 @@ export default function QuizActions({
           {...(!isSolutionShown && { variantColor: 'blue' })}
           variant="outline"
           borderWidth={1}
-          onClick={() => onCheckAnswer(shownItem)}
+          onClick={() => {
+            onCheckAnswer(shownItem);
+            // TODO: nextButtonRef.current?.focus();
+            if (nextButtonRef.current) nextButtonRef.current.focus();
+          }}
         >
           Check
         </Button>
@@ -123,6 +128,7 @@ export default function QuizActions({
         </Button>
 
         <Button
+          ref={nextButtonRef}
           isDisabled={remainingItems.length === 1 && currentResponse == null}
           aria-label="Next item"
           rightIcon="chevron-right"
