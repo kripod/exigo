@@ -24,7 +24,6 @@ export default function NumericEvaluator({
   stepSize = 1,
   constraints = {},
   solution,
-  showSolution,
   onChange,
 }: NumericEvaluatorProps) {
   const { colorMode } = useColorMode();
@@ -45,7 +44,7 @@ export default function NumericEvaluator({
   }
 
   let feedback = InputFeedback.NONE;
-  if (showSolution && value != null) {
+  if (solution != null && value != null) {
     feedback =
       value === solution ? InputFeedback.CORRECT : InputFeedback.INCORRECT;
   }
@@ -64,7 +63,7 @@ export default function NumericEvaluator({
           min={minValue}
           max={maxValue}
           value={value}
-          isReadOnly={showSolution}
+          isReadOnly={solution != null}
           bg={getInputFeedbackProps(feedback, preferDarkMode).backgroundColor}
           onChange={
             ((nextString: string) => {
@@ -88,7 +87,7 @@ export default function NumericEvaluator({
         </NumberInput>
       </label>
 
-      {showSolution && value !== solution && (
+      {solution != null && value !== solution && (
         <Box as="p" mt={5}>
           The solution is:{' '}
           <Box as="span" fontWeight={600}>

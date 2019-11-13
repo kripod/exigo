@@ -15,13 +15,14 @@ import {
 import React, { useRef } from 'react';
 
 import useCarouselControls from '../hooks/useCarouselControls';
+import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
-import QuizResponses from '../models/QuizResponses';
 
 export interface QuizActionsProps extends StackProps {
   remainingItems: QuizItem[];
-  responses: QuizResponses;
+  responses: QuizAnswers;
   disableNavigation?: boolean;
+  onCheckAnswer: (item: QuizItem) => void;
   onSurrender: (item: QuizItem) => void;
 }
 
@@ -29,6 +30,7 @@ export default function QuizActions({
   remainingItems,
   responses,
   disableNavigation = false,
+  onCheckAnswer,
   onSurrender,
   ...restProps
 }: QuizActionsProps) {
@@ -37,6 +39,9 @@ export default function QuizActions({
   const currentResponse = responses[shownItem.id];
 
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
+  const isSolutionShown = shownItem.solution != null;
+  const isCheckAnswerButtonDisabled =
+    isSolutionShown || currentResponse == null;
 
   function goToNext() {
     setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
@@ -53,7 +58,7 @@ export default function QuizActions({
           isDisabled={remainingItems.length === 1 && currentResponse == null}
           aria-label="Next item"
           rightIcon="chevron-right"
-          {...(currentResponse != null
+          {...(isSolutionShown
             ? { variantColor: 'blue' }
             : { variant: 'outline' })}
           borderWidth={1}
@@ -63,13 +68,13 @@ export default function QuizActions({
         </Button>
 
         <Button
-          isDisabled={currentResponse == null}
+          isDisabled={isCheckAnswerButtonDisabled}
           aria-label="Check answer"
           rightIcon={'glasses' as any}
           variant="outline"
-          {...(currentResponse != null && { variantColor: 'blue' })}
+          {...(!isCheckAnswerButtonDisabled && { variantColor: 'blue' })}
           borderWidth={1}
-          onClick={undefined} // TODO
+          onClick={() => onCheckAnswer(shownItem)}
         >
           Check
         </Button>
@@ -81,6 +86,7 @@ export default function QuizActions({
             <>
               <PopoverTrigger>
                 <Button
+                  isDisabled={isSolutionShown}
                   aria-label="Surrender current item"
                   leftIcon={'running' as any}
                   variant="ghost"

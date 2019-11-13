@@ -17,7 +17,6 @@ export default function MultipleOptionsEvaluator({
   options,
   constraints = {},
   solution,
-  showSolution,
   onChange,
 }: MultipleOptionsEvaluatorProps) {
   const { colorMode } = useColorMode();
@@ -70,12 +69,13 @@ export default function MultipleOptionsEvaluator({
         {options.map(option => {
           let feedback = InputFeedback.NONE;
           // TODO: solutionIDs?.includes(option.id)
-          if (showSolution && solution && solution.includes(option.id)) {
+          if (solution && solution.includes(option.id)) {
             feedback = InputFeedback.CORRECT;
           } else if (values.includes(`${option.id}`)) {
-            feedback = showSolution
-              ? InputFeedback.INCORRECT
-              : InputFeedback.SELECTED;
+            feedback =
+              solution != null
+                ? InputFeedback.INCORRECT
+                : InputFeedback.SELECTED;
           }
 
           return (
@@ -84,7 +84,7 @@ export default function MultipleOptionsEvaluator({
             <Checkbox
               key={option.id}
               value={`${option.id}`}
-              isDisabled={showSolution}
+              isDisabled={solution != null}
               isFullWidth
               position="relative" // TODO: Remove when Chakra UI gets fixed, see: https://github.com/chakra-ui/chakra-ui/issues/212
               px={QUIZ_ITEM_CARD_PADDING}

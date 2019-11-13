@@ -11,8 +11,8 @@ import QuizItemCard from '../components/QuizItemCard';
 import QuizItemEvaluator from '../components/QuizItemEvaluator';
 // TODO: Load this from GraphQL template query
 import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
+import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
-import QuizResponses from '../models/QuizResponses';
 
 interface QuizPageProps {
   items: QuizItem[];
@@ -21,8 +21,11 @@ interface QuizPageProps {
 export default function QuizPage({
   items = multipleChoiceQuizExample.items,
 }: QuizPageProps) {
-  const [remainingItems, setRemainingItems] = useState(items);
-  const [responses, setResponses] = useState<QuizResponses>({});
+  const [remainingItems, setRemainingItems] = useState(() =>
+    // Simulate that solutions are not given at first
+    items.map(({ solution, ...itemProps }) => itemProps),
+  );
+  const [responses, setResponses] = useState<QuizAnswers>({});
 
   const [surrenderedItem, setSurrenderedItem] = useState<QuizItem>();
 
@@ -76,6 +79,23 @@ export default function QuizPage({
             disableNavigation={surrenderedItem != null}
             mt={2}
             px={4}
+            onCheckAnswer={item =>
+              setRemainingItems(prevRemainingItems => {
+                const index = prevRemainingItems.findIndex(
+                  ({ id }) => id === item.id,
+                );
+                return [
+                  ...prevRemainingItems.slice(0, index),
+                  {
+                    ...item,
+                    // TODO: Load solution from the server if desired
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    solution: items.find(({ id }) => id === item.id)!.solution,
+                  },
+                  ...prevRemainingItems.slice(index + 1),
+                ];
+              })
+            }
             onSurrender={setSurrenderedItem}
           />
         </CarouselProvider>
