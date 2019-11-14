@@ -62,8 +62,7 @@ export default function QuizActions({
           borderWidth={1}
           onClick={() => {
             onCheckAnswer(shownItem);
-            // TODO: nextButtonRef.current?.focus();
-            if (nextButtonRef.current) nextButtonRef.current.focus();
+            nextButtonRef.current?.focus();
           }}
         >
           Check
