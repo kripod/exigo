@@ -39,17 +39,23 @@ export default function ExpandingTextarea({
       {...restProps}
       suppressContentEditableWarning
       contentEditable={!isDisabled && !isReadOnly}
-      css={theme => css`
-        :empty::before {
-          /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
-          color: ${
-            preferDarkMode
-              ? theme.colors.whiteAlpha[400]
-              : theme.colors.gray[400]
-          };
-          content: '${placeholder}';
-        }
-      `}
+      css={
+        typeof value === 'string' && value.length === 0
+          ? theme =>
+              css`
+                ::before {
+                  /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
+                  color: ${
+                    preferDarkMode
+                      ? theme.colors.whiteAlpha[400]
+                      : theme.colors.gray[400]
+                  };
+                  content: '${placeholder}';
+                  pointer-events: none;
+                }
+              `
+          : undefined
+      }
     />
   );
 }
