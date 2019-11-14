@@ -49,6 +49,7 @@ export default function QuizItemCard({
             size="lg"
             fontSize="xl"
             fontWeight={600}
+            lineHeight="base"
             value={stem}
             onChange={(event: React.FormEvent<HTMLElement>) => {
               if (onStemChange) onStemChange(event.currentTarget.innerText);
@@ -59,7 +60,7 @@ export default function QuizItemCard({
             as="h3"
             size="md"
             fontWeight={600}
-            lineHeight={1.5}
+            lineHeight="base"
             whiteSpace="pre-line"
           >
             {stem}
