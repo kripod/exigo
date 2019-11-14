@@ -42,10 +42,12 @@ export default function ExpandingTextarea({
       css={theme => css`
         :empty::before {
           /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
-          color: ${preferDarkMode
-            ? theme.colors.whiteAlpha[400]
-            : theme.colors.gray[400]};
-          content: ${placeholder};
+          color: ${
+            preferDarkMode
+              ? theme.colors.whiteAlpha[400]
+              : theme.colors.gray[400]
+          };
+          content: '${placeholder}';
         }
       `}
     />
