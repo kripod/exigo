@@ -9,7 +9,6 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  Stack,
   StackProps,
 } from '@chakra-ui/core';
 import React, { useRef } from 'react';
@@ -51,8 +50,8 @@ export default function QuizActions({
   }
 
   return (
-    <Stack direction="row" justify="space-between" {...restProps}>
-      <Stack direction="row">
+    <Flex justify="space-between" flexWrap="wrap" {...restProps}>
+      <ButtonGroup mr={2} mb={3}>
         <Button
           isDisabled={isSolutionShown || currentResponse == null}
           aria-label="Check answer"
@@ -113,9 +112,9 @@ export default function QuizActions({
             </>
           )}
         </Popover>
-      </Stack>
+      </ButtonGroup>
 
-      <Stack direction="row">
+      <ButtonGroup>
         <Button
           isDisabled={totalCount === 1}
           aria-label="Previous item"
@@ -136,7 +135,7 @@ export default function QuizActions({
         >
           Next
         </Button>
-      </Stack>
-    </Stack>
+      </ButtonGroup>
+    </Flex>
   );
 }
