@@ -1,4 +1,5 @@
-import { InputProps, Textarea } from '@chakra-ui/core';
+import { InputProps, Textarea, useColorMode } from '@chakra-ui/core';
+import { css } from '@emotion/core';
 import React, { useEffect, useRef } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -23,6 +24,8 @@ export default function ExpandingTextarea({
     }
   }, [value]);
 
+  const preferDarkMode = useColorMode() === 'dark';
+
   return (
     <Textarea
       ref={ref}
@@ -36,6 +39,15 @@ export default function ExpandingTextarea({
       {...restProps}
       suppressContentEditableWarning
       contentEditable={!isDisabled && !isReadOnly}
+      css={theme => css`
+        :empty::before {
+          /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
+          color: ${preferDarkMode
+            ? theme.colors.whiteAlpha[400]
+            : theme.colors.gray[400]};
+          content: ${placeholder};
+        }
+      `}
     />
   );
 }
