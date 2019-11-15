@@ -35,7 +35,9 @@ export default function ExpandingTextarea({
       as="div"
       onInput={(event: React.FormEvent<HTMLElement>) => {
         expectedValue.current = event.currentTarget.textContent;
-        setPlaceholderHidden(expectedValue.current?.length !== 0);
+        setPlaceholderHidden(
+          expectedValue.current != null && expectedValue.current.length !== 0,
+        );
         if (onInput) onInput(event);
         if (onChange) onChange(event);
       }}
