@@ -10,20 +10,17 @@ import {
 import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
-import NumericQuizItemProps from '../../models/QuizItemProps/NumericQuizItemProps';
+import NumericQuizItem from '../../models/QuizItems/NumericQuizItem';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 import QuizItemEvaluatorProps from '../QuizItemEvaluatorProps';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface NumericEvaluatorProps
-  extends QuizItemEvaluatorProps<number>,
-    NumericQuizItemProps {}
+  extends QuizItemEvaluatorProps<NumericQuizItem> {}
 
 export default function NumericEvaluator({
-  precision = 0,
-  stepSize = 1,
-  constraints = {},
-  solution,
+  item: { precision = 0, stepSize = 1, constraints = {}, solution },
   onChange,
 }: NumericEvaluatorProps) {
   const { colorMode } = useColorMode();

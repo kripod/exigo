@@ -1,23 +1,21 @@
 import React from 'react';
 
-import QuizItem from '../models/QuizItem';
 import QuizItemType from '../models/QuizItemType';
 import QuizItemEvaluatorProps from './QuizItemEvaluatorProps';
 import MultipleOptionsEvaluator from './QuizItemEvaluators/MultipleOptionsEvaluator';
 import NumericEvaluator from './QuizItemEvaluators/NumericEvaluator';
 
-export default function QuizItemEvaluator(
-  props: QuizItem & QuizItemEvaluatorProps<unknown>,
-) {
-  /* eslint-disable react/destructuring-assignment */
-  if (props.type === QuizItemType.MULTIPLE_OPTIONS) {
-    return <MultipleOptionsEvaluator {...props} />;
+export default function QuizItemEvaluator({
+  item,
+  ...restProps
+}: QuizItemEvaluatorProps) {
+  if (item.type === QuizItemType.MULTIPLE_OPTIONS) {
+    return <MultipleOptionsEvaluator item={item} {...restProps} />;
   }
 
-  if (props.type === QuizItemType.NUMERIC) {
-    return <NumericEvaluator {...props} />;
+  if (item.type === QuizItemType.NUMERIC) {
+    return <NumericEvaluator item={item} {...restProps} />;
   }
-  /* eslint-enable react/destructuring-assignment */
 
   return null;
 }

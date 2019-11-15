@@ -2,21 +2,18 @@ import { Box, Checkbox, CheckboxGroup, useColorMode } from '@chakra-ui/core';
 import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
-import Option from '../../models/Option';
-import MultipleOptionsQuizItemProps from '../../models/QuizItemProps/MultipleOptionsQuizItemProps';
+import MultipleOptionsQuizItem from '../../models/QuizItems/MultipleOptionsQuizItem';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { toCardinal } from '../../utils/Number';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
 import QuizItemEvaluatorProps from '../QuizItemEvaluatorProps';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface MultipleOptionsEvaluatorProps
-  extends QuizItemEvaluatorProps<Option['id'][]>,
-    MultipleOptionsQuizItemProps {}
+  extends QuizItemEvaluatorProps<MultipleOptionsQuizItem> {}
 
 export default function MultipleOptionsEvaluator({
-  options,
-  constraints = {},
-  solution,
+  item: { options, constraints = {}, solution },
   onChange,
 }: MultipleOptionsEvaluatorProps) {
   const { colorMode } = useColorMode();

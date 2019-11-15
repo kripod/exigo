@@ -1,13 +1,14 @@
 import { Box, BoxProps, Flex, Heading, Text } from '@chakra-ui/core';
 import React from 'react';
 
-import { QuizItemBase } from '../models/QuizItem';
+import QuizItem from '../models/QuizItem';
 import Card from './Card';
 import ExpandingTextarea from './ExpandingTextarea';
 
 export const QUIZ_ITEM_CARD_PADDING = 6;
 
-interface QuizItemCardProps extends Omit<QuizItemBase, 'id'>, BoxProps {
+interface QuizItemCardProps extends BoxProps {
+  item: QuizItem;
   shownIndex: number;
   totalCount: number;
   isEditable?: boolean;
@@ -15,7 +16,7 @@ interface QuizItemCardProps extends Omit<QuizItemBase, 'id'>, BoxProps {
 }
 
 export default function QuizItemCard({
-  stem,
+  item,
   shownIndex,
   totalCount,
   children,
@@ -50,7 +51,7 @@ export default function QuizItemCard({
             fontSize="xl"
             fontWeight={600}
             lineHeight="base"
-            value={stem}
+            value={item.stem}
             onChange={(event: React.FormEvent<HTMLElement>) => {
               if (onStemChange) onStemChange(event.currentTarget.innerText);
             }}
@@ -63,7 +64,7 @@ export default function QuizItemCard({
             lineHeight="base"
             whiteSpace="pre-line"
           >
-            {stem}
+            {item.stem}
           </Heading>
         )}
       </Box>

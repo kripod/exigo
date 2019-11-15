@@ -59,12 +59,13 @@ export default function QuizPage({
                 return (
                   <QuizItemCard
                     key={item.id}
-                    stem={item.stem}
+                    item={item}
                     shownIndex={items.findIndex(({ id }) => id === item.id)}
                     totalCount={items.length}
+                    isEditable
                   >
                     <QuizItemEvaluator
-                      {...item}
+                      item={item}
                       onChange={response => {
                         setResponses(prevResponses => ({
                           ...prevResponses,
