@@ -6,14 +6,14 @@ import 'network-information-types';
 
 declare module 'react' {
   interface DOMAttributes<T> {
-    inert?: '' | undefined;
+    inert?: '';
   }
 }
 
 declare global {
   namespace JSX {
     interface IntrinsicAttributes {
-      inert?: '' | undefined;
+      inert?: '';
     }
   }
 }
