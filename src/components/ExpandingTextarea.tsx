@@ -18,9 +18,9 @@ export default function ExpandingTextarea({
   // Use uncontrolled component to avoid caret position reset during user input
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (typeof value === 'string' && ref.current!.innerText !== value) {
+    if (typeof value === 'string' && value !== ref.current!.textContent) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      ref.current!.innerText = value;
+      ref.current!.textContent = value;
     }
   }, [value]);
 
