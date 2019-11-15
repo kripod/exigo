@@ -14,8 +14,8 @@ module.exports = {
         name: 'Exigo',
         short_name: 'Exigo',
         start_url: '/',
-        background_color: '#663399', // TODO
-        theme_color: '#663399', // TODO
+        background_color: '#fff', // TODO
+        theme_color: '#fff', // TODO
         display: 'minimal-ui',
         icon: 'src/assets/favicon.png', // TODO
         /* eslint-enable */
