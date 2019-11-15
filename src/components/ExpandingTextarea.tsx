@@ -1,6 +1,6 @@
 import { InputProps, Textarea, useColorMode } from '@chakra-ui/core';
 import { css } from '@emotion/core';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ExpandingTextareaProps extends InputProps {}
@@ -14,14 +14,17 @@ export default function ExpandingTextarea({
 }: ExpandingTextareaProps) {
   const { isDisabled, isReadOnly } = restProps;
   const ref = useRef<HTMLTextAreaElement>(null);
+  const [isPlaceholderHidden, setPlaceholderHidden] = useState(false);
 
   // Use uncontrolled component to avoid caret position reset during user input
+  const expectedValue = useRef<string | null>('');
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (typeof value === 'string' && value !== ref.current!.textContent) {
+    if (typeof value === 'string' && value !== expectedValue.current) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ref.current!.textContent = value;
     }
+    expectedValue.current = null;
   }, [value]);
 
   const preferDarkMode = useColorMode() === 'dark';
@@ -31,6 +34,8 @@ export default function ExpandingTextarea({
       ref={ref}
       as="div"
       onInput={(event: React.FormEvent<HTMLElement>) => {
+        expectedValue.current = event.currentTarget.textContent;
+        setPlaceholderHidden(expectedValue.current?.length !== 0);
         if (onInput) onInput(event);
         if (onChange) onChange(event);
       }}
@@ -40,23 +45,19 @@ export default function ExpandingTextarea({
       {...restProps}
       suppressContentEditableWarning
       contentEditable={!isDisabled && !isReadOnly}
-      css={
-        typeof value === 'string' && value.length === 0
-          ? theme =>
-              css`
-                ::before {
-                  /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
-                  color: ${
-                    preferDarkMode
-                      ? theme.colors.whiteAlpha[400]
-                      : theme.colors.gray[400]
-                  };
-                  content: '${placeholder}';
-                  pointer-events: none;
-                }
-              `
-          : undefined
-      }
+      css={theme => css`
+        ::before {
+          /* Source: https://github.com/chakra-ui/chakra-ui/blob/master/packages/chakra-ui/src/CSSReset/index.js */
+          position: absolute;
+          color: ${
+            preferDarkMode
+              ? theme.colors.whiteAlpha[400]
+              : theme.colors.gray[400]
+          };
+          content: '${isPlaceholderHidden ? '' : placeholder}';
+          pointer-events: none;
+        }
+      `}
     />
   );
 }
