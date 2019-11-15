@@ -10,10 +10,10 @@ import {
 import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
-import QuizItemEvaluatorProps from '../../models/QuizItemEvaluatorProps';
 import NumericQuizItemProps from '../../models/QuizItemProps/NumericQuizItemProps';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
+import QuizItemEvaluatorProps from '../QuizItemEvaluatorProps';
 
 export interface NumericEvaluatorProps
   extends QuizItemEvaluatorProps<number>,

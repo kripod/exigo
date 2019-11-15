@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 
 import InputFeedback from '../../models/InputFeedback';
 import Option from '../../models/Option';
-import QuizItemEvaluatorProps from '../../models/QuizItemEvaluatorProps';
 import MultipleOptionsQuizItemProps from '../../models/QuizItemProps/MultipleOptionsQuizItemProps';
 import getInputFeedbackProps from '../../utils/getInputFeedbackProps';
 import { toCardinal } from '../../utils/Number';
 import { QUIZ_ITEM_CARD_PADDING } from '../QuizItemCard';
+import QuizItemEvaluatorProps from '../QuizItemEvaluatorProps';
 
 export interface MultipleOptionsEvaluatorProps
   extends QuizItemEvaluatorProps<Option['id'][]>,

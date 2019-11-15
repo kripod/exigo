@@ -1,8 +1,8 @@
 import React from 'react';
 
 import QuizItem from '../models/QuizItem';
-import QuizItemEvaluatorProps from '../models/QuizItemEvaluatorProps';
 import QuizItemType from '../models/QuizItemType';
+import QuizItemEvaluatorProps from './QuizItemEvaluatorProps';
 import MultipleOptionsEvaluator from './QuizItemEvaluators/MultipleOptionsEvaluator';
 import NumericEvaluator from './QuizItemEvaluators/NumericEvaluator';
 
