@@ -29,6 +29,7 @@ export default function ExpandingTextarea({
   return (
     <Textarea
       ref={ref}
+      as="div"
       onInput={(event: React.FormEvent<HTMLElement>) => {
         if (onInput) onInput(event);
         if (onChange) onChange(event);
