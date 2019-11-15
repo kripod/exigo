@@ -19,12 +19,13 @@ export default function ExpandingTextarea({
   );
 
   // Use uncontrolled component to avoid caret position reset during user input
+  const expectedValue = useRef<string | null>('');
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    if (typeof value === 'string' && value !== ref.current!.textContent) {
+    if (typeof value === 'string' && value !== expectedValue.current) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       ref.current!.textContent = value;
     }
+    expectedValue.current = null;
   }, [value]);
 
   const preferDarkMode = useColorMode() === 'dark';
@@ -35,6 +36,7 @@ export default function ExpandingTextarea({
       as="div"
       onInput={(event: React.FormEvent<HTMLElement>) => {
         const { textContent } = event.currentTarget;
+        expectedValue.current = textContent;
         setPlaceholderHidden(textContent != null && textContent.length > 0);
 
         if (onInput) onInput(event);
