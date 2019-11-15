@@ -5,5 +5,5 @@ import React from 'react';
 export interface ContainerProps extends BoxProps {}
 
 export default function Container(props: ContainerProps) {
-  return <Box maxWidth="containers.lg" mx="auto" {...props} />;
+  return <Box maxWidth="containers.lg" mx="auto" px={4} {...props} />;
 }

@@ -10,7 +10,7 @@ export default function Header(props: BoxProps) {
   const preferDarkMode = colorMode === 'dark';
 
   return (
-    <Box as="header" boxShadow="md" px={4} py={2} {...props}>
+    <Box as="header" boxShadow="md" py={2} {...props}>
       <Container as={Flex} justifyContent="space-between" alignItems="center">
         <Link href="/" aria-label="Homepage" py={2}>
           <Logo alt="" height="2em" />
