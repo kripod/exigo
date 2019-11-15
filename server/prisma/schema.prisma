@@ -1,0 +1,61 @@
+generator photon {
+  provider = "photonjs"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.db"
+}
+
+model User {
+  id           String  @default(cuid()) @id
+  email        String  @unique
+  // TODO: Add support for auth tokens
+  passwordHash String
+  name         String?
+  quizzes      Quiz[]
+}
+
+model Quiz {
+  id          String     @default(cuid()) @id
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  isPublished Boolean    @default(true)
+  author      User
+  title       String
+  timeLimit   Int?
+  items       QuizItem[]
+}
+
+// TODO: Use union type (https://github.com/prisma/prisma2/issues/253), e.g.:
+// union QuizItem = MultipleOptionsQuizItem | NumericQuizItem
+
+model QuizItem {
+  id   String       @default(cuid()) @id
+  type QuizItemType
+  stem String
+
+  // MultipleOptionsQuizItem
+  t1_options              Option[]
+  t1_constraints_minCount Int?     @default(1)
+  t1_constraints_maxCount Int?     @default(1)
+
+  // NumericQuizItem
+  t2_solution             Float?
+  t2_precision            Float? @default(0)
+  t2_stepSize             Float? @default(1)
+  t2_constraints_minValue Float?
+  t2_constraints_maxValue Float?
+}
+
+enum QuizItemType {
+  MULTIPLE_OPTIONS
+  NUMERIC
+}
+
+model Option {
+  id         String   @default(cuid()) @id
+  quizItem   QuizItem
+  text       String
+  isSolution Boolean  @default(false)
+}
