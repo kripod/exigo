@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "plugins": ["simple-import-sort"],
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "rules": {
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/sort": "error"
+  }
+}

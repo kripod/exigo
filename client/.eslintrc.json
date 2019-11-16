@@ -1,16 +1,10 @@
 {
-  "root": true,
-  "plugins": ["simple-import-sort"],
   "extends": [
     "airbnb-typescript",
     "airbnb/hooks",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:jest/recommended",
     "plugin:testing-library/recommended",
     "plugin:testing-library/react",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
     "prettier/react"
   ],
   "env": {
@@ -18,12 +12,6 @@
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
-    "react/jsx-props-no-spreading": "off",
-
-    // Disable other sorting rules
-    "sort-imports": "off",
-    "import/order": "off",
-
-    "simple-import-sort/sort": "error"
+    "react/jsx-props-no-spreading": "off"
   }
 }

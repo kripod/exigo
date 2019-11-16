@@ -1,0 +1,15 @@
+language: node_js
+os:
+  - linux
+  - windows
+  - osx
+node_js:
+  - lts/*
+  - node
+env:
+  - YARN_GPG=no
+
+script:
+  - yarn lint
+  - yarn type-check
+  - yarn build
