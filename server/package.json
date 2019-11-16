@@ -2,7 +2,7 @@
   "private": true,
   "name": "exigo-server",
   "scripts": {
-    "dev": "prisma2 dev",
+    "develop": "prisma2 dev",
     "postinstall": "prisma2 generate"
   },
   "dependencies": {
