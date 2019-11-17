@@ -3,7 +3,6 @@
   "extends": "../tsconfig-base",
   "include": ["src/"],
   "compilerOptions": {
-    "module": "esnext",
     "esModuleInterop": true,
     "resolveJsonModule": true, // TODO: Remove
     "jsx": "react"
