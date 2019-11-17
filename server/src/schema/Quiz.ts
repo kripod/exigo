@@ -1,6 +1,6 @@
 import { objectType } from 'nexus';
 
-const Quiz = objectType({
+export default objectType({
   name: 'Quiz',
   definition(t) {
     t.model.id();
@@ -13,5 +13,3 @@ const Quiz = objectType({
     t.model.items();
   },
 });
-
-export default Quiz;

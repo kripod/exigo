@@ -1,6 +1,6 @@
 import { objectType } from 'nexus';
 
-const MultipleOptionsQuizItemParams = objectType({
+export default objectType({
   name: 'MultipleOptionsQuizItemParams',
   definition(t) {
     t.model.id();
@@ -10,5 +10,3 @@ const MultipleOptionsQuizItemParams = objectType({
     t.model.constraints_maxCount();
   },
 });
-
-export default MultipleOptionsQuizItemParams;

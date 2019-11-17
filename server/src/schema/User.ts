@@ -1,6 +1,6 @@
 import { objectType } from 'nexus';
 
-const User = objectType({
+export default objectType({
   name: 'User',
   definition(t) {
     t.model.id();
@@ -11,5 +11,3 @@ const User = objectType({
     t.model.quizzes();
   },
 });
-
-export default User;

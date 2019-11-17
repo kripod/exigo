@@ -1,6 +1,6 @@
 import { objectType } from 'nexus';
 
-const Option = objectType({
+export default objectType({
   name: 'Option',
   definition(t) {
     t.model.id();
@@ -9,5 +9,3 @@ const Option = objectType({
     t.model.isSolution();
   },
 });
-
-export default Option;

@@ -11,7 +11,7 @@ import Quiz from './Quiz';
 import QuizItem from './QuizItem';
 import User from './User';
 
-const schema = makeSchema({
+export default makeSchema({
   types: [
     Query,
     Mutation,
@@ -52,5 +52,3 @@ const schema = makeSchema({
   },
   */
 });
-
-export default schema;

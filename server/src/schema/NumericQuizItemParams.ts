@@ -1,6 +1,6 @@
 import { objectType } from 'nexus';
 
-const NumericQuizItemParams = objectType({
+export default objectType({
   name: 'NumericQuizItemParams',
   definition(t) {
     t.model.id();
@@ -12,5 +12,3 @@ const NumericQuizItemParams = objectType({
     t.model.constraints_maxValue();
   },
 });
-
-export default NumericQuizItemParams;

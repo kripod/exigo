@@ -1,9 +1,7 @@
 import { mutationType } from 'nexus';
 
-const Mutation = mutationType({
+export default mutationType({
   definition(t) {
     t.crud.createOneUser();
   },
 });
-
-export default Mutation;
