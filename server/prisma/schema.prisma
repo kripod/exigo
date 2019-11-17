@@ -8,7 +8,7 @@ generator photonjs {
 }
 
 model User {
-  id           String   @default(cuid()) @id
+  id           String   @id @default(cuid())
   createdAt    DateTime @default(now())
   email        String   @unique
   // TODO: Add support for multiple auth providers, e.g. Facebook and Google
@@ -18,11 +18,11 @@ model User {
 }
 
 model Quiz {
-  id                 String     @default(cuid()) @id
+  id                 String     @id @default(cuid())
+  author             User       @relation(onDelete: CASCADE)
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
   isPrivate          Boolean    @default(false)
-  author             User
   title              String
   timeLimitInMinutes Int?
   items              QuizItem[]
@@ -32,21 +32,13 @@ model Quiz {
 // union QuizItem = MultipleOptionsQuizItem | NumericQuizItem
 
 model QuizItem {
-  id   String       @default(cuid()) @id
+  id   String       @id @default(cuid())
+  quiz Quiz         @relation(onDelete: CASCADE)
   type QuizItemType
   stem String
 
-  // MultipleOptionsQuizItem
-  t1_options              Option[]
-  t1_constraints_minCount Int?     @default(1)
-  t1_constraints_maxCount Int?     @default(1)
-
-  // NumericQuizItem
-  t2_solution             Float?
-  t2_precision            Float? @default(0)
-  t2_stepSize             Float? @default(1)
-  t2_constraints_minValue Float?
-  t2_constraints_maxValue Float?
+  t_MultipleOptions MultipleOptionsQuizItemParams?
+  t_Numeric         NumericQuizItemParams?
 }
 
 enum QuizItemType {
@@ -54,9 +46,27 @@ enum QuizItemType {
   NUMERIC
 }
 
+model MultipleOptionsQuizItemParams {
+  id                   String   @id @default(cuid())
+  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
+  options              Option[]
+  constraints_minCount Int?     @default(1)
+  constraints_maxCount Int?     @default(1)
+}
+
 model Option {
-  id         String   @default(cuid()) @id
-  quizItem   QuizItem
+  id         String   @id @default(cuid())
+  quizItem   QuizItem @relation(onDelete: CASCADE)
   text       String
   isSolution Boolean  @default(false)
+}
+
+model NumericQuizItemParams {
+  id                   String   @id @default(cuid())
+  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
+  solution             Float?
+  precision            Float?   @default(0)
+  stepSize             Float?   @default(1)
+  constraints_minValue Float?
+  constraints_maxValue Float?
 }
