@@ -1,16 +1,9 @@
 {
   "include": ["**/src/"],
-
-  // Reference: https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/
   "compilerOptions": {
     "strict": true,
     "target": "esnext",
-    "module": "esnext",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "resolveJsonModule": true, // TODO: Remove
-    "allowJs": true,
-    "jsx": "react"
+    "isolatedModules": true
   }
 }
