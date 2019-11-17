@@ -3,12 +3,12 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "generate": "run-s generate:prisma generate:nexus",
-    "generate:nexus": "ts-node --transpile-only src/schema",
-    "generate:prisma": "prisma2 generate && prisma2 lift up --create-db",
     "build": "netlify-lambda build src",
     "clean": "del-cli \"**/dev.db\"",
     "develop": "prisma2 dev && netlify-lambda serve src",
+    "generate": "run-s generate:prisma generate:nexus",
+    "generate:nexus": "ts-node --transpile-only src/schema",
+    "generate:prisma": "prisma2 generate && prisma2 lift up --create-db",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
