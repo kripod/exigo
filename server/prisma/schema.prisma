@@ -8,8 +8,9 @@ generator photonjs {
 }
 
 model User {
-  id           String  @default(cuid()) @id
-  email        String  @unique
+  id           String   @default(cuid()) @id
+  createdAt    DateTime @default(now())
+  email        String   @unique
   // TODO: Add support for multiple auth providers, e.g. Facebook and Google
   passwordHash String
   name         String?
@@ -17,14 +18,14 @@ model User {
 }
 
 model Quiz {
-  id          String     @default(cuid()) @id
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  isPublished Boolean    @default(true)
-  author      User
-  title       String
-  timeLimit   Int?
-  items       QuizItem[]
+  id                 String     @default(cuid()) @id
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  isPrivate          Boolean    @default(false)
+  author             User
+  title              String
+  timeLimitInMinutes Int?
+  items              QuizItem[]
 }
 
 // TODO: Use union type (https://github.com/prisma/prisma2/issues/253), e.g.:
