@@ -1,7 +1,3 @@
 *.log*
-.cache/
 .eslintcache
-dev.db
-coverage/
 node_modules/
-public/
