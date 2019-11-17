@@ -1,9 +1,10 @@
 {
   "private": true,
   "name": "exigo-server",
+  "version": "0.0.0",
   "scripts": {
-    "develop": "prisma2 dev",
-    "postinstall": "prisma2 generate"
+    "bootstrap": "prisma2 generate",
+    "develop": "prisma2 dev"
   },
   "dependencies": {
     "prisma2": "^2.0.0-preview016.2"
