@@ -3,10 +3,14 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "prisma2 generate",
+    "bootstrap": "prisma2 generate && prisma2 lift up --create-db",
+    "clean": "del-cli \"**/dev.db\"",
     "develop": "prisma2 dev"
   },
   "dependencies": {
     "prisma2": "^2.0.0-preview016.2"
+  },
+  "devDependencies": {
+    "del-cli": "^3.0.0"
   }
 }
