@@ -6,7 +6,8 @@
     "build": "gatsby build",
     "clean": "gatsby clean",
     "develop": "gatsby develop",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.4.1",
@@ -37,6 +38,7 @@
     "@types/smoothscroll-polyfill": "^0.3.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.3.0"
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "typescript": "^3.7.2"
   }
 }

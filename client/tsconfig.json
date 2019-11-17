@@ -1,6 +1,7 @@
 {
   // Reference: https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/
-  "extends": "../tsconfig",
+  "extends": "../tsconfig-base",
+  "include": ["src/"],
   "compilerOptions": {
     "module": "esnext",
     "esModuleInterop": true,
