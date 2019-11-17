@@ -1,16 +1,16 @@
-generator photon {
-  provider = "photonjs"
-}
-
 datasource db {
   provider = "sqlite"
   url      = "file:dev.db"
 }
 
+generator photonjs {
+  provider = "photonjs"
+}
+
 model User {
   id           String  @default(cuid()) @id
   email        String  @unique
-  // TODO: Add support for auth tokens
+  // TODO: Add support for multiple auth providers, e.g. Facebook and Google
   passwordHash String
   name         String?
   quizzes      Quiz[]
