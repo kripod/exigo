@@ -5,7 +5,9 @@
   "scripts": {
     "build": "netlify-lambda build src",
     "clean": "del-cli \"**/dev.db\"",
-    "develop": "prisma2 dev && netlify-lambda serve src",
+    "develop": "run-p develop:*",
+    "develop:apollo": "netlify-lambda serve src",
+    "develop:prisma": "prisma2 dev",
     "generate": "run-s generate:prisma generate:nexus",
     "generate:nexus": "ts-node --transpile-only src/schema",
     "generate:prisma": "prisma2 generate && prisma2 lift up --create-db",
@@ -19,6 +21,7 @@
     "prisma2": "^2.0.0-preview016.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.7.2",
     "del-cli": "^3.0.0",
     "netlify-lambda": "^1.6.3",
     "npm-run-all": "^4.1.5",
