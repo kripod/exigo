@@ -2,9 +2,9 @@ import { makeSchema } from 'nexus';
 import { nexusPrismaPlugin } from 'nexus-prisma';
 import * as path from 'path';
 
-import MultipleOptionsQuizItemParams from './MultipleOptionsQuizItemParams';
+import MultipleOptionsQuizItemFragment from './MultipleOptionsQuizItemFragment';
 import Mutation from './Mutation';
-import NumericQuizItemParams from './NumericQuizItemParams';
+import NumericQuizItemFragment from './NumericQuizItemFragment';
 import Option from './Option';
 import Query from './Query';
 import Quiz from './Quiz';
@@ -15,8 +15,8 @@ export default makeSchema({
   types: [
     Query,
     Mutation,
-    MultipleOptionsQuizItemParams,
-    NumericQuizItemParams,
+    MultipleOptionsQuizItemFragment,
+    NumericQuizItemFragment,
     Option,
     Quiz,
     QuizItem,

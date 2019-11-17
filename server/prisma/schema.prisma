@@ -32,13 +32,14 @@ model Quiz {
 // union QuizItem = MultipleOptionsQuizItem | NumericQuizItem
 
 model QuizItem {
+  // TODO: Move these fields to `QuizItemBase`
   id   String       @id @default(cuid())
   quiz Quiz         @relation(onDelete: CASCADE)
   type QuizItemType
   stem String
 
-  t_MultipleOptions MultipleOptionsQuizItemParams?
-  t_Numeric         NumericQuizItemParams?
+  t_MultipleOptions MultipleOptionsQuizItemFragment?
+  t_Numeric         NumericQuizItemFragment?
 }
 
 enum QuizItemType {
@@ -46,7 +47,8 @@ enum QuizItemType {
   NUMERIC
 }
 
-model MultipleOptionsQuizItemParams {
+// TODO: implements QuizItemBase
+model MultipleOptionsQuizItemFragment {
   id                   String   @id @default(cuid())
   quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
   options              Option[]
@@ -61,10 +63,11 @@ model Option {
   isSolution Boolean  @default(false)
 }
 
-model NumericQuizItemParams {
+// TODO: implements QuizItemBase
+model NumericQuizItemFragment {
   id                   String   @id @default(cuid())
   quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
-  solution             Float?
+  solution             Float
   precision            Float?   @default(0)
   stepSize             Float?   @default(1)
   constraints_minValue Float?

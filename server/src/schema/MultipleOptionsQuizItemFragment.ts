@@ -1,7 +1,7 @@
 import { objectType } from 'nexus';
 
 export default objectType({
-  name: 'MultipleOptionsQuizItemParams',
+  name: 'MultipleOptionsQuizItemFragment',
   definition(t) {
     t.model.id();
     t.model.quizItem();
