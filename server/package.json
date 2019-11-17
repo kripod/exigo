@@ -3,14 +3,24 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "prisma2 generate && prisma2 lift up --create-db",
+    "bootstrap": "run-s bootstrap:prisma bootstrap:nexus",
+    "bootstrap:nexus": "ts-node --transpile-only src/schema",
+    "bootstrap:prisma": "prisma2 generate && prisma2 lift up --create-db",
+    "build": "netlify-lambda build src",
     "clean": "del-cli \"**/dev.db\"",
-    "develop": "prisma2 dev"
+    "develop": "prisma2 dev && netlify-lambda serve src"
   },
   "dependencies": {
+    "apollo-server-lambda": "^2.9.9",
+    "graphql": "^14.5.8",
+    "nexus": "^0.12.0-rc.4",
+    "nexus-prisma": "^0.5.2",
     "prisma2": "^2.0.0-preview016.2"
   },
   "devDependencies": {
-    "del-cli": "^3.0.0"
+    "del-cli": "^3.0.0",
+    "netlify-lambda": "^1.6.3",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^8.5.2"
   }
 }
