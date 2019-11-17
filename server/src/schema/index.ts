@@ -1,5 +1,6 @@
 import { makeSchema } from 'nexus';
 import { nexusPrismaPlugin } from 'nexus-prisma';
+import * as path from 'path';
 
 import MultipleOptionsQuizItemParams from './MultipleOptionsQuizItemParams';
 import Mutation from './Mutation';
@@ -29,6 +30,12 @@ const schema = makeSchema({
       },
     }),
   ],
+  outputs: {
+    typegen: path.join(
+      __dirname,
+      '../../node_modules/@types/nexus-typegen/index.d.ts',
+    ),
+  },
   /*
   typegenAutoConfig: {
     sources: [
