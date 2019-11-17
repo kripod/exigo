@@ -1,10 +1,9 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-lambda';
 
 import context from './context';
 import schema from './schema';
 
 const server = new ApolloServer({ schema, context });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+// eslint-disable-next-line import/prefer-default-export
+export const graphqlHandler = server.createHandler();
