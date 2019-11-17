@@ -5,12 +5,12 @@
     "server"
   ],
   "scripts": {
-    "build": "wsrun build",
+    "build": "wsrun build --exclude-missing",
     "clean": "wsrun clean",
     "develop": "wsrun develop",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
-    "postinstall": "wsrun bootstrap",
+    "postinstall": "wsrun bootstrap --exclude-missing",
     "serve": "wsrun serve",
     "type-check": "tsc --noEmit"
   },
