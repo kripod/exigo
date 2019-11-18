@@ -4,4 +4,5 @@
   publish = "client/public/"
 
 [dev]
-  command = "wsrun develop"
+  command = "wsrun --no-prefix develop"
+  publish = "client/public/"
