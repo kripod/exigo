@@ -7,7 +7,7 @@
   "scripts": {
     "build": "wsrun build",
     "clean": "wsrun clean",
-    "develop": "netlify dev --targetPort 8000",
+    "develop": "netlify dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
     "postinstall": "wsrun --exclude-missing generate",
