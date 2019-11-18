@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc --outDir build",
-    "clean": "del-cli \"**/dev.db\"",
+    "clean": "del-cli build \"**/dev.db\" prisma/migrations/dev",
     "develop": "run-p develop:*",
     "develop:functions": "yarn build --watch",
     "develop:prisma": "prisma2 dev",
