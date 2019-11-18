@@ -36,19 +36,4 @@ export default makeSchema({
       '../../../node_modules/@types/nexus-typegen/index.d.ts',
     ),
   },
-  /*
-  typegenAutoConfig: {
-    sources: [
-      // {
-      //   source: '@generated/photon',
-      //   alias: 'photon',
-      // },
-      {
-        source: require.resolve('../context'),
-        alias: 'context',
-      },
-    ],
-    contextType: 'context.Context',
-  },
-  */
 });
