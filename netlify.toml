@@ -1,0 +1,7 @@
+[build]
+  command = "yarn build"
+  functions = "server/build/functions/"
+  publish = "client/public/"
+
+[dev]
+  command = "wsrun develop"
