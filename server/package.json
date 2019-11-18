@@ -11,7 +11,7 @@
     "generate": "run-s generate:prisma generate:nexus",
     "generate:nexus": "ts-node --transpile-only src/graphql/schema",
     "generate:prisma": "prisma2 generate && prisma2 lift up --create-db",
-    "serve": "yarn develop:functions",
+    "serve": "netlify-lambda --static serve build/functions",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
