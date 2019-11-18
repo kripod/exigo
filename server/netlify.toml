@@ -1,4 +1,3 @@
 [build]
-  command = "yarn build"
-  functions = "functions"
-  publish = "build"
+  functionsSource = "src/functions/"
+  functions = "build/"
