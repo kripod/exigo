@@ -3,10 +3,11 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "build": "netlify-lambda build src/functions",
+    "build": "tsc --outDir build",
     "clean": "del-cli \"**/dev.db\"",
     "develop": "run-p develop:*",
-    "develop:functions": "netlify-lambda serve src/functions",
+    "develop:functions": "yarn build --watch",
+    "develop:netlify": "netlify dev",
     "develop:prisma": "prisma2 dev",
     "generate": "run-s generate:prisma generate:nexus",
     "generate:nexus": "ts-node --transpile-only src/graphql/schema",
