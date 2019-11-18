@@ -1,0 +1,616 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateEnum",
+      "enum": "QuizItemType",
+      "values": ["MULTIPLE_OPTIONS", "NUMERIC"]
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "User"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "User",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "createdAt",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "createdAt",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "User",
+      "field": "createdAt",
+      "directive": "default",
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "email",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "User",
+      "field": "email",
+      "directive": "unique"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "passwordHash",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "name",
+      "type": "String",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "User",
+      "field": "quizzes",
+      "type": "Quiz",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Quiz"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Quiz",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "author",
+      "type": "User",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "author",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Quiz",
+      "field": "author",
+      "directive": "relation",
+      "argument": "onDelete",
+      "value": "CASCADE"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "createdAt",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "createdAt",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Quiz",
+      "field": "createdAt",
+      "directive": "default",
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "updatedAt",
+      "type": "DateTime",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "updatedAt",
+      "directive": "updatedAt"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "isPrivate",
+      "type": "Boolean",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Quiz",
+      "field": "isPrivate",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Quiz",
+      "field": "isPrivate",
+      "directive": "default",
+      "argument": "",
+      "value": "false"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "title",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "timeLimitInMinutes",
+      "type": "Int",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Quiz",
+      "field": "items",
+      "type": "QuizItem",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "QuizItem"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "QuizItem",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "QuizItem",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "QuizItem",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "quiz",
+      "type": "Quiz",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "QuizItem",
+      "field": "quiz",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "QuizItem",
+      "field": "quiz",
+      "directive": "relation",
+      "argument": "onDelete",
+      "value": "CASCADE"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "type",
+      "type": "QuizItemType",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "stem",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "t_MultipleOptions",
+      "type": "MultipleOptionsQuizItemFragment",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "QuizItem",
+      "field": "t_Numeric",
+      "type": "NumericQuizItemFragment",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "MultipleOptionsQuizItemFragment"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "quizItem",
+      "type": "QuizItem",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "references",
+      "value": "id"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "onDelete",
+      "value": "CASCADE"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "options",
+      "type": "Option",
+      "arity": "list"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_minCount",
+      "type": "Int",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_minCount",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_minCount",
+      "directive": "default",
+      "argument": "",
+      "value": "1"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_maxCount",
+      "type": "Int",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_maxCount",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "constraints_maxCount",
+      "directive": "default",
+      "argument": "",
+      "value": "1"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "Option"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Option",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Option",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Option",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Option",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Option",
+      "field": "quizItem",
+      "type": "QuizItem",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Option",
+      "field": "quizItem",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Option",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "onDelete",
+      "value": "CASCADE"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Option",
+      "field": "text",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "Option",
+      "field": "isSolution",
+      "type": "Boolean",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "Option",
+      "field": "isSolution",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "Option",
+      "field": "isSolution",
+      "directive": "default",
+      "argument": "",
+      "value": "false"
+    },
+    {
+      "stepType": "CreateModel",
+      "model": "NumericQuizItemFragment"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "id",
+      "type": "String",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "NumericQuizItemFragment",
+      "field": "id",
+      "directive": "id"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "NumericQuizItemFragment",
+      "field": "id",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "id",
+      "directive": "default",
+      "argument": "",
+      "value": "cuid()"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "quizItem",
+      "type": "QuizItem",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "NumericQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "references",
+      "value": "id"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "onDelete",
+      "value": "CASCADE"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "solution",
+      "type": "Float",
+      "arity": "required"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "precision",
+      "type": "Float",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "NumericQuizItemFragment",
+      "field": "precision",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "precision",
+      "directive": "default",
+      "argument": "",
+      "value": "0"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "stepSize",
+      "type": "Float",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateDirective",
+      "model": "NumericQuizItemFragment",
+      "field": "stepSize",
+      "directive": "default"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "stepSize",
+      "directive": "default",
+      "argument": "",
+      "value": "1"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "constraints_minValue",
+      "type": "Float",
+      "arity": "optional"
+    },
+    {
+      "stepType": "CreateField",
+      "model": "NumericQuizItemFragment",
+      "field": "constraints_maxValue",
+      "type": "Float",
+      "arity": "optional"
+    }
+  ]
+}
