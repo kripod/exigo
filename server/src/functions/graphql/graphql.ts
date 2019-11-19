@@ -1,9 +1,23 @@
-import { ApolloServer } from 'apollo-server-lambda';
+import { ApolloServer, gql } from 'apollo-server-lambda';
 
-import context from './context';
-import schema from './schema';
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
 
-const server = new ApolloServer({ schema, context });
+const resolvers = {
+  Query: {
+    hello: (parent: any, args: any, context: any): string => {
+      return 'Hello, world!';
+    },
+  },
+};
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
 
 // eslint-disable-next-line import/prefer-default-export
 export const handler = server.createHandler();
