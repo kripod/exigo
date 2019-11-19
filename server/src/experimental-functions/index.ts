@@ -5,7 +5,11 @@ import { Photon } from './generated/photon'; // eslint-disable-line import/no-un
 const photon = new Photon();
 
 // eslint-disable-next-line import/prefer-default-export
-export async function handler(event: any, context: any, callback: any): any {
+export async function handler(
+  event: any,
+  context: any,
+  callback: any,
+): Promise<any> {
   const users = await photon.users();
   return {
     statusCode: 200,
