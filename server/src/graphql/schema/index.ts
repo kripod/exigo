@@ -25,18 +25,15 @@ export default makeSchema({
   plugins: [
     nexusPrismaPlugin({
       inputs: {
-        // TODO: Remove when https://github.com/prisma-labs/nexus-prisma/pull/534 gets resolved
-        photon: path.join(
-          __dirname,
-          '../../../../node_modules/@generated/photon',
-        ),
+        // TODO: Remove when https://github.com/prisma-labs/nexus-prisma/pull/532 gets resolved
+        photon: require.resolve('@generated/photon'),
       },
     }),
   ],
   outputs: {
     typegen: path.join(
       __dirname,
-      '../../../../node_modules/@types/nexus-typegen/index.d.ts',
+      '../../../node_modules/@types/nexus-typegen/index.d.ts',
     ),
   },
 });
