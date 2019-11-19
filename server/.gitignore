@@ -2,4 +2,4 @@
 dev.db
 dist/
 prisma/migrations/dev/
-nexus.d.ts
+*.generated.d.ts

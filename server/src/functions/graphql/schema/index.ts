@@ -27,9 +27,12 @@ export default makeSchema({
       inputs: {
         photon: path.join(__dirname, '../.generated/photon'),
       },
+      outputs: {
+        typegen: path.join(__dirname, '../nexus-prisma.generated.d.ts'),
+      },
     }),
   ],
   outputs: {
-    typegen: path.join(__dirname, '../nexus.d.ts'),
+    typegen: path.join(__dirname, '../nexus.generated.d.ts'),
   },
 });
