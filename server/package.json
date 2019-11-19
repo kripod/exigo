@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "scripts": {
     "build": "cpy --cwd ./src/ --parents ./functions/graphql/.generated/ ../dist/ && tsc --outDir ./dist/",
-    "clean": "del-cli \"**/.generated\" ./dist/ \"**/dev.db\" ./prisma/migrations/dev/",
     "develop": "run-p develop:*",
     "develop:functions": "yarn build --watch",
     "develop:prisma": "prisma2 dev",
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "cpy-cli": "^2.0.0",
-    "del-cli": "^3.0.0",
     "netlify-lambda": "^1.6.3",
     "npm-run-all": "^4.1.5",
     "ts-node": "^8.5.2",
