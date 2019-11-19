@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig-base",
-  "include": ["src/"],
   "compilerOptions": {
+    "rootDir": "./src/",
     "module": "commonjs",
     "skipLibCheck": true // TODO: Remove when nexus-prisma gets fixed
   }
