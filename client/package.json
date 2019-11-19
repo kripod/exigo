@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "serve": "gatsby serve",
     "type-check": "tsc --noEmit"
