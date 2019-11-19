@@ -3,7 +3,7 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "build": "cpy --cwd ./src/ --parents ./experimental-functions/graphql/.generated/ ../dist/ && tsc --outDir ./dist/",
+    "build": "cpy --cwd ./src/ --parents ./functions/graphql/.generated/ ../dist/ && tsc --outDir ./dist/",
     "clean": "del-cli \"**/.generated\" ./dist/ \"**/dev.db\" ./prisma/migrations/dev/",
     "develop": "run-p develop:*",
     "develop:functions": "yarn build --watch",
