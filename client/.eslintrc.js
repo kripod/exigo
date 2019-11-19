@@ -1,5 +1,12 @@
+const baseConfig = require('../.eslintrc');
+
 module.exports = {
-  extends: 'airbnb-typescript',
+  extends: [
+    'airbnb-typescript',
+    'airbnb/hooks',
+    ...baseConfig.extends.filter(name => !name.includes('airbnb')),
+    'prettier/react',
+  ],
   env: {
     browser: true,
   },
