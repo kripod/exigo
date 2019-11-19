@@ -30,6 +30,6 @@ export default makeSchema({
     }),
   ],
   outputs: {
-    typegen: path.join(__dirname, '../.generated/nexus.d.ts'),
+    typegen: path.join(__dirname, '../nexus.d.ts'),
   },
 });
