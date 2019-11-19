@@ -5,6 +5,9 @@ datasource db {
 
 generator photonjs {
   provider = "photonjs"
+  // TODO: Remove when migrating to @prisma/photon facade package
+  // See: https://github.com/prisma/photonjs/issues/261
+  output   = "../../node_modules/@generated/photon"
 }
 
 model User {
