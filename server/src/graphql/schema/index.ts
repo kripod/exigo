@@ -25,8 +25,7 @@ export default makeSchema({
   plugins: [
     nexusPrismaPlugin({
       inputs: {
-        // TODO: Remove when https://github.com/prisma-labs/nexus-prisma/pull/532 gets resolved
-        photon: require.resolve('@generated/photon'),
+        photon: path.join(__dirname, '../.generated/photon'),
       },
     }),
   ],
