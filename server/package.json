@@ -3,13 +3,13 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "build": "cpy --cwd ./src/ --parents ./graphql/.generated/ ../build/ && tsc --outDir ./build/",
-    "clean": "del-cli ./build/ \"**/dev.db\" ./prisma/migrations/dev/",
+    "build": "cpy --cwd ./src/ --parents ./functions/graphql/.generated/ ../build/ && tsc --outDir ./build/",
+    "clean": "del-cli \"**/.generated\" ./build/ \"**/dev.db\" ./prisma/migrations/dev/",
     "develop": "run-p develop:*",
     "develop:functions": "yarn build --watch",
     "develop:prisma": "prisma2 dev",
     "generate": "run-s generate:prisma generate:nexus",
-    "generate:nexus": "ts-node --transpile-only ./src/graphql/schema",
+    "generate:nexus": "ts-node --transpile-only ./src/functions/graphql/schema",
     "generate:prisma": "prisma2 generate",
     "serve": "netlify-lambda --static serve ./build/functions/",
     "type-check": "tsc --noEmit"

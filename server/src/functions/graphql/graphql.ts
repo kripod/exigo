@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-lambda';
 
-import context from '../graphql/context';
-import schema from '../graphql/schema';
+import context from './context';
+import schema from './schema';
 
 const server = new ApolloServer({ schema, context });
 
