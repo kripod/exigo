@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  functions = "server/dist/functions/"
+  functions = "server/dist/experimental-functions/"
   publish = "client/public/"
 
 [dev]
