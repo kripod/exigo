@@ -27,9 +27,12 @@ export default makeSchema({
       inputs: {
         photon: path.join(__dirname, '../.generated/photon'),
       },
+      // TODO: Enable this for Netlify Function deployment
+      /*
       outputs: {
         typegen: path.join(__dirname, '../nexus-prisma.generated.d.ts'),
       },
+      */
     }),
   ],
   outputs: {
