@@ -16,14 +16,14 @@ const getQuizzes = gql`
 `;
 
 export default function QuizList() {
-  const [res] = useQuery<Pick<Quiz, 'id' | 'title'>[]>({
+  const [res] = useQuery<{ quizzes: Pick<Quiz, 'id' | 'title'>[] }>({
     query: getQuizzes,
   });
 
   if (res.fetching) return <Text>Loading…</Text>;
   if (res.error) return <Text>Failed to load.</Text>;
 
-  if (!res.data?.length) {
+  if (!res.data?.quizzes.length) {
     return (
       <Text>You currently have no quizzes. Create your first one now!</Text>
     );
@@ -32,7 +32,7 @@ export default function QuizList() {
   // TODO: Show cards with creation/modification date and author
   return (
     <List styleType="disc">
-      {res.data.map(quiz => (
+      {res.data.quizzes.map(quiz => (
         <ListItem>
           <Link href={`/quiz/${quiz.id}`}>{quiz.title}</Link>
         </ListItem>
