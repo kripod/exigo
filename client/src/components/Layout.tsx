@@ -1,14 +1,14 @@
+import { Box, BoxProps } from '@chakra-ui/core';
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Header from './Header';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface LayoutProps extends BoxProps {}
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, ...restProps }: LayoutProps) {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -37,11 +37,13 @@ export default function Layout({ children }: LayoutProps) {
         />
       </Helmet>
 
-      <Header mb={6} />
+      <Box {...restProps}>
+        <Header mb={6} />
 
-      <main>{children}</main>
+        <main>{children}</main>
 
-      <footer>{/* TODO */}</footer>
+        <footer>{/* TODO */}</footer>
+      </Box>
     </React.StrictMode>
   );
 }

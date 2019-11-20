@@ -30,12 +30,13 @@ export default function QuizPage({
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
 
   return (
-    <Layout>
+    <Layout maxHeight="100vh">
       <Measure mx="auto">
         <CarouselProvider>
           <CarouselContainer mt={-6}>
             <CarouselRotator
               ignoreTargetChange={itemBeingRemoved != null}
+              maxHeight="fill-available"
               onScrollEnd={() => {
                 if (itemBeingRemoved != null) {
                   setItemBeingRemoved(undefined);

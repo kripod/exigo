@@ -25,7 +25,13 @@ export default function QuizItemCard({
   ...restProps
 }: QuizItemCardProps) {
   return (
-    <Card as={Flex} flexDirection="column" boxShadow="lg" {...restProps}>
+    <Card
+      as={Flex}
+      flexDirection="column"
+      overflowY="auto"
+      boxShadow="lg"
+      {...restProps}
+    >
       <Box
         mx={QUIZ_ITEM_CARD_PADDING}
         mb={2}
