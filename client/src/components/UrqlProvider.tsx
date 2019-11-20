@@ -1,5 +1,12 @@
+import fetch from 'node-fetch';
 import React from 'react';
 import { Client, createClient, Provider } from 'urql';
+
+// Polyfill fetch only in Node environments
+if (typeof window === 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (global as any).fetch = fetch;
+}
 
 const client = createClient({
   url:
