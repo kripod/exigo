@@ -16,8 +16,9 @@ import React, { useRef } from 'react';
 import useCarouselControls from '../hooks/useCarouselControls';
 import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
+import QuizNavigator from './QuizNavigator';
 
-export interface QuizActionsProps extends StackProps {
+export interface QuizEvaluatorActionsProps extends StackProps {
   remainingItems: QuizItem[];
   responses: QuizAnswers;
   disableNavigation?: boolean;
@@ -25,14 +26,14 @@ export interface QuizActionsProps extends StackProps {
   onSurrender: (item: QuizItem) => void;
 }
 
-export default function QuizActions({
+export default function QuizEvaluatorActions({
   remainingItems,
   responses,
   disableNavigation = false,
   onCheckAnswer,
   onSurrender,
   ...restProps
-}: QuizActionsProps) {
+}: QuizEvaluatorActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
   const shownItem = remainingItems[shownIndex];
   const currentResponse = responses[shownItem.id];
@@ -43,10 +44,6 @@ export default function QuizActions({
 
   function goToNext() {
     setShownIndex(prevIndex => (prevIndex + 1) % totalCount);
-  }
-
-  function goToPrev() {
-    setShownIndex(prevIndex => (prevIndex - 1 + totalCount) % totalCount);
   }
 
   return (
@@ -114,28 +111,13 @@ export default function QuizActions({
         </Popover>
       </ButtonGroup>
 
-      <ButtonGroup>
-        <Button
-          isDisabled={totalCount === 1}
-          aria-label="Previous item"
-          leftIcon="chevron-left"
-          variant="outline"
-          onClick={!disableNavigation ? goToPrev : undefined}
-        >
-          Previous
-        </Button>
-
-        <Button
-          ref={nextButtonRef}
-          isDisabled={remainingItems.length === 1 && currentResponse == null}
-          aria-label="Next item"
-          rightIcon="chevron-right"
-          variant="outline"
-          onClick={!disableNavigation ? goToNext : undefined}
-        >
-          Next
-        </Button>
-      </ButtonGroup>
+      <QuizNavigator
+        remainingItems={remainingItems}
+        responses={responses}
+        disableActions={disableNavigation}
+        onCheckAnswer={onCheckAnswer}
+        onSurrender={onSurrender}
+      />
     </Flex>
   );
 }

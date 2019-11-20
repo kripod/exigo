@@ -6,7 +6,7 @@ import CarouselProvider from '../components/CarouselProvider';
 import CarouselRotator from '../components/CarouselRotator';
 import Layout from '../components/Layout';
 import Measure from '../components/Measure';
-import QuizActions from '../components/QuizActions';
+import QuizEvaluatorActions from '../components/QuizEvaluatorActions';
 import QuizItemCard from '../components/QuizItemCard';
 import QuizItemEvaluator from '../components/QuizItemEvaluator';
 // TODO: Load this from GraphQL template query
@@ -79,7 +79,7 @@ export default function QuizPage({
             </CarouselRotator>
           </CarouselContainer>
 
-          <QuizActions
+          <QuizEvaluatorActions
             remainingItems={remainingItems}
             responses={responses}
             disableNavigation={itemBeingRemoved != null}
