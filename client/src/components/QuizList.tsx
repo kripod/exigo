@@ -33,8 +33,8 @@ export default function QuizList() {
   return (
     <List styleType="disc">
       {res.data.quizzes.map(quiz => (
-        <ListItem>
-          <Link href={`/quiz/${quiz.id}`}>{quiz.title}</Link>
+        <ListItem key={quiz.id}>
+          <Link href={`/app/quiz/${quiz.id}`}>{quiz.title}</Link>
         </ListItem>
       ))}
     </List>

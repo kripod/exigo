@@ -1,4 +1,6 @@
 import { css } from '@emotion/core';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { RouteComponentProps } from '@reach/router';
 import React, { useState } from 'react';
 
 import CarouselContainer from '../components/CarouselContainer';
@@ -14,13 +16,14 @@ import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json'
 import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
 
-interface QuizPageProps {
-  items: QuizItem[];
+interface QuizPageProps extends RouteComponentProps {
+  id?: string;
 }
 
-export default function QuizPage({
-  items = multipleChoiceQuizExample.items,
-}: QuizPageProps) {
+export default function QuizPage({ id: quizId }: QuizPageProps) {
+  console.log({ quizId });
+  const { items } = multipleChoiceQuizExample;
+
   const [remainingItems, setRemainingItems] = useState(() =>
     // Simulate that solutions are not given at first
     items.map(({ solution, ...itemProps }) => itemProps),
