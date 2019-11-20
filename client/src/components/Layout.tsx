@@ -41,8 +41,6 @@ export default function Layout({ children, ...restProps }: LayoutProps) {
         <Header mb={6} />
 
         <main>{children}</main>
-
-        <footer>{/* TODO */}</footer>
       </Box>
     </React.StrictMode>
   );
