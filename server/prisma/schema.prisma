@@ -59,7 +59,8 @@ model MultipleOptionsQuizItemFragment {
 
 model Option {
   id         String   @id @default(cuid())
-  quizItem   QuizItem @relation(onDelete: CASCADE)
+  // TODO: Add when cascaded deletion is supported
+  // quizItem   QuizItem @relation(onDelete: CASCADE)
   text       String
   isSolution Boolean  @default(false)
 }

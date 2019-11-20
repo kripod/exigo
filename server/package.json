@@ -5,6 +5,7 @@
   "scripts": {
     "build": "cpy --cwd ./src/ --parents ./functions/graphql/.generated/ ../dist/ && tsc --outDir ./dist/",
     "clean": "del-cli \"**/.generated\" ./dist/ \"**/dev.db\" ./prisma/migrations/dev/",
+    "data:inject": "ts-node --transpile-only ./prisma/seed.ts",
     "develop": "run-p develop:*",
     "develop:functions": "yarn build --watch",
     "develop:prisma": "prisma2 dev",
