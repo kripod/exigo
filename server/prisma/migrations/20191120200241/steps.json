@@ -1,0 +1,26 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "MultipleOptionsQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "references",
+      "value": "id"
+    },
+    {
+      "stepType": "DeleteField",
+      "model": "Option",
+      "field": "quizItem"
+    },
+    {
+      "stepType": "CreateDirectiveArgument",
+      "model": "NumericQuizItemFragment",
+      "field": "quizItem",
+      "directive": "relation",
+      "argument": "references",
+      "value": "id"
+    }
+  ]
+}
