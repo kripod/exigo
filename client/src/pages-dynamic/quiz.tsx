@@ -1,6 +1,7 @@
 import { css } from '@emotion/core';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RouteComponentProps } from '@reach/router';
+import gql from 'graphql-tag';
 import React, { useState } from 'react';
 
 import CarouselContainer from '../components/CarouselContainer';
@@ -16,12 +17,43 @@ import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json'
 import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
 
+const getQuiz = gql`
+  query GetQuiz($id: ID!) {
+    quizzes(id: $id) {
+      title
+      items {
+        id
+        type
+        stem
+
+        t_MultipleOptions {
+          constraints_minCount
+          constraints_maxCount
+          options {
+            id
+            text
+            isSolution
+          }
+        }
+
+        t_Numeric {
+          constraints_minValue
+          constraints_maxValue
+          precision
+          stepSize
+          solution
+        }
+      }
+    }
+  }
+`;
+
 interface QuizPageProps extends RouteComponentProps {
   id?: string;
 }
 
-export default function QuizPage({ id: quizId }: QuizPageProps) {
-  console.log({ quizId });
+export default function QuizPage({ id: quizID }: QuizPageProps) {
+  console.log({ quizID });
   const { items } = multipleChoiceQuizExample;
 
   const [remainingItems, setRemainingItems] = useState(() =>
