@@ -1,0 +1,9 @@
+{
+  "schema": "./server/prisma/schema.generated.graphql",
+  "generates": {
+    "./client/src/models.generated.ts": ["typescript"]
+  },
+  "hooks": {
+    "afterOneFileWrite": ["prettier --write"]
+  }
+}

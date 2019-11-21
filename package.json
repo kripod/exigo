@@ -9,12 +9,16 @@
     "clean": "wsrun clean",
     "develop": "netlify dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
-    "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
-    "postinstall": "wsrun --exclude-missing generate",
+    "generate": "wsrun --exclude-missing generate && graphql-codegen",
+    "lint": "eslint --ignore-pattern \"**/*.generated.*\" --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
+    "postinstall": "yarn generate",
     "serve": "wsrun serve",
     "type-check": "wsrun type-check"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.8.3",
+    "@graphql-codegen/typescript": "^1.8.3",
+    "@graphql-codegen/typescript-urql": "^1.8.3",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
     "eslint": "^6.6.0",
