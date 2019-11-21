@@ -8,8 +8,8 @@ node_modules/
 public/
 
 # Server
-*.generated.d.ts
 .generated/
 dev.db
 dist/
+nexus*.generated.d.ts
 prisma/migrations/dev/
