@@ -1,3 +1,15 @@
+# Common
 *.log*
 .eslintcache
 node_modules/
+
+# Client
+.cache/
+public/
+
+# Server
+*.generated.d.ts
+.generated/
+dev.db
+dist/
+prisma/migrations/dev/

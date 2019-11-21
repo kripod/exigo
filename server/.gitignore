@@ -1,5 +1,0 @@
-.generated/
-dev.db
-dist/
-prisma/migrations/dev/
-src/**/*.generated.d.ts
