@@ -10,7 +10,7 @@
     "develop": "netlify dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "generate": "wsrun --exclude-missing generate && graphql-codegen",
-    "lint": "eslint --ignore-pattern \"**/*.generated.*\" --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
+    "lint": "eslint --ignore-path .eslintignore \"**/*.{ts,tsx,js}\"",
     "postinstall": "yarn generate",
     "serve": "wsrun serve",
     "type-check": "wsrun type-check"
