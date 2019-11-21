@@ -36,6 +36,7 @@ export default makeSchema({
     }),
   ],
   outputs: {
+    schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
     typegen: path.join(__dirname, '../nexus.generated.d.ts'),
   },
 });
