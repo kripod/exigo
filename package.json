@@ -18,6 +18,7 @@
     "type-check": "wsrun type-check"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^1.8.3",
     "@graphql-codegen/cli": "^1.8.3",
     "@graphql-codegen/near-operation-file-preset": "^1.8.3",
     "@graphql-codegen/typescript": "^1.8.3",

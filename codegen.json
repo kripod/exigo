@@ -2,7 +2,10 @@
   "schema": "./server/prisma/schema.generated.graphql",
   "documents": "./client/src/**/*.graphql",
   "generates": {
-    "./client/src/models.generated.d.ts": ["typescript"],
+    "./client/src/models.generated.d.ts": [
+      { "add": "/* eslint-disable import/prefer-default-export */\n" },
+      "typescript"
+    ],
     "./client/src/": {
       "preset": "near-operation-file",
       "presetConfig": {
@@ -17,6 +20,6 @@
     }
   },
   "hooks": {
-    "afterOneFileWrite": ["prettier --write"]
+    "afterOneFileWrite": ["eslint --fix"]
   }
 }

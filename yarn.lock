@@ -1045,7 +1045,7 @@
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-"@graphql-codegen/add@1.8.3":
+"@graphql-codegen/add@1.8.3", "@graphql-codegen/add@^1.8.3":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/add/-/add-1.8.3.tgz#669d83dc0a1cf98f0584e29486df97b634296050"
   integrity sha512-m1gIBKWBdv6LlYxQZqnYr6VBy3/g0HX54gSnNzFXsvO6vh2fWAtGYLZ9jf+D6U/kUA0LV4Ltxq5nN8oXEnMjTQ==
