@@ -5,7 +5,10 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "gatsby develop",
+    "develop": "run-p develop:*",
+    "develop:gatsby": "gatsby develop",
+    "develop:graphql": "yarn generate:graphql --watch",
+    "generate:graphql": "cd .. && yarn generate:client",
     "serve": "gatsby serve",
     "type-check": "tsc --noEmit"
   },
