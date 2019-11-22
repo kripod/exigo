@@ -443,27 +443,6 @@
     {
       "stepType": "CreateField",
       "model": "Option",
-      "field": "quizItem",
-      "type": "QuizItem",
-      "arity": "required"
-    },
-    {
-      "stepType": "CreateDirective",
-      "model": "Option",
-      "field": "quizItem",
-      "directive": "relation"
-    },
-    {
-      "stepType": "CreateDirectiveArgument",
-      "model": "Option",
-      "field": "quizItem",
-      "directive": "relation",
-      "argument": "onDelete",
-      "value": "CASCADE"
-    },
-    {
-      "stepType": "CreateField",
-      "model": "Option",
       "field": "text",
       "type": "String",
       "arity": "required"
