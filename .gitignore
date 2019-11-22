@@ -11,5 +11,6 @@ public/
 .generated/
 dev.db
 dist/
+failed-*.md
 nexus*.generated.d.ts
 prisma/migrations/dev/
