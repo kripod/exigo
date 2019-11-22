@@ -39,8 +39,8 @@ model QuizItem {
   type QuizItemType
   stem String
 
-  t_MultipleOptions MultipleOptionsQuizItemFragment?
-  t_Numeric         NumericQuizItemFragment?
+  fragmentMultipleOptions MultipleOptionsQuizItemFragment?
+  fragmentNumeric         NumericQuizItemFragment?
 }
 
 enum QuizItemType {

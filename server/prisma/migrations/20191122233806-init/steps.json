@@ -289,14 +289,14 @@
     {
       "stepType": "CreateField",
       "model": "QuizItem",
-      "field": "t_MultipleOptions",
+      "field": "fragmentMultipleOptions",
       "type": "MultipleOptionsQuizItemFragment",
       "arity": "optional"
     },
     {
       "stepType": "CreateField",
       "model": "QuizItem",
-      "field": "t_Numeric",
+      "field": "fragmentNumeric",
       "type": "NumericQuizItemFragment",
       "arity": "optional"
     },

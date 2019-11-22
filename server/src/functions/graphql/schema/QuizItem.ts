@@ -7,7 +7,7 @@ export default objectType({
     t.model.quiz();
     t.model.type();
     t.model.stem();
-    t.model.t_MultipleOptions();
-    t.model.t_Numeric();
+    t.model.fragmentMultipleOptions();
+    t.model.fragmentNumeric();
   },
 });

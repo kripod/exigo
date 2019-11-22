@@ -22,7 +22,7 @@ async function main(): Promise<void> {
                   type: QuizItemType.MULTIPLE_OPTIONS,
                   stem:
                     'A popular method for solving systems of linear equations works one of these objects into reduced "row-echelon form." If one of these objects is square, its trace is simply the sum of values along a diagonal, and these mathematical arrangements have an inverse if and only if their determinant is not zero.',
-                  t_MultipleOptions: {
+                  fragmentMultipleOptions: {
                     create: {
                       constraints_maxCount: 1,
                       options: {
@@ -39,7 +39,7 @@ async function main(): Promise<void> {
                 {
                   type: QuizItemType.MULTIPLE_OPTIONS,
                   stem: '|x| = 1\nx = ?',
-                  t_MultipleOptions: {
+                  fragmentMultipleOptions: {
                     create: {
                       constraints_minCount: 2,
                       constraints_maxCount: 2,
@@ -59,7 +59,7 @@ async function main(): Promise<void> {
                 {
                   type: QuizItemType.NUMERIC,
                   stem: '-x = 3.14\nx = ?',
-                  t_Numeric: {
+                  fragmentNumeric: {
                     create: {
                       precision: 2,
                       solution: 3.14,
@@ -71,7 +71,7 @@ async function main(): Promise<void> {
                   type: QuizItemType.MULTIPLE_OPTIONS,
                   stem:
                     "These values exist at a function's critical points when the function is concave down.",
-                  t_MultipleOptions: {
+                  fragmentMultipleOptions: {
                     create: {
                       constraints_maxCount: 1,
                       options: {
@@ -95,7 +95,7 @@ async function main(): Promise<void> {
                   type: QuizItemType.NUMERIC,
                   stem:
                     'In which year was the city of Budapest officially created?',
-                  t_Numeric: {
+                  fragmentNumeric: {
                     create: {
                       solution: 1873,
                     },
@@ -106,7 +106,7 @@ async function main(): Promise<void> {
                   type: QuizItemType.MULTIPLE_OPTIONS,
                   stem:
                     'Which political faction represented the rich middle class during the French Revolution?',
-                  t_MultipleOptions: {
+                  fragmentMultipleOptions: {
                     create: {
                       constraints_maxCount: 1,
                       options: {

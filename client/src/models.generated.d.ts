@@ -31,7 +31,7 @@ export type MultipleOptionsQuizItemFragmentOptionsArgs = {
   skip?: Maybe<Scalars['Int']>;
 };
 
-export type MultipleOptionsQuizItemFragmentCreateOneWithoutT_MultipleOptionsInput = {
+export type MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput = {
   connect?: Maybe<MultipleOptionsQuizItemFragmentWhereUniqueInput>;
   create?: Maybe<MultipleOptionsQuizItemFragmentCreateWithoutQuizItemInput>;
 };
@@ -105,7 +105,7 @@ export type NumericQuizItemFragment = {
   stepSize?: Maybe<Scalars['Float']>;
 };
 
-export type NumericQuizItemFragmentCreateOneWithoutT_NumericInput = {
+export type NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput = {
   connect?: Maybe<NumericQuizItemFragmentWhereUniqueInput>;
   create?: Maybe<NumericQuizItemFragmentCreateWithoutQuizItemInput>;
 };
@@ -275,11 +275,11 @@ export type QuizCreateInput = {
 
 export type QuizItem = {
   __typename?: 'QuizItem';
+  fragmentMultipleOptions?: Maybe<MultipleOptionsQuizItemFragment>;
+  fragmentNumeric?: Maybe<NumericQuizItemFragment>;
   id: Scalars['ID'];
   quiz: Quiz;
   stem: Scalars['String'];
-  t_MultipleOptions?: Maybe<MultipleOptionsQuizItemFragment>;
-  t_Numeric?: Maybe<NumericQuizItemFragment>;
   type: QuizItemType;
 };
 
@@ -289,12 +289,14 @@ export type QuizItemCreateManyWithoutItemsInput = {
 };
 
 export type QuizItemCreateWithoutQuizInput = {
+  fragmentMultipleOptions?: Maybe<
+    MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput
+  >;
+  fragmentNumeric?: Maybe<
+    NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput
+  >;
   id?: Maybe<Scalars['ID']>;
   stem: Scalars['String'];
-  t_MultipleOptions?: Maybe<
-    MultipleOptionsQuizItemFragmentCreateOneWithoutT_MultipleOptionsInput
-  >;
-  t_Numeric?: Maybe<NumericQuizItemFragmentCreateOneWithoutT_NumericInput>;
   type: QuizItemType;
 };
 
@@ -336,12 +338,12 @@ export type QuizItemUpdateManyWithWhereNestedInput = {
 };
 
 export type QuizItemUpdateWithoutQuizDataInput = {
-  id?: Maybe<Scalars['ID']>;
-  stem?: Maybe<Scalars['String']>;
-  t_MultipleOptions?: Maybe<
+  fragmentMultipleOptions?: Maybe<
     MultipleOptionsQuizItemFragmentUpdateOneWithoutQuizItemInput
   >;
-  t_Numeric?: Maybe<NumericQuizItemFragmentUpdateOneWithoutQuizItemInput>;
+  fragmentNumeric?: Maybe<NumericQuizItemFragmentUpdateOneWithoutQuizItemInput>;
+  id?: Maybe<Scalars['ID']>;
+  stem?: Maybe<Scalars['String']>;
   type?: Maybe<QuizItemType>;
 };
 

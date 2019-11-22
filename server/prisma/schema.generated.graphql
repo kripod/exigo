@@ -17,7 +17,7 @@ type MultipleOptionsQuizItemFragment {
   quizItem: QuizItem!
 }
 
-input MultipleOptionsQuizItemFragmentCreateOneWithoutT_MultipleOptionsInput {
+input MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput {
   connect: MultipleOptionsQuizItemFragmentWhereUniqueInput
   create: MultipleOptionsQuizItemFragmentCreateWithoutQuizItemInput
 }
@@ -71,7 +71,7 @@ type NumericQuizItemFragment {
   stepSize: Float
 }
 
-input NumericQuizItemFragmentCreateOneWithoutT_NumericInput {
+input NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput {
   connect: NumericQuizItemFragmentWhereUniqueInput
   create: NumericQuizItemFragmentCreateWithoutQuizItemInput
 }
@@ -209,11 +209,11 @@ input QuizCreateInput {
 }
 
 type QuizItem {
+  fragmentMultipleOptions: MultipleOptionsQuizItemFragment
+  fragmentNumeric: NumericQuizItemFragment
   id: ID!
   quiz: Quiz!
   stem: String!
-  t_MultipleOptions: MultipleOptionsQuizItemFragment
-  t_Numeric: NumericQuizItemFragment
   type: QuizItemType!
 }
 
@@ -223,10 +223,10 @@ input QuizItemCreateManyWithoutItemsInput {
 }
 
 input QuizItemCreateWithoutQuizInput {
+  fragmentMultipleOptions: MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput
+  fragmentNumeric: NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput
   id: ID
   stem: String!
-  t_MultipleOptions: MultipleOptionsQuizItemFragmentCreateOneWithoutT_MultipleOptionsInput
-  t_Numeric: NumericQuizItemFragmentCreateOneWithoutT_NumericInput
   type: QuizItemType!
 }
 
@@ -268,10 +268,10 @@ input QuizItemUpdateManyWithWhereNestedInput {
 }
 
 input QuizItemUpdateWithoutQuizDataInput {
+  fragmentMultipleOptions: MultipleOptionsQuizItemFragmentUpdateOneWithoutQuizItemInput
+  fragmentNumeric: NumericQuizItemFragmentUpdateOneWithoutQuizItemInput
   id: ID
   stem: String
-  t_MultipleOptions: MultipleOptionsQuizItemFragmentUpdateOneWithoutQuizItemInput
-  t_Numeric: NumericQuizItemFragmentUpdateOneWithoutQuizItemInput
   type: QuizItemType
 }
 
