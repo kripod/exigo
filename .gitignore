@@ -8,9 +8,9 @@ node_modules/
 public/
 
 # Server
+**/prisma/migrations/dev/
 .generated/
 dev.db
 dist/
 failed-*.md
 nexus*.generated.d.ts
-server/prisma/migrations/dev/
