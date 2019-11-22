@@ -1,0 +1,6 @@
+query GetQuizzes {
+  quizzes {
+    id
+    title
+  }
+}

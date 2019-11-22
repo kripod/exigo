@@ -1,24 +1,11 @@
 import { List, ListItem, Text } from '@chakra-ui/core';
-import gql from 'graphql-tag';
 import React from 'react';
-import { useQuery } from 'urql';
 
-import { Quiz } from '../models/Quiz';
 import Link from './Link';
-
-const getQuizzes = gql`
-  {
-    quizzes {
-      id
-      title
-    }
-  }
-`;
+import { useGetQuizzesQuery } from './QuizList.generated';
 
 export default function QuizList() {
-  const [res] = useQuery<{ quizzes: Pick<Quiz, 'id' | 'title'>[] }>({
-    query: getQuizzes,
-  });
+  const [res] = useGetQuizzesQuery();
 
   if (res.fetching) return <Text>Loading…</Text>;
   if (res.error) return <Text>Failed to load.</Text>;

@@ -1,7 +1,20 @@
 {
   "schema": "./server/prisma/schema.generated.graphql",
+  "documents": "./client/src/**/*.graphql",
   "generates": {
-    "./client/src/models.generated.d.ts": ["typescript"]
+    "./client/src/models.generated.d.ts": ["typescript"],
+    "./client/src/": {
+      "preset": "near-operation-file",
+      "presetConfig": {
+        "extension": ".generated.tsx",
+        "baseTypesPath": "./models.generated.d.ts"
+      },
+      "plugins": ["typescript-operations", "typescript-urql"],
+      "config": {
+        "withHooks": true,
+        "withComponent": false
+      }
+    }
   },
   "hooks": {
     "afterOneFileWrite": ["prettier --write"]
