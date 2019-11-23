@@ -1,11 +1,10 @@
 import { Text } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 import { QuizItemType } from '../models.generated.d';
 import { Quiz } from '../models/Quiz';
-// TODO: Load this from GraphQL template query
-// import multipleChoiceQuizExample from '../data/examples/multipleChoiceQuiz.json';
 import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
 import MultipleOptionsQuizItem from '../models/QuizItems/MultipleOptionsQuizItem';
@@ -112,6 +111,10 @@ export default function QuizComponent({ id: quizID }: QuizProps) {
 
   return (
     <Measure mx="auto">
+      <Helmet>
+        <title>{quiz.title}</title>
+      </Helmet>
+
       <CarouselProvider>
         <CarouselContainer mt={-6}>
           <CarouselRotator
