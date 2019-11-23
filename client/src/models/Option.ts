@@ -1,4 +1,4 @@
 export default interface Option {
-  id: number;
+  id: string;
   text: string;
 }

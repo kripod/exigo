@@ -1,0 +1,28 @@
+query GetQuiz($id: ID!) {
+  quiz(where: { id: $id }) {
+    title
+    items {
+      id
+      type
+      stem
+
+      fragmentMultipleOptions {
+        constraints_minCount
+        constraints_maxCount
+        options {
+          id
+          text
+          isSolution
+        }
+      }
+
+      fragmentNumeric {
+        constraints_minValue
+        constraints_maxValue
+        precision
+        stepSize
+        solution
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import QuizItemType from './QuizItemType';
 
 export default interface QuizItemBase<T extends QuizItemType, S> {
+  id: string;
   type: T;
-  id: number;
   stem: string;
   solution?: S;
 }

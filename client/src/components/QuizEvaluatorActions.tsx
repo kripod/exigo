@@ -35,12 +35,15 @@ export default function QuizEvaluatorActions({
   ...restProps
 }: QuizEvaluatorActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
-  const shownItem = remainingItems[shownIndex];
-  const currentResponse = responses[shownItem.id];
-
   const nextButtonRef = useRef<HTMLElement>(null);
   const initialPopoverFocusRef = useRef<HTMLElement>(null);
+
+  if (remainingItems.length === 0) return null;
+
+  const shownItem = remainingItems[shownIndex];
   const isSolutionShown = shownItem.solution != null;
+
+  const currentResponse = responses[shownItem.id];
 
   function goToNext() {
     setShownIndex(prevIndex => (prevIndex + 1) % totalCount);

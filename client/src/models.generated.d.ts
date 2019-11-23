@@ -234,7 +234,12 @@ export type OptionWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query';
+  quiz?: Maybe<Quiz>;
   quizzes: Array<Quiz>;
+};
+
+export type QueryQuizArgs = {
+  where: QuizWhereUniqueInput;
 };
 
 export type QueryQuizzesArgs = {

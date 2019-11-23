@@ -1,3 +1,3 @@
 export default interface QuizAnswers {
-  [id: number]: unknown;
+  [id: string]: unknown;
 }

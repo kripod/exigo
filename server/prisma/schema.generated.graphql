@@ -183,6 +183,7 @@ input OptionWhereUniqueInput {
 }
 
 type Query {
+  quiz(where: QuizWhereUniqueInput!): Quiz
   quizzes(after: ID, before: ID, first: Int, last: Int, skip: Int): [Quiz!]!
 }
 

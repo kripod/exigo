@@ -1,0 +1,82 @@
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
+
+import * as Types from '../models.generated.d';
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
+export type GetQuizQueryVariables = {
+  id: Types.Scalars['ID'];
+};
+
+export type GetQuizQuery = { __typename?: 'Query' } & {
+  quiz: Types.Maybe<
+    { __typename?: 'Quiz' } & Pick<Types.Quiz, 'title'> & {
+        items: Array<
+          { __typename?: 'QuizItem' } & Pick<
+            Types.QuizItem,
+            'id' | 'type' | 'stem'
+          > & {
+              fragmentMultipleOptions: Types.Maybe<
+                { __typename?: 'MultipleOptionsQuizItemFragment' } & Pick<
+                  Types.MultipleOptionsQuizItemFragment,
+                  'constraints_minCount' | 'constraints_maxCount'
+                > & {
+                    options: Array<
+                      { __typename?: 'Option' } & Pick<
+                        Types.Option,
+                        'id' | 'text' | 'isSolution'
+                      >
+                    >;
+                  }
+              >;
+              fragmentNumeric: Types.Maybe<
+                { __typename?: 'NumericQuizItemFragment' } & Pick<
+                  Types.NumericQuizItemFragment,
+                  | 'constraints_minValue'
+                  | 'constraints_maxValue'
+                  | 'precision'
+                  | 'stepSize'
+                  | 'solution'
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export const GetQuizDocument = gql`
+  query GetQuiz($id: ID!) {
+    quiz(where: { id: $id }) {
+      title
+      items {
+        id
+        type
+        stem
+        fragmentMultipleOptions {
+          constraints_minCount
+          constraints_maxCount
+          options {
+            id
+            text
+            isSolution
+          }
+        }
+        fragmentNumeric {
+          constraints_minValue
+          constraints_maxValue
+          precision
+          stepSize
+          solution
+        }
+      }
+    }
+  }
+`;
+
+export function useGetQuizQuery(
+  options: Omit<Urql.UseQueryArgs<GetQuizQueryVariables>, 'query'> = {},
+) {
+  return Urql.useQuery<GetQuizQuery>({ query: GetQuizDocument, ...options });
+}
