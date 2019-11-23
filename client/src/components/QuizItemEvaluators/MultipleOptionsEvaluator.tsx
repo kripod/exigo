@@ -53,11 +53,7 @@ export default function MultipleOptionsEvaluator({
             }
 
             setValues(nextValues);
-            onChange(
-              nextValues.length >= minCount
-                ? nextValues.map(Number)
-                : undefined,
-            );
+            onChange(nextValues.length >= minCount ? nextValues : undefined);
           }) as any
         }
         spacing={0}

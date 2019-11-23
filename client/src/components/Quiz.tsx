@@ -179,7 +179,8 @@ export default function QuizComponent({ id: quizID }: QuizProps) {
                 {
                   ...item,
                   // TODO: Load solution from the server if desired
-                  solution: items.find(({ id }) => id === item.id)?.solution,
+                  solution: items.find(({ id }) => id === item.id)
+                    ?.solution as any,
                 },
                 ...prevRemainingItems.slice(index + 1),
               ];
