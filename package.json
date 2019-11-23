@@ -17,6 +17,10 @@
     "serve": "wsrun serve",
     "type-check": "wsrun type-check"
   },
+  "dependencies": {
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1"
+  },
   "devDependencies": {
     "@graphql-codegen/add": "^1.8.3",
     "@graphql-codegen/cli": "^1.8.3",
@@ -26,17 +30,18 @@
     "@graphql-codegen/typescript-urql": "^1.8.3",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
-    "eslint": "^6.6.0",
+    "eslint": "^6.7.0",
     "eslint-config-airbnb-typescript": "^6.3.0",
     "eslint-config-prettier": "^6.6.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^5.0.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.3",
     "netlify-cli": "^2.21.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
+    "typescript": "^3.7.2",
     "wsrun": "^5.1.0"
   }
 }

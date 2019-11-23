@@ -24,9 +24,14 @@ export default makeSchema({
   ],
   plugins: [
     nexusPrismaPlugin({
+      /*
       inputs: {
-        photon: path.join(__dirname, '../.generated/photon'),
+        photon: path.join(
+          __dirname,
+          '../../../../../node_modules/@prisma/photon',
+        ),
       },
+      */
       // TODO: Enable this for Netlify Function deployment
       /*
       outputs: {
@@ -37,6 +42,20 @@ export default makeSchema({
   ],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
-    typegen: path.join(__dirname, '../nexus.generated.d.ts'),
+    /*
+    typegen: path.join(
+      __dirname,
+      '../../../../node_modules/@types/nexus-typegen/index.d.ts',
+    ),
+    */
   },
+  /*
+  typegenAutoConfig: {
+    sources: [
+      { source: '@prisma/photon', alias: 'photon' },
+      { source: require.resolve('../context'), alias: 'context' },
+    ],
+    contextType: 'context.Context',
+  },
+  */
 });

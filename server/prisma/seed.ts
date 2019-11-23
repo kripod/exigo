@@ -1,7 +1,4 @@
-import {
-  Photon,
-  QuizItemType,
-} from '../src/functions/graphql/.generated/photon';
+import { Photon, QuizItemType } from '@prisma/photon';
 
 async function main(): Promise<void> {
   const photon = new Photon();
