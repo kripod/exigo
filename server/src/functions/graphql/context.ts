@@ -1,4 +1,8 @@
-import { Photon } from '@prisma/photon';
+// TODO: Replace with the @prisma/photon facade package	import { Photon } from '@prisma/photon';
+// See: https://github.com/prisma/photonjs/issues/261
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import { Photon } from './.generated/photon'; // eslint-disable-line import/no-unresolved
 
 export type Context = {
   photon: Photon;

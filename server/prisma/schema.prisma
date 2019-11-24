@@ -5,6 +5,7 @@ datasource db {
 
 generator photonjs {
   provider = "photonjs"
+  output   = "../src/functions/graphql/.generated/photon"
 }
 
 model User {
