@@ -1,3 +1,4 @@
+import { ValidationError } from 'apollo-server-lambda';
 import { hash } from 'bcryptjs';
 import { mutationType, stringArg } from 'nexus';
 
@@ -12,7 +13,12 @@ export default mutationType({
         password: stringArg(),
       },
       async resolve(_root, { email, password }, ctx) {
-        const passwordHash = await hash(password || '', BCRYPT_SALT_ROUNDS);
+        // TODO: Add proper validations
+        // TODO: Throw errors with instructions for resolution
+        if (!email?.trim()) throw new ValidationError('Invalid email address.');
+        if (!password?.trim()) throw new ValidationError('Invalid password.');
+
+        const passwordHash = await hash(password, BCRYPT_SALT_ROUNDS);
         return ctx.photon.users.create({ data: { email, passwordHash } });
       },
     });
