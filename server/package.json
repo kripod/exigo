@@ -12,7 +12,7 @@
     "develop:nexus": "onchange --verbose \"./src/functions/graphql/schema/**\" -- yarn generate:nexus",
     "develop:prisma": "prisma2 dev",
     "generate": "run-s generate:prisma generate:nexus",
-    "generate:nexus": "ts-node --transpile-only ./src/functions/graphql/schema",
+    "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only ./src/functions/graphql/schema",
     "generate:prisma": "prisma2 generate",
     "serve": "netlify-lambda --static serve ./dist/functions/",
     "type-check": "tsc --noEmit"
@@ -21,6 +21,7 @@
     "@prisma/photon": "^2.0.0-preview017.1",
     "apollo-server-lambda": "^2.9.12",
     "bcryptjs": "^2.4.3",
+    "cross-env": "^6.0.3",
     "graphql": "^14.5.8",
     "nexus": "^0.12.0-rc.5",
     "nexus-prisma": "^0.6.1"
