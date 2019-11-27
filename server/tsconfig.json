@@ -4,7 +4,6 @@
   "compilerOptions": {
     "rootDir": "./src/",
     "target": "es2015",
-    "module": "commonjs",
-    "skipLibCheck": true // TODO: Remove when nexus-prisma gets fixed
+    "module": "commonjs"
   }
 }
