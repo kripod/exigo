@@ -20,6 +20,7 @@
   "dependencies": {
     "@prisma/photon": "^2.0.0-preview017.1",
     "@types/bcryptjs": "^2.4.2",
+    "@types/node-fetch": "^2.5.4",
     "apollo-server-lambda": "^2.9.12",
     "bcryptjs": "^2.4.3",
     "cross-env": "^6.0.3",
