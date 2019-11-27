@@ -13,7 +13,7 @@
     "generate:client": "graphql-codegen",
     "generate:server": "cd ./server/ && yarn generate",
     "lint": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
-    "postinstall": "wsrun --exclude-missing postinstall",
+    "postinstall": "yarn generate:server",
     "serve": "wsrun serve",
     "type-check": "wsrun type-check"
   },
