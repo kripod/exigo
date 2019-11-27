@@ -3,8 +3,8 @@
   "name": "exigo-server",
   "version": "0.0.0",
   "scripts": {
-    "build": "cpy --cwd ./src/ --parents ./functions/graphql/.generated/ ../dist/ && tsc --outDir ./dist/",
-    "clean": "del-cli \"**/.generated\" ./dist/ \"**/dev.db\" \"./failed-*.md\" ./prisma/migrations/dev/",
+    "build": "tsc --outDir ./dist/",
+    "clean": "del-cli ./dist/ \"**/dev.db\" \"./failed-*.md\" ./prisma/migrations/dev/",
     "db:init": "prisma2 lift up --create-db",
     "db:seed": "ts-node --transpile-only ./prisma/seed.ts",
     "develop": "run-p develop:*",
@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "cpy-cli": "^2.0.0",
     "del-cli": "^3.0.0",
     "netlify-lambda": "^1.6.3",
     "onchange": "^6.1.0",
