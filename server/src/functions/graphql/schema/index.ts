@@ -22,13 +22,7 @@ export default makeSchema({
     QuizItem,
     User,
   ],
-  plugins: [
-    nexusPrismaPlugin({
-      inputs: {
-        photon: path.join(__dirname, '../.generated/photon'),
-      },
-    }),
-  ],
+  plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
     typegen: path.join(__dirname, '../nexus.generated.d.ts'),

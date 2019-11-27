@@ -3,9 +3,8 @@ datasource db {
   url      = "file:dev.db"
 }
 
-generator photonjs {
+generator photon {
   provider = "photonjs"
-  output   = "../src/functions/graphql/.generated/photon"
 }
 
 model User {

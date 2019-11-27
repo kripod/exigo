@@ -18,13 +18,12 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/photon": "^2.0.0-alpha.351",
+    "@prisma/photon": "^2.0.0-preview017.1",
     "apollo-server-lambda": "^2.9.12",
     "bcryptjs": "^2.4.3",
     "graphql": "^14.5.8",
     "nexus": "^0.12.0-rc.5",
-    "nexus-prisma": "^0.6.1",
-    "prisma2": "^2.0.0-alpha.351"
+    "nexus-prisma": "^0.6.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -32,6 +31,7 @@
     "del-cli": "^3.0.0",
     "netlify-lambda": "^1.6.3",
     "onchange": "^6.1.0",
+    "prisma2": "^2.0.0-preview017.1",
     "ts-node": "^8.5.2"
   }
 }
