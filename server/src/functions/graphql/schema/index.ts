@@ -1,4 +1,4 @@
-import { makeSchema } from 'nexus';
+import { fieldAuthorizePlugin, makeSchema } from 'nexus';
 import { nexusPrismaPlugin } from 'nexus-prisma';
 import * as path from 'path';
 
@@ -22,7 +22,7 @@ export default makeSchema({
     QuizItem,
     User,
   ],
-  plugins: [nexusPrismaPlugin()],
+  plugins: [nexusPrismaPlugin(), fieldAuthorizePlugin()],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
     // TODO: Remove once Nexus emits generated types to a facade package
