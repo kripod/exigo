@@ -25,9 +25,9 @@ export default makeSchema({
   plugins: [nexusPrismaPlugin()],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
+    // TODO: Remove once Nexus emits generated types to a facade package
     typegen: path.join(__dirname, '../nexus.generated.d.ts'),
   },
-  /*
   typegenAutoConfig: {
     sources: [
       { source: '@prisma/photon', alias: 'photon' },
@@ -35,5 +35,4 @@ export default makeSchema({
     ],
     contextType: 'context.Context',
   },
-  */
 });
