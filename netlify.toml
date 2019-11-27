@@ -3,6 +3,9 @@
   functions = "server/dist/functions/"
   publish = "client/public/"
 
+[build.environment]
+  NODE_ENV = 'production'
+
 [dev]
   command = "wsrun --no-prefix develop"
   port = 8000
