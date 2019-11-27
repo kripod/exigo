@@ -1,7 +1,7 @@
 [build]
   # TODO: Remove commands after 'build' when the issue below gets resolved:
   # https://github.com/netlify/zip-it-and-ship-it/issues/73
-  command = 'yarn build && rm -rf ./node_modules/prisma2/ && echo "{}" > ./node_modules/prisma2/package.json'
+  command = 'yarn build && rm -rf "./node_modules/prisma2/**" && echo "{}" > ./node_modules/prisma2/package.json'
   functions = 'server/dist/functions/'
   publish = 'client/public/'
 
