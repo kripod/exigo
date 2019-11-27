@@ -18,16 +18,18 @@
     "type-check": "wsrun type-check"
   },
   "dependencies": {
-    "graphql": "^14.5.8",
-    "graphql-tag": "^2.10.1"
-  },
-  "devDependencies": {
     "@graphql-codegen/add": "^1.9.0",
     "@graphql-codegen/cli": "^1.9.1-alpha-b18845dc.3",
     "@graphql-codegen/near-operation-file-preset": "^1.9.0",
     "@graphql-codegen/typescript": "^1.9.0",
     "@graphql-codegen/typescript-operations": "^1.9.0",
     "@graphql-codegen/typescript-urql": "^1.9.0",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "npm-run-all": "^4.1.5",
+    "wsrun": "^5.1.0"
+  },
+  "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
     "eslint": "^6.7.1",
@@ -39,9 +41,7 @@
     "husky": "^3.0.9",
     "lint-staged": "^9.5.0",
     "netlify-cli": "^2.21.0",
-    "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.2",
-    "wsrun": "^5.1.0"
+    "typescript": "^3.7.2"
   }
 }
