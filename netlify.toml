@@ -11,6 +11,5 @@
 [dev]
   command = 'wsrun --no-prefix develop'
   port = 8000
-  functionsPort = 4000
   targetPort = 8000
-  publish = './client/public/'
+  functionsPort = 4000
