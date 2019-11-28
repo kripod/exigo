@@ -12,7 +12,7 @@
     "develop:nexus": "onchange --verbose \"./src/functions/graphql/schema/**\" -- yarn generate:nexus",
     "develop:prisma": "prisma2 dev",
     "generate": "run-s generate:prisma generate:nexus",
-    "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only ./src/functions/graphql/schema",
+    "generate:nexus": "cross-env NEXUS_SHOULD_GENERATE_ARTIFACTS=true ts-node --transpile-only ./src/functions/graphql/schema",
     "generate:prisma": "prisma2 generate",
     "type-check": "tsc --noEmit"
   },
