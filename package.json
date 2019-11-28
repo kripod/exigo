@@ -17,12 +17,12 @@
     "type-check": "wsrun type-check"
   },
   "dependencies": {
-    "@graphql-codegen/add": "^1.9.0",
-    "@graphql-codegen/cli": "^1.9.1-alpha-b18845dc.3",
-    "@graphql-codegen/near-operation-file-preset": "^1.9.0",
-    "@graphql-codegen/typescript": "^1.9.0",
-    "@graphql-codegen/typescript-operations": "^1.9.0",
-    "@graphql-codegen/typescript-urql": "^1.9.0",
+    "@graphql-codegen/add": "^1.9.1",
+    "@graphql-codegen/cli": "^1.9.1",
+    "@graphql-codegen/near-operation-file-preset": "^1.9.1",
+    "@graphql-codegen/typescript": "^1.9.1",
+    "@graphql-codegen/typescript-operations": "^1.9.1",
+    "@graphql-codegen/typescript-urql": "^1.9.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "npm-run-all": "^4.1.5",
