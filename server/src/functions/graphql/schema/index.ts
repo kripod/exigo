@@ -11,6 +11,15 @@ import Quiz from './Quiz';
 import QuizItem from './QuizItem';
 import User from './User';
 
+// TODO: Remove this temporary mitigation for issues with Netlify deployments
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  // eslint-disable-next-line import/no-unresolved
+  import('@types/nexus-prisma-typegen/index.d');
+}
+
 export default makeSchema({
   types: [
     Query,
