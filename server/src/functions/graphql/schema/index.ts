@@ -22,7 +22,14 @@ export default makeSchema({
     QuizItem,
     User,
   ],
-  plugins: [nexusPrismaPlugin(), fieldAuthorizePlugin()],
+  plugins: [
+    nexusPrismaPlugin({
+      // TODO: Remove once Nexus emits generated types to a facade package
+      // Disallow artifact generation on AWS Lambda during runtime
+      shouldGenerateArtifacts: !process.env.AWS_LAMBDA_FUNCTION_NAME,
+    }),
+    fieldAuthorizePlugin(),
+  ],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
     // TODO: Remove once Nexus emits generated types to a facade package
