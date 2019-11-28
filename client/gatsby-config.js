@@ -1,11 +1,14 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const proxy = require('http-proxy-middleware');
+
 module.exports = {
-  pathPrefix: '/exigo',
   siteMetadata: {
     title: 'Exigo',
     description: '', // TODO
     languageCode: 'en',
     countryCode: 'US',
   },
+
   plugins: [
     {
       resolve: 'gatsby-plugin-manifest',
@@ -40,4 +43,16 @@ module.exports = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-chakra-ui',
   ],
+
+  developMiddleware: app => {
+    app.use(
+      '/.netlify/functions/',
+      proxy({
+        target: 'http://localhost:4000',
+        pathRewrite: {
+          '^/.netlify/functions/': '/',
+        },
+      }),
+    );
+  },
 };

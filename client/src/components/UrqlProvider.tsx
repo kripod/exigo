@@ -9,10 +9,7 @@ if (typeof window === 'undefined') {
 }
 
 const client = createClient({
-  url:
-    process.env.NODE_ENV !== 'production'
-      ? 'http://localhost:4000/graphql'
-      : '/.netlify/functions/graphql',
+  url: '/.netlify/functions/graphql',
 });
 
 // TODO: Create a Gatsby plugin out of this with SSR support
