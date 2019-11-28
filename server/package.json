@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc --outDir ./dist/",
-    "clean": "del-cli ./dist/ \"**/dev.db\" \"./failed-*.md\" ./prisma/migrations/dev/",
+    "clean": "del-cli \"**/dev.db\" ./dist/ ./prisma/migrations/dev/ ./src/functions/graphql/nexus.generated.d.ts",
     "db:init": "prisma2 lift up --create-db",
     "db:seed": "ts-node --transpile-only ./prisma/seed.ts",
     "develop": "run-p develop:*",
