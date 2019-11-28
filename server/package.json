@@ -14,7 +14,6 @@
     "generate": "run-s generate:prisma generate:nexus",
     "generate:nexus": "cross-env NODE_ENV=development ts-node --transpile-only ./src/functions/graphql/schema",
     "generate:prisma": "prisma2 generate",
-    "serve": "netlify-lambda --static serve ./dist/functions/",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -33,7 +32,6 @@
   },
   "devDependencies": {
     "del-cli": "^3.0.0",
-    "netlify-lambda": "^1.6.3",
     "onchange": "^6.1.0"
   }
 }
