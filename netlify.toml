@@ -2,8 +2,8 @@
   # TODO: Remove commands after 'build' when the issue below gets resolved:
   # https://github.com/netlify/zip-it-and-ship-it/issues/73
   command = 'yarn build && cd ./node_modules/prisma2/ && rm -rf * && echo "{}" > ./package.json'
-  functions = 'server/dist/functions/'
-  publish = 'client/public/'
+  functions = './server/dist/functions/'
+  publish = './client/public/'
 
 [build.environment]
   NODE_ENV = 'production'
@@ -13,4 +13,4 @@
   port = 8000
   functionsPort = 4000
   targetPort = 8000
-  publish = 'client/public/'
+  publish = './client/public/'
