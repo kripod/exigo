@@ -22,7 +22,10 @@ export default makeSchema({
     QuizItem,
     User,
   ],
-  plugins: [nexusPrismaPlugin(), fieldAuthorizePlugin()],
+  plugins: [
+    nexusPrismaPlugin({ shouldGenerateArtifacts: !process.env.NETLIFY }),
+    fieldAuthorizePlugin(),
+  ],
   outputs: {
     schema: path.join(__dirname, '../../../../prisma/schema.generated.graphql'),
     // TODO: Remove once Nexus emits generated types to a facade package
