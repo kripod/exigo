@@ -1710,10 +1710,10 @@
     string-width "^2.0.0"
     strip-ansi "^3"
 
-"@prisma/photon@^2.0.0-alpha.368":
-  version "2.0.0-alpha.368"
-  resolved "https://registry.yarnpkg.com/@prisma/photon/-/photon-2.0.0-alpha.368.tgz#ee4a778a3bd0decda8dc89a9242e28c0aa6f650d"
-  integrity sha512-BfJdD7qwMyDI3OdZTSx89jG3Fjg+xcEmtYfWBU/QFlB7IfOR5i0nky84GahVs/wLH9F8XrPUE5w4+jsR2LUjOg==
+"@prisma/photon@^2.0.0-alpha.369":
+  version "2.0.0-alpha.369"
+  resolved "https://registry.yarnpkg.com/@prisma/photon/-/photon-2.0.0-alpha.369.tgz#4886a1cfc735fe5ce3c629d3349dc275bc2bac39"
+  integrity sha512-GUrhgkYCg8UghSz5vkK4/eoS/09km9KXROezQ1WWmB8j8S2DJv370UBotyjdwA+KygH6tOXjWZPh5NobvsHouA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -12109,10 +12109,10 @@ prettyjson@^1.2.1:
     colors "^1.1.2"
     minimist "^1.2.0"
 
-prisma2@^2.0.0-alpha.368:
-  version "2.0.0-alpha.368"
-  resolved "https://registry.yarnpkg.com/prisma2/-/prisma2-2.0.0-alpha.368.tgz#f6602cd760d8de99ab32203d6dfc8180850e8c00"
-  integrity sha512-BhrL8YyRJTjS+FJCGgOld5YWN7kvgquVQjMUXjgNxQFycx7KTw7dTgUZA0tuiZOBfgJRZ7P/hGOrz75/ovjOAg==
+prisma2@^2.0.0-alpha.369:
+  version "2.0.0-alpha.369"
+  resolved "https://registry.yarnpkg.com/prisma2/-/prisma2-2.0.0-alpha.369.tgz#061651f1e0f2d75714b3f23405fe9d75e9c50ab7"
+  integrity sha512-jHaPHUHmMdIZu3yTihh+J2eCZpZ6Jpnq+6hpcWxVWH8BfziUriDtQ0hTf5fOqprR9sZbReOTOnR++qrRtZk67Q==
 
 private@^0.1.6:
   version "0.1.8"
