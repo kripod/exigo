@@ -11,3 +11,5 @@
   port = 8000
   targetPort = 8000
   functionsPort = 4000
+  # TODO: Remove when https://github.com/netlify/cli/issues/624 gets resolved
+  publish = './client/public/'
