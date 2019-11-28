@@ -12182,10 +12182,10 @@ prettyjson@^1.2.1:
     colors "^1.1.2"
     minimist "^1.2.0"
 
-prisma2@^2.0.0-preview017.1:
-  version "2.0.0-preview017.1"
-  resolved "https://registry.yarnpkg.com/prisma2/-/prisma2-2.0.0-preview017.1.tgz#0eea3c5eb10cbcc482b296e8fdd87b3c4e7c33bc"
-  integrity sha512-Kl+W694NKcimPK4UEHFWnJhA8Wzjj3ciVGWAtodfV/z6FrEek8uQcSUP7kIFwroC+xwbcV+shCU7Sn54nog8rg==
+prisma2@^2.0.0-alpha.367:
+  version "2.0.0-alpha.367"
+  resolved "https://registry.yarnpkg.com/prisma2/-/prisma2-2.0.0-alpha.367.tgz#d3ba8ff508de39b15a16e9a76fb70ea4f32c14e1"
+  integrity sha512-erra4+fbcJMW5A+yzgcdvoPcSU9iBNJYo8w0Y4l+bmz6d6aUbBq9Ubjw/VFX47+WVMb9Nns+PEHP+GvCfbqa/w==
 
 private@^0.1.6:
   version "0.1.8"
