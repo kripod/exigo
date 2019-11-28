@@ -1755,10 +1755,10 @@
     string-width "^2.0.0"
     strip-ansi "^3"
 
-"@prisma/photon@^2.0.0-preview017.1":
-  version "2.0.0-preview017.1"
-  resolved "https://registry.yarnpkg.com/@prisma/photon/-/photon-2.0.0-preview017.1.tgz#1ae94e8ebc4d48483fdee001f509bef1bdf0f4fa"
-  integrity sha512-3Kn3YpETGIrLcC57mWXmSEL/8X96a55mamXe3Pkcn5r1BGYnh1eDcwpgyQU9qOUM+zrCvV+OrenQ/MT09Iy/8w==
+"@prisma/photon@^2.0.0-alpha.367":
+  version "2.0.0-alpha.367"
+  resolved "https://registry.yarnpkg.com/@prisma/photon/-/photon-2.0.0-alpha.367.tgz#7d9caa4f622d9ecbeb84568c55f427e2899c21ba"
+  integrity sha512-ieb0sMiIDz3MXFmRI8wiKZyh0FpOsKOMjoVM0Q4JT5F4++jl8jHTWwqTj1cVP3Z1prxuh+5roAZqX6Z7Ud8cfA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
