@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@netlify/zip-it-and-ship-it": "^0.4.0-8",
-    "@prisma/photon": "^2.0.0-alpha.369",
+    "@prisma/photon": "^2.0.0-preview017.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/node-fetch": "^2.5.4",
     "apollo-server-lambda": "^2.9.12",
@@ -27,7 +27,7 @@
     "graphql": "^14.5.8",
     "nexus": "^0.12.0-rc.5",
     "nexus-prisma": "^0.6.1",
-    "prisma2": "^2.0.0-alpha.369",
+    "prisma2": "^2.0.0-preview017.2",
     "ts-node": "^8.5.3"
   },
   "devDependencies": {
