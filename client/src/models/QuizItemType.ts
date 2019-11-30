@@ -1,6 +1,6 @@
 enum QuizItemType {
-  MULTIPLE_OPTIONS = 1,
-  NUMERIC = 2,
+  MULTIPLE_OPTIONS = 'MULTIPLE_OPTIONS',
+  NUMERIC = 'NUMERIC',
 }
 
 export default QuizItemType;
