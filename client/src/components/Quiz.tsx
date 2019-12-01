@@ -41,7 +41,7 @@ function daoToModel(
           .map(option => option.id);
         return {
           id,
-          type: 1, // TODO
+          type: 'MULTIPLE_OPTIONS', // TODO
           stem,
           solution,
           options,
@@ -62,7 +62,7 @@ function daoToModel(
         } = fragments.fragmentNumeric!;
         return {
           id,
-          type: 2, // TODO
+          type: 'NUMERIC', // TODO
           stem,
           solution,
           precision,
