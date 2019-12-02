@@ -30,7 +30,7 @@ function scroll(
   const targetChild = container.children[targetIndex] as HTMLElement;
   if (targetChild != null) {
     /* eslint-disable no-param-reassign */
-    // Fix momentum-based scrolling issues on iOS
+    // Fix momentum-based scrolling issues in iOS Safari
     // See: https://www.popmotion.io/blog/20170704-manually-set-scroll-while-ios-momentum-scroll-bounces/
     if (isWebKit) container.style.overflowX = 'hidden';
     container.scroll({
