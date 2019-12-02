@@ -17,10 +17,8 @@ import useCarouselControls from '../hooks/useCarouselControls';
 
 const IS_SCROLLING_DEBOUNCE_INTERVAL_MS = 150;
 
-let isWebKit = false;
-if (typeof CSS !== 'undefined' && CSS.supports('-webkit-touch-callout: none')) {
-  isWebKit = true;
-}
+const isWebKit =
+  typeof CSS !== 'undefined' && CSS.supports('-webkit-touch-callout: none');
 
 function scroll(
   container: HTMLElement,
