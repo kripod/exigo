@@ -18,7 +18,7 @@ export interface NumericEditorProps
 
 export default function NumericEditor({ item, onChange }: NumericEditorProps) {
   const { precision, stepSize = 1, constraints = {}, solution } = item;
-  const [value, setValue] = useState(solution);
+  const [value, setValue] = useState(solution ?? null);
 
   return (
     <Box mx={QUIZ_ITEM_CARD_PADDING}>
@@ -30,18 +30,14 @@ export default function NumericEditor({ item, onChange }: NumericEditorProps) {
 
         <NumberInput
           step={stepSize}
-          value={value}
-          onChange={
-            ((nextString: string) => {
-              const nextValue =
-                nextString.length > 0 ? Number(nextString) : undefined;
-              setValue(nextValue);
-              onChange({ ...item, solution: nextValue });
-            }) as any
-          }
+          // TODO: Resolve https://github.com/chakra-ui/chakra-ui/issues/278
+          value={(value ?? '') as any}
+          onChange={nextValue => {
+            setValue(nextValue);
+            onChange({ ...item, solution: nextValue ?? undefined });
+          }}
         >
           <NumberInputField
-            // TODO: Wait until https://github.com/chakra-ui/chakra-ui/pull/243 gets merged
             placeholder={`e.g. ${
               precision ? `0.${'0'.repeat(precision)}` : '0'
             }`}

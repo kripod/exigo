@@ -27,7 +27,8 @@ export default function NumericEvaluator({
   const preferDarkMode = colorMode === 'dark';
 
   const { minValue, maxValue } = constraints;
-  const [value, setValue] = useState<number>();
+  const [valueString, setValueString] = useState<string | null>(null);
+  const value = valueString ? Number(valueString) : null;
 
   let instruction;
   if (minValue != null && maxValue != null) {
@@ -57,17 +58,21 @@ export default function NumericEvaluator({
         <NumberInput
           precision={precision}
           step={stepSize}
-          min={minValue}
-          max={maxValue}
-          value={value}
+          min={minValue ?? undefined}
+          max={maxValue ?? undefined}
+          // TODO: Resolve https://github.com/chakra-ui/chakra-ui/issues/278
+          value={(valueString ?? '') as any}
           isReadOnly={solution != null}
           bg={getInputFeedbackProps(feedback, preferDarkMode).backgroundColor}
           onChange={
-            ((nextString: string) => {
-              const nextValue =
-                nextString.length > 0 ? Number(nextString) : undefined;
-              setValue(nextValue);
-              onChange(nextValue);
+            ((nextValueString: string | null) => {
+              setValueString(nextValueString);
+              const nextValue = nextValueString
+                ? Number(nextValueString)
+                : null;
+              if (nextValue !== value) {
+                onChange(nextValue ?? undefined);
+              }
             }) as any
           }
         >
