@@ -42,4 +42,5 @@ export default makeSchema({
     ],
     contextType: 'context.Context',
   },
+  prettierConfig: require.resolve('../../../../../.prettierrc'),
 });
