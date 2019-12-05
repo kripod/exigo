@@ -1,7 +1,14 @@
-datasource db {
+datasource sqlite {
   provider = "sqlite"
   url      = "file:dev.db"
 }
+
+// TODO: Enable in production
+// datasource postgresql {
+//   provider = "postgresql"
+//   url      = env("POSTGRESQL_URL")
+//   enabled  = env("POSTGRESQL_URL")
+// }
 
 generator photon {
   provider = "photonjs"
