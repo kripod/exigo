@@ -9,9 +9,8 @@ public/
 
 # Server
 **/prisma/migrations/dev/
-.generated/
 .netlify/
 dev.db
 dist/
 failed-*.md
-nexus*.generated.d.ts
+nexus.generated.d.ts
