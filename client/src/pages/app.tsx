@@ -3,11 +3,13 @@ import { Router } from '@reach/router';
 import React from 'react';
 
 import QuizPage from '../pages-dynamic/quiz';
+import NotFoundPage from './404';
 
 export default function AppPage() {
   return (
     <Router>
       <QuizPage path="/app/quiz/:id" />
+      <NotFoundPage default />
     </Router>
   );
 }
