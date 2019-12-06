@@ -1,15 +1,15 @@
 [build]
-  command = 'yarn build'
+  command   = 'yarn build'
+  publish   = './client/public/'
   functions = './server/dist/functions/'
-  publish = './client/public/'
 
 [build.environment]
   NODE_ENV = 'production'
 
 [dev]
-  command = 'wsrun --no-prefix develop'
-  port = 8000
-  targetPort = 8000
-  functionsPort = 4000
+  command       = 'wsrun --no-prefix develop'
+  targetPort    = 8000 # Depends on the Gatsby development server configuration
+  port          = 8000 # Same as `targetPort`
+  functionsPort = 4000 # Following the convention of GraphQL servers
   # TODO: Remove when https://github.com/netlify/cli/issues/624 gets resolved
-  publish = './client/public/'
+  publish       = './client/public/'
