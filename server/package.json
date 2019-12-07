@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "tsc --outDir ./dist/",
-    "clean": "del-cli \"**/dev.db\" ./dist/ ./prisma/migrations/dev/ ./src/functions/graphql/nexus.generated.d.ts",
+    "clean": "del-cli ./dist/ ./prisma/dev.db ./prisma/migrations/dev/ ./src/functions/graphql/nexus.generated.d.ts",
     "db:init": "prisma2 lift up --create-db",
     "db:seed": "ts-node --transpile-only ./prisma/seed.ts",
     "develop": "run-p develop:*",
@@ -18,16 +18,16 @@
   },
   "dependencies": {
     "@netlify/zip-it-and-ship-it": "^0.4.0-8",
-    "@prisma/photon": "^2.0.0-preview017.2",
+    "@prisma/photon": "^2.0.0-preview018",
     "@types/bcryptjs": "^2.4.2",
     "@types/node-fetch": "^2.5.4",
-    "apollo-server-lambda": "^2.9.12",
+    "apollo-server-lambda": "^2.9.13",
     "bcryptjs": "^2.4.3",
     "cross-env": "^6.0.3",
     "graphql": "^14.5.8",
     "nexus": "^0.12.0-rc.5",
     "nexus-prisma": "^0.6.1",
-    "prisma2": "^2.0.0-preview017.2",
+    "prisma2": "^2.0.0-preview018",
     "ts-node": "^8.5.4"
   },
   "devDependencies": {

@@ -8,9 +8,9 @@ node_modules/
 public/
 
 # Server
+**/prisma/dev.db
 **/prisma/migrations/dev/
 .netlify/
-dev.db
 dist/
 failed-*.md
 nexus.generated.d.ts
