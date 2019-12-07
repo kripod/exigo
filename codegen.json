@@ -9,7 +9,7 @@
     "./client/src/": {
       "preset": "near-operation-file",
       "presetConfig": {
-        "extension": ".generated.tsx",
+        "extension": ".generated.ts",
         "baseTypesPath": "./models.generated.d.ts"
       },
       "plugins": ["typescript-operations", "typescript-urql"],
