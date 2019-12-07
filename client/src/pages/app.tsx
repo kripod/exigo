@@ -7,8 +7,8 @@ import NotFoundPage from './404';
 
 export default function AppPage() {
   return (
-    <Router>
-      <QuizPage path="/app/quiz/:id" />
+    <Router basepath="/app">
+      <QuizPage path="/quiz/:id" />
       <NotFoundPage default />
     </Router>
   );
