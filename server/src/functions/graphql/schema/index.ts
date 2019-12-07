@@ -11,6 +11,8 @@ import Quiz from './Quiz';
 import QuizItem from './QuizItem';
 import User from './User';
 
+const isFileSystemReadOnly = Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME);
+
 export default makeSchema({
   types: [
     Query,
@@ -25,8 +27,7 @@ export default makeSchema({
   plugins: [
     nexusPrismaPlugin({
       // TODO: Remove once Nexus emits generated types to a facade package
-      // Disallow artifact generation on AWS Lambda during runtime
-      shouldGenerateArtifacts: !process.env.AWS_LAMBDA_FUNCTION_NAME,
+      shouldGenerateArtifacts: !isFileSystemReadOnly,
     }),
     fieldAuthorizePlugin(),
   ],
@@ -42,5 +43,7 @@ export default makeSchema({
     ],
     contextType: 'context.Context',
   },
-  prettierConfig: require.resolve('../../../../../.prettierrc'),
+  prettierConfig: !isFileSystemReadOnly
+    ? require.resolve('../../../../../.prettierrc')
+    : undefined,
 });
