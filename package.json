@@ -7,7 +7,7 @@
   "scripts": {
     "build": "wsrun build",
     "clean": "wsrun clean",
-    "develop": "netlify dev",
+    "develop": "wsrun --package exigo-server -- build && netlify dev",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "generate": "run-s generate:server generate:client",
     "generate:client": "graphql-codegen",
