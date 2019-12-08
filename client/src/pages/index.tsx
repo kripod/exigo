@@ -9,8 +9,8 @@ export default function IndexPage() {
   return (
     <Layout>
       <Container>
-        <Heading as="h2" textTransform="capitalize" fontWeight={600} mb={2}>
-          Your quizzes
+        <Heading as="h2" fontWeight={600} mb={2}>
+          Quizzes
         </Heading>
         <QuizList />
       </Container>

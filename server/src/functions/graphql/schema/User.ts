@@ -6,7 +6,7 @@ export default objectType({
     t.model.id();
     t.model.createdAt();
     t.model.email();
-    // TODO: t.model.name();
+    t.model.name();
     t.model.quizzes();
   },
 });

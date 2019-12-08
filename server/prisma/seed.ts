@@ -9,6 +9,7 @@ async function main(): Promise<void> {
       passwordHash:
         // bcrypt('123456')
         '$2b$10$gw5TKMoIbK8qlEmYUFJjf.327cZjk3PfHFWqW2gUQNywi4GpWo2i6',
+      name: 'John Doe',
       quizzes: {
         create: [
           {

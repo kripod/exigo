@@ -6,6 +6,7 @@ import {
   faMoon,
   faRunning,
   faSun,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
@@ -18,6 +19,7 @@ const faIconDefinitions = [
   faMoon,
   faRunning,
   faSun,
+  faUser,
 ];
 
 const customIcons = fromEntries(

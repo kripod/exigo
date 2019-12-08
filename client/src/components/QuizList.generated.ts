@@ -8,7 +8,11 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type GetQuizzesQueryVariables = {};
 
 export type GetQuizzesQuery = { __typename?: 'Query' } & {
-  quizzes: Array<{ __typename?: 'Quiz' } & Pick<Types.Quiz, 'id' | 'title'>>;
+  quizzes: Array<
+    { __typename?: 'Quiz' } & Pick<Types.Quiz, 'id' | 'title'> & {
+        author: { __typename?: 'User' } & Pick<Types.User, 'name'>;
+      }
+  >;
 };
 
 export const GetQuizzesDocument = gql`
@@ -16,6 +20,9 @@ export const GetQuizzesDocument = gql`
     quizzes {
       id
       title
+      author {
+        name
+      }
     }
   }
 `;

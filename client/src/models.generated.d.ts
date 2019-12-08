@@ -404,6 +404,7 @@ export type User = {
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
   quizzes: Array<Quiz>;
 };
 

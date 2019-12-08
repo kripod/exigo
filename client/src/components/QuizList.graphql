@@ -2,5 +2,8 @@ query GetQuizzes {
   quizzes {
     id
     title
+    author {
+      name
+    }
   }
 }
