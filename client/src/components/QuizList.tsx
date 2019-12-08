@@ -27,8 +27,10 @@ export default function QuizList() {
           flexBasis={['100%', `${100 / 2}%`, `${100 / 3}%`]}
         >
           <Card boxShadow="sm" m={2} p={4}>
-            <Heading as="h3" fontSize="md" fontWeight={600} mb={2}>
-              <Link href={`/app/quiz/${quiz.id}`}>{quiz.title}</Link>
+            <Heading as="h3" fontSize="lg" fontWeight={600} mb={2}>
+              <Link href={`/app/quiz/${quiz.id}`} color="blue.400">
+                {quiz.title}
+              </Link>
             </Heading>
 
             <Text color="gray.500">
