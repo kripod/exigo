@@ -10,6 +10,7 @@ public/
 # Server
 **/prisma/dev.db
 **/prisma/migrations/dev/
+**/prisma/Studio/
 .netlify/
 dist/
 failed-*.md
