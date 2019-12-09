@@ -77,6 +77,17 @@ export default function QuizListItem({
         />
       </Flex>
 
+      <Text color="gray.500">
+        <Icon
+          name={'user' as any}
+          aria-label="Author"
+          size="0.8em"
+          verticalAlign="baseline"
+          mr={2}
+        />
+        {quiz.author.name}
+      </Text>
+
       <Scale in={isOpen}>
         {styles => (
           <AlertDialog
@@ -115,17 +126,6 @@ export default function QuizListItem({
           </AlertDialog>
         )}
       </Scale>
-
-      <Text color="gray.500">
-        <Icon
-          name={'user' as any}
-          aria-label="Author"
-          size="0.8em"
-          verticalAlign="baseline"
-          mr={2}
-        />
-        {quiz.author.name}
-      </Text>
     </Card>
   );
 }
