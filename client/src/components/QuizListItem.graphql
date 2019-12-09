@@ -1,0 +1,5 @@
+mutation DeleteQuiz($id: ID!) {
+  deleteOneQuiz(where: { id: $id }) {
+    id
+  }
+}
