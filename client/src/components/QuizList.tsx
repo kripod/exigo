@@ -42,6 +42,11 @@ export default function QuizList() {
               </Heading>
 
               <IconButton
+                as={Link}
+                // TODO: Revisit this once Chakra's TypeScript rewrite is done
+                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                // @ts-ignore
+                href={`/app/quiz/${quiz.id}/edit`}
                 aria-label="Edit quiz"
                 icon={'pen' as any}
                 variant="ghost"

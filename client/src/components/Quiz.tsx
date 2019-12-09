@@ -82,9 +82,10 @@ function daoToModel(
 
 export interface QuizProps {
   id: string;
+  isEditable?: boolean;
 }
 
-export default function QuizComponent({ id: quizID }: QuizProps) {
+export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   const [res] = useGetQuizQuery({ variables: { id: quizID } });
   const quiz = daoToModel(quizID, res.data);
   const items = quiz?.items || [];
@@ -146,7 +147,7 @@ export default function QuizComponent({ id: quizID }: QuizProps) {
                   item={item}
                   shownIndex={items.findIndex(({ id }) => id === item.id)}
                   totalCount={items.length}
-                  isEditable
+                  isEditable={isEditable}
                 >
                   <QuizItemEvaluator
                     item={item}

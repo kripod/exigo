@@ -2,9 +2,9 @@
 import { RouteComponentProps } from '@reach/router';
 import React from 'react';
 
-import Container from '../components/Container';
-import Layout from '../components/Layout';
-import Quiz from '../components/Quiz';
+import Container from '../../components/Container';
+import Layout from '../../components/Layout';
+import Quiz from '../../components/Quiz';
 
 interface QuizPageProps extends RouteComponentProps {
   id?: string;
