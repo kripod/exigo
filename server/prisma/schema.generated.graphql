@@ -212,7 +212,7 @@ type QuizItem {
   fragmentMultipleOptions: MultipleOptionsQuizItemFragment
   fragmentNumeric: NumericQuizItemFragment
   id: ID!
-  quiz: Quiz!
+  quiz: Quiz
   stem: String!
   type: QuizItemType!
 }

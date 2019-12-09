@@ -36,7 +36,8 @@ model Quiz {
 model QuizItem {
   // TODO: Move these fields to `QuizItemBase`
   id   String       @id @default(cuid())
-  quiz Quiz         @relation(onDelete: CASCADE)
+  // TODO: Make required when cascaded deletion is supported
+  quiz Quiz?        @relation(onDelete: CASCADE)
   type QuizItemType
   stem String
 

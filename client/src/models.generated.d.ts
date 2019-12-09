@@ -286,7 +286,7 @@ export type QuizItem = {
   fragmentMultipleOptions?: Maybe<MultipleOptionsQuizItemFragment>;
   fragmentNumeric?: Maybe<NumericQuizItemFragment>;
   id: Scalars['ID'];
-  quiz: Quiz;
+  quiz?: Maybe<Quiz>;
   stem: Scalars['String'];
   type: QuizItemType;
 };

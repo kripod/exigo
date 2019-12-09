@@ -256,7 +256,7 @@
       "model": "QuizItem",
       "field": "quiz",
       "type": "Quiz",
-      "arity": "required"
+      "arity": "optional"
     },
     {
       "stepType": "CreateDirective",
