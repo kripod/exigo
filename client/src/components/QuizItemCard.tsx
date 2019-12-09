@@ -7,7 +7,7 @@ import ExpandingTextarea from './ExpandingTextarea';
 
 export const QUIZ_ITEM_CARD_PADDING = 6;
 
-interface QuizItemCardProps extends BoxProps {
+export interface QuizItemCardProps extends BoxProps {
   item: QuizItem;
   shownIndex: number;
   totalCount: number;

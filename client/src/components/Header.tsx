@@ -5,7 +5,10 @@ import Logo from '../assets/logo.svg';
 import Container from './Container';
 import Link from './Link';
 
-export default function Header(props: BoxProps) {
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface HeaderProps extends BoxProps {}
+
+export default function Header(props: HeaderProps) {
   const { colorMode, toggleColorMode } = useColorMode();
   const preferDarkMode = colorMode === 'dark';
 

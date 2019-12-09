@@ -7,7 +7,7 @@ import Header from './Header';
 import UrqlProvider from './UrqlProvider';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface LayoutProps extends BoxProps {}
+export interface LayoutProps extends BoxProps {}
 
 export default function Layout({ children, ...restProps }: LayoutProps) {
   const data = useStaticQuery(graphql`
