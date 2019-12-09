@@ -14,6 +14,10 @@ export default function QuizList() {
     setQuizzes(res.data?.quizzes || []);
   }, [res.data]);
 
+  const [quizzesBeingRemoved, setQuizzesBeingRemoved] = useState<
+    GetQuizzesQuery['quizzes']
+  >([]);
+
   if (res.fetching) return <Text>Loading…</Text>;
   if (res.error) return <Text>Failed to load.</Text>;
 
@@ -34,13 +38,18 @@ export default function QuizList() {
         >
           <QuizListItem
             quiz={quiz}
+            isDisabled={quizzesBeingRemoved.includes(quiz)}
             m={2}
             onRemoving={() => {
+              setQuizzesBeingRemoved(prevQuizzes => [...prevQuizzes, quiz]);
+            }}
+            onRemoved={() => {
               setQuizzes(prevQuizzes =>
                 prevQuizzes.filter(({ id }) => id !== quiz.id),
               );
-            }}
-            onRemoved={() => {
+              setQuizzesBeingRemoved(prevQuizzes =>
+                prevQuizzes.filter(({ id }) => id !== quiz.id),
+              );
               toast({
                 title: 'Quiz deleted.',
                 description: `"${quiz.title}" has been deleted successfully.`,
