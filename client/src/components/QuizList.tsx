@@ -1,9 +1,8 @@
-import { Box, Flex, Heading, Icon, IconButton, Text } from '@chakra-ui/core';
+import { Box, Flex, Text } from '@chakra-ui/core';
 import React from 'react';
 
-import Card from './Card';
-import Link from './Link';
 import { useGetQuizzesQuery } from './QuizList.generated';
+import QuizListItem from './QuizListItem';
 
 export default function QuizList() {
   const [res] = useGetQuizzesQuery();
@@ -26,54 +25,7 @@ export default function QuizList() {
           flexGrow={0}
           flexBasis={['100%', null, `${100 / 2}%`, `${100 / 3}%`]}
         >
-          <Card boxShadow="sm" m={2} p={4}>
-            <Flex>
-              <Heading
-                as="h3"
-                flex={1}
-                fontSize="lg"
-                fontWeight={600}
-                mr={3}
-                mb={2}
-              >
-                <Link href={`/app/quiz/${quiz.id}`} color="blue.400">
-                  {quiz.title}
-                </Link>
-              </Heading>
-
-              <IconButton
-                as={Link}
-                // TODO: Revisit this once Chakra's TypeScript rewrite is done
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                href={`/app/quiz/${quiz.id}/edit`}
-                aria-label="Edit quiz"
-                icon={'pen' as any}
-                variant="ghost"
-                color="gray.500"
-                size="xs"
-              />
-              <IconButton
-                aria-label="Delete quiz"
-                icon={'trash' as any}
-                variant="ghost"
-                color="gray.500"
-                size="xs"
-                mr={-1}
-              />
-            </Flex>
-
-            <Text color="gray.500">
-              <Icon
-                name={'user' as any}
-                aria-label="Author"
-                size="0.8em"
-                verticalAlign="baseline"
-                mr={2}
-              />
-              {quiz.author.name}
-            </Text>
-          </Card>
+          <QuizListItem quiz={quiz} m={2} />
         </Box>
       ))}
     </Flex>
