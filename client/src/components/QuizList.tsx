@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/core';
+import { Box, Flex, Heading, Icon, IconButton, Text } from '@chakra-ui/core';
 import React from 'react';
 
 import Card from './Card';
@@ -24,14 +24,39 @@ export default function QuizList() {
         <Box
           key={quiz.id}
           flexGrow={0}
-          flexBasis={['100%', `${100 / 2}%`, `${100 / 3}%`]}
+          flexBasis={['100%', null, `${100 / 2}%`, `${100 / 3}%`]}
         >
           <Card boxShadow="sm" m={2} p={4}>
-            <Heading as="h3" fontSize="lg" fontWeight={600} mb={2}>
-              <Link href={`/app/quiz/${quiz.id}`} color="blue.400">
-                {quiz.title}
-              </Link>
-            </Heading>
+            <Flex>
+              <Heading
+                as="h3"
+                flex={1}
+                fontSize="lg"
+                fontWeight={600}
+                mr={3}
+                mb={2}
+              >
+                <Link href={`/app/quiz/${quiz.id}`} color="blue.400">
+                  {quiz.title}
+                </Link>
+              </Heading>
+
+              <IconButton
+                aria-label="Edit quiz"
+                icon={'pen' as any}
+                variant="ghost"
+                color="gray.500"
+                size="xs"
+              />
+              <IconButton
+                aria-label="Delete quiz"
+                icon={'trash' as any}
+                variant="ghost"
+                color="gray.500"
+                size="xs"
+                mr={-1}
+              />
+            </Flex>
 
             <Text color="gray.500">
               <Icon

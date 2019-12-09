@@ -4,8 +4,10 @@ import {
   faChevronRight,
   faGlasses,
   faMoon,
+  faPen,
   faRunning,
   faSun,
+  faTrash,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
@@ -17,8 +19,10 @@ const faIconDefinitions = [
   faChevronRight,
   faGlasses,
   faMoon,
+  faPen,
   faRunning,
   faSun,
+  faTrash,
   faUser,
 ];
 
@@ -29,7 +33,7 @@ const customIcons = fromEntries(
       {
         path: <path fill="currentColor" d={svgPathData as string} />,
         viewBox: `0 0 ${width} ${height}`,
-      },
+      } as unknown,
     ],
   ),
 );
