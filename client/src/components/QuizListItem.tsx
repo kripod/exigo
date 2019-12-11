@@ -1,26 +1,10 @@
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogCloseButton,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/core';
-import React, { useEffect, useRef } from 'react';
+import { Flex, Heading, Icon, IconButton, Text } from '@chakra-ui/core';
+import React from 'react';
 
 import Card, { CardProps } from './Card';
 import Link from './Link';
+import QuizDeleteButton from './QuizDeleteButton';
 import { GetQuizzesQuery } from './QuizList.generated';
-import { useDeleteQuizMutation } from './QuizListItem.generated';
-import Scale from './Scale';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface QuizListItemProps extends CardProps {
@@ -35,20 +19,10 @@ export default function QuizListItem({
   isDisabled,
   onRemoving,
   onRemoved,
-  ...props
+  ...restProps
 }: QuizListItemProps) {
-  const [res, deleteQuiz] = useDeleteQuizMutation();
-  useEffect(() => {
-    if (res.data?.deleteOneQuiz?.id === quiz.id) {
-      onRemoved();
-    }
-  }, [onRemoved, quiz.id, res.data]);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelButtonRef = useRef<HTMLButtonElement>(null);
-
   return (
-    <Card boxShadow="sm" p={4} {...props}>
+    <Card boxShadow="sm" p={4} {...restProps}>
       <div inert={isDisabled ? '' : undefined}>
         <Flex>
           <Heading
@@ -76,14 +50,11 @@ export default function QuizListItem({
             color="gray.500"
             size="xs"
           />
-          <IconButton
+          <QuizDeleteButton
             aria-label="Delete quiz"
-            icon={'trash' as any}
-            variant="ghost"
-            color="gray.500"
-            size="xs"
-            mr={-1}
-            onClick={onOpen}
+            quiz={quiz}
+            onRemoving={onRemoving}
+            onRemoved={onRemoved}
           />
         </Flex>
 
@@ -98,44 +69,6 @@ export default function QuizListItem({
           {quiz.author.name}
         </Text>
       </div>
-
-      <Scale in={isOpen}>
-        {styles => (
-          <AlertDialog
-            leastDestructiveRef={cancelButtonRef}
-            onClose={onClose}
-            isOpen
-          >
-            <AlertDialogOverlay opacity={styles.opacity} />
-            <AlertDialogContent {...styles}>
-              <AlertDialogHeader>Delete quiz?</AlertDialogHeader>
-              <AlertDialogCloseButton />
-              <AlertDialogBody>
-                This action cannot be undone. Are you sure about deleting{' '}
-                <Text as="q" fontWeight={600}>
-                  {quiz.title}
-                </Text>{' '}
-                permanently?
-              </AlertDialogBody>
-              <AlertDialogFooter>
-                <Button ref={cancelButtonRef} mr={3} onClick={onClose}>
-                  No, keep it
-                </Button>
-                <Button
-                  variantColor="red"
-                  onClick={() => {
-                    deleteQuiz({ id: quiz.id });
-                    onRemoving();
-                    onClose();
-                  }}
-                >
-                  Yes
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
-      </Scale>
     </Card>
   );
 }
