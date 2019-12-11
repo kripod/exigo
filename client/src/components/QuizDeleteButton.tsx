@@ -63,6 +63,7 @@ export default function QuizDeleteButton({
             <AlertDialogContent {...styles}>
               <AlertDialogHeader>Delete quiz?</AlertDialogHeader>
               <AlertDialogCloseButton />
+
               <AlertDialogBody>
                 This action cannot be undone. Are you sure about deleting{' '}
                 <Text as="q" fontWeight={600}>
@@ -70,6 +71,7 @@ export default function QuizDeleteButton({
                 </Text>{' '}
                 permanently?
               </AlertDialogBody>
+
               <AlertDialogFooter>
                 <Button ref={cancelButtonRef} mr={3} onClick={onClose}>
                   No, keep it
