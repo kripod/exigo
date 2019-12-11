@@ -45,7 +45,6 @@ export default function QuizListItem({
   }, [onRemoved, quiz.id, res.data]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const initiatorButtonRef = useRef<HTMLButtonElement>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
@@ -78,7 +77,6 @@ export default function QuizListItem({
             size="xs"
           />
           <IconButton
-            ref={initiatorButtonRef}
             aria-label="Delete quiz"
             icon={'trash' as any}
             variant="ghost"
@@ -105,7 +103,6 @@ export default function QuizListItem({
         {styles => (
           <AlertDialog
             leastDestructiveRef={cancelButtonRef}
-            finalFocusRef={initiatorButtonRef}
             onClose={onClose}
             isOpen
           >
