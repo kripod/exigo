@@ -128,7 +128,7 @@ migration ..20191209153051-init
 +  NUMERIC
 +}
 +
-+// TODO: implements QuizItemBase
++// TODO: `implements QuizItemBase`
 +model MultipleOptionsQuizItemFragment {
 +  id                   String   @id @default(cuid())
 +  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
@@ -145,7 +145,7 @@ migration ..20191209153051-init
 +  isSolution Boolean @default(false)
 +}
 +
-+// TODO: implements QuizItemBase
++// TODO: `implements QuizItemBase`
 +model NumericQuizItemFragment {
 +  id                   String   @id @default(cuid())
 +  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)

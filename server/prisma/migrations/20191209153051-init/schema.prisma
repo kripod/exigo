@@ -1,6 +1,6 @@
 datasource sqlite {
   provider = "sqlite"
-  url = "***"
+  url      = "***"
 }
 
 // TODO: Use PostgreSQL in production
@@ -50,7 +50,7 @@ enum QuizItemType {
   NUMERIC
 }
 
-// TODO: implements QuizItemBase
+// TODO: `implements QuizItemBase`
 model MultipleOptionsQuizItemFragment {
   id                   String   @id @default(cuid())
   quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
@@ -67,7 +67,7 @@ model Option {
   isSolution Boolean @default(false)
 }
 
-// TODO: implements QuizItemBase
+// TODO: `implements QuizItemBase`
 model NumericQuizItemFragment {
   id                   String   @id @default(cuid())
   quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
