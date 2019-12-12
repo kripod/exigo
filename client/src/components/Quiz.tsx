@@ -129,16 +129,18 @@ export interface QuizProps {
 }
 
 export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
-  const [, updateQuizItem] = useUpdateQuizItemMutation();
-
-  const [res] = useGetQuizQuery({ variables: { id: quizID } });
-  const quiz = daoToQuiz(quizID, res.data);
-  const items = quiz?.items || [];
-
   const [remainingItems, setRemainingItems] = useState<QuizItem[]>([]);
   const [responses, setResponses] = useState<QuizAnswers>({});
 
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
+
+  const [, updateQuizItem] = useUpdateQuizItemMutation();
+  const [res] = useGetQuizQuery({
+    variables: { id: quizID },
+    pause: isEditable && remainingItems.length > 0,
+  });
+  const quiz = daoToQuiz(quizID, res.data);
+  const items = quiz?.items || [];
 
   useEffect(() => {
     setRemainingItems(
