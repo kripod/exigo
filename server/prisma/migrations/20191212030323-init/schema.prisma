@@ -1,6 +1,6 @@
 datasource sqlite {
   provider = "sqlite"
-  url      = "***"
+  url = "***"
 }
 
 // TODO: Use PostgreSQL in production
