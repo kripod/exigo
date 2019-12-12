@@ -131,7 +131,7 @@ function quizItemToDao(
     };
   }
 
-  return { stem };
+  return undefined as never;
 }
 
 // TODO: Allow creating items of other types
