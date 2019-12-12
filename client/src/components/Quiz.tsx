@@ -1,5 +1,6 @@
 import { Text } from '@chakra-ui/core';
 import { css } from '@emotion/core';
+import cuid from 'cuid';
 import debounce from 'just-debounce';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -17,6 +18,7 @@ import CarouselRotator from './CarouselRotator';
 import Measure from './Measure';
 import {
   GetQuizQuery,
+  useCreateQuizItemMutation,
   useGetQuizQuery,
   useUpdateQuizItemMutation,
 } from './Quiz.generated';
@@ -87,15 +89,20 @@ function daoToQuiz(
   };
 }
 
-function quizItemToDao(quizItem: QuizItem) {
+function quizItemToDao(
+  quizItem: QuizItem,
+  method: 'create' | 'update' = 'update',
+) {
+  const { id, stem } = quizItem;
+
   if (quizItem.type === QuizItemModelType.MULTIPLE_OPTIONS) {
-    const { id, stem, constraints, solution } = quizItem;
+    const { constraints, solution } = quizItem;
     return {
       id,
       type: QuizItemType.MultipleOptions,
       stem,
       fragmentMultipleOptions: {
-        update: {
+        [method]: {
           constraints_minCount: constraints?.minCount,
           constraints_maxCount: constraints?.maxCount,
           // TODO: Update `options`
@@ -105,13 +112,13 @@ function quizItemToDao(quizItem: QuizItem) {
   }
 
   if (quizItem.type === QuizItemModelType.NUMERIC) {
-    const { id, stem, precision, stepSize, constraints, solution } = quizItem;
+    const { precision, stepSize, constraints, solution = 0 } = quizItem;
     return {
       id,
       type: QuizItemType.Numeric,
       stem,
       fragmentNumeric: {
-        update: {
+        [method]: {
           precision,
           stepSize,
           constraints_minValue: constraints?.minValue,
@@ -122,12 +129,12 @@ function quizItemToDao(quizItem: QuizItem) {
     };
   }
 
-  return undefined as never;
+  return { stem };
 }
 
 // TODO: Allow creating items of other types
 function createDummyQuizItem(): NumericQuizItem {
-  return { id: '', type: QuizItemModelType.NUMERIC, stem: '' };
+  return { id: cuid(), type: QuizItemModelType.NUMERIC, stem: '' };
 }
 
 export interface QuizProps {
@@ -141,14 +148,27 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
 
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
 
+  const [createRes, createQuizItem] = useCreateQuizItemMutation();
+  const debouncedCreateQuizItem = debounce(createQuizItem, 400);
+  useEffect(() => {
+    const id = createRes.data?.createOneQuizItem.id;
+    if (id) {
+      console.log(id);
+      setRemainingItems(prevItems => {
+        console.log([...prevItems, createDummyQuizItem()]);
+        return [...prevItems, createDummyQuizItem()];
+      });
+    }
+  }, [createRes.data]);
+
   const [, updateQuizItem] = useUpdateQuizItemMutation();
   const debouncedUpdateQuizItem = debounce(updateQuizItem, 400);
 
-  const [res] = useGetQuizQuery({
+  const [getRes] = useGetQuizQuery({
     variables: { id: quizID },
     pause: isEditable && remainingItems.length > 1,
   });
-  const quiz = daoToQuiz(quizID, res.data);
+  const quiz = daoToQuiz(quizID, getRes.data);
   const items = quiz?.items || [];
 
   useEffect(() => {
@@ -159,13 +179,36 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
           items.map(({ solution, ...itemProps }) => itemProps),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [res.data]);
+  }, [getRes.data]);
 
-  if (res.fetching) return <Text>Loading…</Text>;
-  if (res.error) return <Text>Failed to load.</Text>;
+  if (getRes.fetching) return <Text>Loading…</Text>;
+  if (getRes.error) return <Text>Failed to load.</Text>;
 
   if (!quiz) {
     return <Text>Quiz cannot be found.</Text>;
+  }
+
+  function handleQuizItemChange(item: QuizItem, index: number) {
+    if (index < remainingItems.length - 1) {
+      const data = quizItemToDao(item);
+      debouncedUpdateQuizItem({ data, id: item.id });
+    } else {
+      const data = {
+        ...quizItemToDao(item, 'create'),
+        quiz: { connect: { id: quizID } },
+      };
+      debouncedCreateQuizItem({
+        data,
+      });
+    }
+
+    setRemainingItems(prevItems => {
+      return [
+        ...prevItems.slice(0, index),
+        { ...prevItems[index], item },
+        ...prevItems.slice(index + 1),
+      ];
+    });
   }
 
   return (
@@ -198,7 +241,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
               }
             `}
           >
-            {remainingItems.map((item, i) => {
+            {remainingItems.map((item, index) => {
               return (
                 <QuizItemCard
                   key={item.id}
@@ -207,34 +250,14 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                   totalCount={items.length}
                   isEditable={isEditable}
                   onStemChange={stem => {
-                    setRemainingItems(prevItems => {
-                      debouncedUpdateQuizItem({
-                        id: item.id,
-                        data: { stem },
-                      });
-                      return [
-                        ...prevItems.slice(0, i),
-                        { ...prevItems[i], stem },
-                        ...prevItems.slice(i + 1),
-                      ];
-                    });
+                    handleQuizItemChange({ ...item, stem }, index);
                   }}
                 >
                   {isEditable ? (
                     <QuizItemEditor
                       item={item}
                       onChange={nextItem => {
-                        debouncedUpdateQuizItem({
-                          id: item.id,
-                          data: quizItemToDao(nextItem),
-                        });
-                        setRemainingItems(prevItems => {
-                          return [
-                            ...prevItems.slice(0, i),
-                            nextItem,
-                            ...prevItems.slice(i + 1),
-                          ];
-                        });
+                        handleQuizItemChange(nextItem, index);
                       }}
                     />
                   ) : (

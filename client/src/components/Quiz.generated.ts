@@ -46,6 +46,14 @@ export type GetQuizQuery = { __typename?: 'Query' } & {
   >;
 };
 
+export type CreateQuizItemMutationVariables = {
+  data: Types.QuizItemCreateInput;
+};
+
+export type CreateQuizItemMutation = { __typename?: 'Mutation' } & {
+  createOneQuizItem: { __typename?: 'QuizItem' } & Pick<Types.QuizItem, 'id'>;
+};
+
 export type UpdateQuizItemMutationVariables = {
   id: Types.Scalars['ID'];
   data: Types.QuizItemUpdateInput;
@@ -90,6 +98,20 @@ export function useGetQuizQuery(
   options: Omit<Urql.UseQueryArgs<GetQuizQueryVariables>, 'query'> = {},
 ) {
   return Urql.useQuery<GetQuizQuery>({ query: GetQuizDocument, ...options });
+}
+export const CreateQuizItemDocument = gql`
+  mutation CreateQuizItem($data: QuizItemCreateInput!) {
+    createOneQuizItem(data: $data) {
+      id
+    }
+  }
+`;
+
+export function useCreateQuizItemMutation() {
+  return Urql.useMutation<
+    CreateQuizItemMutation,
+    CreateQuizItemMutationVariables
+  >(CreateQuizItemDocument);
 }
 export const UpdateQuizItemDocument = gql`
   mutation UpdateQuizItem($id: ID!, $data: QuizItemUpdateInput!) {

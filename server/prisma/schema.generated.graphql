@@ -55,8 +55,10 @@ input MultipleOptionsQuizItemFragmentWhereUniqueInput {
 
 type Mutation {
   createOneQuiz(data: QuizCreateInput!): Quiz!
+  createOneQuizItem(data: QuizItemCreateInput!): QuizItem!
   createOneUser(email: String, password: String): User!
   deleteOneQuiz(where: QuizWhereUniqueInput!): Quiz
+  deleteOneQuizItem(where: QuizItemWhereUniqueInput!): QuizItem
   updateOneQuiz(data: QuizUpdateInput!, where: QuizWhereUniqueInput!): Quiz
   updateOneQuizItem(
     data: QuizItemUpdateInput!
@@ -212,6 +214,11 @@ input QuizCreateInput {
   updatedAt: DateTime
 }
 
+input QuizCreateOneWithoutQuizInput {
+  connect: QuizWhereUniqueInput
+  create: QuizCreateWithoutItemsInput
+}
+
 input QuizCreateWithoutItemsInput {
   author: UserCreateOneWithoutAuthorInput!
   createdAt: DateTime
@@ -227,6 +234,15 @@ type QuizItem {
   fragmentNumeric: NumericQuizItemFragment
   id: ID!
   quiz: Quiz
+  stem: String!
+  type: QuizItemType!
+}
+
+input QuizItemCreateInput {
+  fragmentMultipleOptions: MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput
+  fragmentNumeric: NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput
+  id: ID
+  quiz: QuizCreateOneWithoutQuizInput
   stem: String!
   type: QuizItemType!
 }

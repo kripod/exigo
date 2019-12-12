@@ -74,14 +74,20 @@ export type MultipleOptionsQuizItemFragmentWhereUniqueInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createOneQuiz: Quiz;
+  createOneQuizItem: QuizItem;
   createOneUser: User;
   deleteOneQuiz?: Maybe<Quiz>;
+  deleteOneQuizItem?: Maybe<QuizItem>;
   updateOneQuiz?: Maybe<Quiz>;
   updateOneQuizItem?: Maybe<QuizItem>;
 };
 
 export type MutationCreateOneQuizArgs = {
   data: QuizCreateInput;
+};
+
+export type MutationCreateOneQuizItemArgs = {
+  data: QuizItemCreateInput;
 };
 
 export type MutationCreateOneUserArgs = {
@@ -91,6 +97,10 @@ export type MutationCreateOneUserArgs = {
 
 export type MutationDeleteOneQuizArgs = {
   where: QuizWhereUniqueInput;
+};
+
+export type MutationDeleteOneQuizItemArgs = {
+  where: QuizItemWhereUniqueInput;
 };
 
 export type MutationUpdateOneQuizArgs = {
@@ -287,6 +297,11 @@ export type QuizCreateInput = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type QuizCreateOneWithoutQuizInput = {
+  connect?: Maybe<QuizWhereUniqueInput>;
+  create?: Maybe<QuizCreateWithoutItemsInput>;
+};
+
 export type QuizCreateWithoutItemsInput = {
   author: UserCreateOneWithoutAuthorInput;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -303,6 +318,19 @@ export type QuizItem = {
   fragmentNumeric?: Maybe<NumericQuizItemFragment>;
   id: Scalars['ID'];
   quiz?: Maybe<Quiz>;
+  stem: Scalars['String'];
+  type: QuizItemType;
+};
+
+export type QuizItemCreateInput = {
+  fragmentMultipleOptions?: Maybe<
+    MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput
+  >;
+  fragmentNumeric?: Maybe<
+    NumericQuizItemFragmentCreateOneWithoutFragmentNumericInput
+  >;
+  id?: Maybe<Scalars['ID']>;
+  quiz?: Maybe<QuizCreateOneWithoutQuizInput>;
   stem: Scalars['String'];
   type: QuizItemType;
 };

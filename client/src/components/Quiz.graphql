@@ -27,6 +27,12 @@ query GetQuiz($id: ID!) {
   }
 }
 
+mutation CreateQuizItem($data: QuizItemCreateInput!) {
+  createOneQuizItem(data: $data) {
+    id
+  }
+}
+
 mutation UpdateQuizItem($id: ID!, $data: QuizItemUpdateInput!) {
   updateOneQuizItem(where: { id: $id }, data: $data) {
     id
