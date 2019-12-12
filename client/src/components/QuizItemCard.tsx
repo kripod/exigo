@@ -45,7 +45,9 @@ export default function QuizItemCard({
           color="gray.500"
           mb={2}
         >
-          Item #{shownIndex + 1} of {totalCount}
+          {shownIndex >= 0
+            ? `Item #${shownIndex + 1} of ${totalCount}`
+            : 'New item'}
         </Text>
 
         {isEditable ? (

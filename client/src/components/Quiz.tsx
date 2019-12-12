@@ -253,7 +253,9 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                   key={item.id}
                   item={item}
                   shownIndex={items.findIndex(({ id }) => id === item.id)}
-                  totalCount={items.length}
+                  totalCount={
+                    isEditable ? remainingItems.length - 1 : items.length
+                  }
                   isEditable={isEditable}
                   onStemChange={stem => {
                     handleQuizItemChange({ ...item, stem }, index);
