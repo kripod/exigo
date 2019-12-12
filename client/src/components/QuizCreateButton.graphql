@@ -1,0 +1,11 @@
+mutation CreateQuiz($title: String!) {
+  createOneQuiz(
+    data: {
+      title: $title
+      # TODO: Authentication
+      author: { connect: { email: "john.doe@example.com" } }
+    }
+  ) {
+    id
+  }
+}

@@ -2,6 +2,7 @@ import {
   Button,
   ButtonProps,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input,
   Modal,
@@ -13,16 +14,27 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/core';
-import React, { useRef } from 'react';
+import { navigate } from 'gatsby';
+import React, { useEffect, useRef } from 'react';
+import useForm from 'react-hook-form';
 
+import { useCreateQuizMutation } from './QuizCreateButton.generated';
 import Scale from './Scale';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface QuizCreateButtonProps extends ButtonProps {}
 
 export default function QuizCreateButton(props: QuizCreateButtonProps) {
+  const [res, createQuiz] = useCreateQuizMutation();
+  useEffect(() => {
+    const id = res.data?.createOneQuiz?.id;
+    if (id) navigate(`/app/quiz/${id}/edit`);
+  }, [res.data]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef<HTMLInputElement>(null);
+
+  const { register, handleSubmit, errors } = useForm();
 
   return (
     <>
@@ -42,19 +54,37 @@ export default function QuizCreateButton(props: QuizCreateButtonProps) {
               <ModalHeader>Create a new quiz</ModalHeader>
               <ModalCloseButton />
 
-              <ModalBody>
-                <FormControl>
-                  <FormLabel>Title</FormLabel>
-                  <Input ref={initialRef} placeholder="e.g. Science Quiz" />
-                </FormControl>
-              </ModalBody>
+              <form
+                onSubmit={handleSubmit(({ title }) => {
+                  createQuiz({ title });
+                })}
+              >
+                <ModalBody>
+                  <FormControl isInvalid={Boolean(errors.title)}>
+                    <FormLabel>Title</FormLabel>
+                    <Input
+                      ref={(instance: HTMLInputElement) => {
+                        (initialRef.current as HTMLInputElement) = instance;
+                        register({ required: 'Please fill out this field' })(
+                          instance,
+                        );
+                      }}
+                      name="title"
+                      placeholder="e.g. Science Quiz"
+                    />
+                    <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+                  </FormControl>
+                </ModalBody>
 
-              <ModalFooter>
-                <Button mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button variantColor="green">Create</Button>
-              </ModalFooter>
+                <ModalFooter>
+                  <Button mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" variantColor="green">
+                    Create
+                  </Button>
+                </ModalFooter>
+              </form>
             </ModalContent>
           </Modal>
         )}
