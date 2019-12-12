@@ -2,6 +2,7 @@
 // for npm module without type declarations, and assets files.
 
 // Shim modules without declarations
+declare module 'just-debounce';
 declare module 'use-resize-observer';
 declare module 'wicg-inert';
 

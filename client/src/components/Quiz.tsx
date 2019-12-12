@@ -1,5 +1,6 @@
 import { Text } from '@chakra-ui/core';
 import { css } from '@emotion/core';
+import debounce from 'just-debounce';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
@@ -135,6 +136,8 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
 
   const [, updateQuizItem] = useUpdateQuizItemMutation();
+  const debouncedUpdateQuizItem = debounce(updateQuizItem, 400);
+
   const [res] = useGetQuizQuery({
     variables: { id: quizID },
     pause: isEditable && remainingItems.length > 0,
@@ -199,9 +202,9 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                   isEditable={isEditable}
                   onStemChange={stem => {
                     setRemainingItems(prevItems => {
-                      updateQuizItem({
+                      debouncedUpdateQuizItem({
                         id: item.id,
-                        data: quizItemToDao(item),
+                        data: { stem },
                       });
                       return [
                         ...prevItems.slice(0, i),
@@ -215,6 +218,10 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                     <QuizItemEditor
                       item={item}
                       onChange={nextItem => {
+                        debouncedUpdateQuizItem({
+                          id: item.id,
+                          data: quizItemToDao(item),
+                        });
                         setRemainingItems(prevItems => {
                           return [
                             ...prevItems.slice(0, i),
