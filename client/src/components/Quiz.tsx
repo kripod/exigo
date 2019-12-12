@@ -16,6 +16,7 @@ import Measure from './Measure';
 import { GetQuizQuery, useGetQuizQuery } from './Quiz.generated';
 import QuizEvaluatorActions from './QuizEvaluatorActions';
 import QuizItemCard from './QuizItemCard';
+import QuizItemEditor from './QuizItemEditor';
 import QuizItemEvaluator from './QuizItemEvaluator';
 
 function daoToModel(
@@ -97,8 +98,10 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
 
   useEffect(() => {
     setRemainingItems(
-      // Simulate that solutions are not given at first
-      items.map(({ solution, ...itemProps }) => itemProps),
+      isEditable
+        ? items
+        : // Simulate that solutions are not given at first
+          items.map(({ solution, ...itemProps }) => itemProps),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res.data]);
@@ -140,7 +143,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
               }
             `}
           >
-            {remainingItems.map(item => {
+            {remainingItems.map((item, i) => {
               return (
                 <QuizItemCard
                   key={item.id}
@@ -148,16 +151,40 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                   shownIndex={items.findIndex(({ id }) => id === item.id)}
                   totalCount={items.length}
                   isEditable={isEditable}
+                  onStemChange={stem => {
+                    setRemainingItems(prevItems => {
+                      return [
+                        ...prevItems.slice(0, i),
+                        { ...prevItems[i], stem },
+                        ...prevItems.slice(i + 1),
+                      ];
+                    });
+                  }}
                 >
-                  <QuizItemEvaluator
-                    item={item}
-                    onChange={response => {
-                      setResponses(prevResponses => ({
-                        ...prevResponses,
-                        [item.id]: response,
-                      }));
-                    }}
-                  />
+                  {isEditable ? (
+                    <QuizItemEditor
+                      item={item}
+                      onChange={nextItem => {
+                        setRemainingItems(prevItems => {
+                          return [
+                            ...prevItems.slice(0, i),
+                            nextItem,
+                            ...prevItems.slice(i + 1),
+                          ];
+                        });
+                      }}
+                    />
+                  ) : (
+                    <QuizItemEvaluator
+                      item={item}
+                      onChange={response => {
+                        setResponses(prevResponses => ({
+                          ...prevResponses,
+                          [item.id]: response,
+                        }));
+                      }}
+                    />
+                  )}
                 </QuizItemCard>
               );
             })}
