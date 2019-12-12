@@ -27,7 +27,7 @@
     "gatsby-plugin-emotion": "^4.1.18",
     "gatsby-plugin-manifest": "^2.2.33",
     "gatsby-plugin-react-svg": "^2.1.2",
-    "gatsby-plugin-typescript": "^2.1.22",
+    "gatsby-plugin-typescript": "^2.1.23",
     "graphql-tag": "^2.10.1",
     "node-fetch": "^2.6.0",
     "react": "^16.12.0",
@@ -36,7 +36,7 @@
     "react-hook-form": "^3.28.15",
     "scroll-behavior-polyfill": "^2.0.13",
     "state-hooks": "^2.1.0",
-    "urql": "^1.6.3",
+    "urql": "^1.7.0",
     "use-debounce": "^3.3.0",
     "web-api-hooks": "^2.2.2",
     "wicg-inert": "^3.0.0"
