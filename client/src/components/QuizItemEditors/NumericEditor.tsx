@@ -34,7 +34,10 @@ export default function NumericEditor({ item, onChange }: NumericEditorProps) {
           value={(value ?? '') as any}
           onChange={nextValue => {
             setValue(nextValue);
-            onChange({ ...item, solution: nextValue ?? undefined });
+            onChange({
+              ...item,
+              solution: nextValue ? Number(nextValue) : undefined,
+            });
           }}
         >
           <NumberInputField
