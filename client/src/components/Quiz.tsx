@@ -1,9 +1,9 @@
 import { Text } from '@chakra-ui/core';
 import { css } from '@emotion/core';
 import cuid from 'cuid';
-import debounce from 'just-debounce';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { QuizItemType } from '../models.generated.d';
 import { Quiz } from '../models/Quiz';
@@ -26,6 +26,8 @@ import QuizEvaluatorActions from './QuizEvaluatorActions';
 import QuizItemCard from './QuizItemCard';
 import QuizItemEditor from './QuizItemEditor';
 import QuizItemEvaluator from './QuizItemEvaluator';
+
+const MUTATION_DEBOUNCE_INTERVAL_MS = 400;
 
 function daoToQuiz(
   quizID: Quiz['id'],
@@ -149,20 +151,24 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
 
   const [createRes, createQuizItem] = useCreateQuizItemMutation();
-  const debouncedCreateQuizItem = debounce(createQuizItem, 400);
+  const [debouncedCreateQuizItem] = useDebouncedCallback(
+    createQuizItem,
+    MUTATION_DEBOUNCE_INTERVAL_MS,
+  );
   useEffect(() => {
     const id = createRes.data?.createOneQuizItem.id;
     if (id) {
-      console.log(id);
       setRemainingItems(prevItems => {
-        console.log([...prevItems, createDummyQuizItem()]);
         return [...prevItems, createDummyQuizItem()];
       });
     }
   }, [createRes.data]);
 
   const [, updateQuizItem] = useUpdateQuizItemMutation();
-  const debouncedUpdateQuizItem = debounce(updateQuizItem, 400);
+  const [debouncedUpdateQuizItem] = useDebouncedCallback(
+    updateQuizItem,
+    MUTATION_DEBOUNCE_INTERVAL_MS,
+  );
 
   const [getRes] = useGetQuizQuery({
     variables: { id: quizID },
