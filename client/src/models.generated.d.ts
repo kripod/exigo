@@ -77,6 +77,7 @@ export type Mutation = {
   createOneUser: User;
   deleteOneQuiz?: Maybe<Quiz>;
   updateOneQuiz?: Maybe<Quiz>;
+  updateOneQuizItem?: Maybe<QuizItem>;
 };
 
 export type MutationCreateOneQuizArgs = {
@@ -95,6 +96,11 @@ export type MutationDeleteOneQuizArgs = {
 export type MutationUpdateOneQuizArgs = {
   data: QuizUpdateInput;
   where: QuizWhereUniqueInput;
+};
+
+export type MutationUpdateOneQuizItemArgs = {
+  data: QuizItemUpdateInput;
+  where: QuizItemWhereUniqueInput;
 };
 
 export type NumericQuizItemFragment = {
@@ -281,6 +287,16 @@ export type QuizCreateInput = {
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
+export type QuizCreateWithoutItemsInput = {
+  author: UserCreateOneWithoutAuthorInput;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  isPrivate?: Maybe<Scalars['Boolean']>;
+  timeLimitInMinutes?: Maybe<Scalars['Int']>;
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
 export type QuizItem = {
   __typename?: 'QuizItem';
   fragmentMultipleOptions?: Maybe<MultipleOptionsQuizItemFragment>;
@@ -321,6 +337,17 @@ export enum QuizItemType {
   MultipleOptions = 'MULTIPLE_OPTIONS',
   Numeric = 'NUMERIC',
 }
+
+export type QuizItemUpdateInput = {
+  fragmentMultipleOptions?: Maybe<
+    MultipleOptionsQuizItemFragmentUpdateOneWithoutQuizItemInput
+  >;
+  fragmentNumeric?: Maybe<NumericQuizItemFragmentUpdateOneWithoutQuizItemInput>;
+  id?: Maybe<Scalars['ID']>;
+  quiz?: Maybe<QuizUpdateOneWithoutItemsInput>;
+  stem?: Maybe<Scalars['String']>;
+  type?: Maybe<QuizItemType>;
+};
 
 export type QuizItemUpdateManyDataInput = {
   id?: Maybe<Scalars['ID']>;
@@ -379,6 +406,30 @@ export type QuizUpdateInput = {
   timeLimitInMinutes?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type QuizUpdateOneWithoutItemsInput = {
+  connect?: Maybe<QuizWhereUniqueInput>;
+  create?: Maybe<QuizCreateWithoutItemsInput>;
+  delete?: Maybe<Scalars['Boolean']>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+  update?: Maybe<QuizUpdateWithoutItemsDataInput>;
+  upsert?: Maybe<QuizUpsertWithoutItemsInput>;
+};
+
+export type QuizUpdateWithoutItemsDataInput = {
+  author?: Maybe<UserUpdateOneRequiredWithoutQuizzesInput>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id?: Maybe<Scalars['ID']>;
+  isPrivate?: Maybe<Scalars['Boolean']>;
+  timeLimitInMinutes?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type QuizUpsertWithoutItemsInput = {
+  create: QuizCreateWithoutItemsInput;
+  update: QuizUpdateWithoutItemsDataInput;
 };
 
 export type QuizWhereUniqueInput = {

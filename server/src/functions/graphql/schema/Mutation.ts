@@ -26,5 +26,7 @@ export default mutationType({
     t.crud.createOneQuiz();
     t.crud.updateOneQuiz();
     t.crud.deleteOneQuiz();
+
+    t.crud.updateOneQuizItem();
   },
 });

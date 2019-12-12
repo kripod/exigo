@@ -13,13 +13,17 @@ import CarouselContainer from './CarouselContainer';
 import CarouselProvider from './CarouselProvider';
 import CarouselRotator from './CarouselRotator';
 import Measure from './Measure';
-import { GetQuizQuery, useGetQuizQuery } from './Quiz.generated';
+import {
+  GetQuizQuery,
+  useGetQuizQuery,
+  useUpdateQuizItemMutation,
+} from './Quiz.generated';
 import QuizEvaluatorActions from './QuizEvaluatorActions';
 import QuizItemCard from './QuizItemCard';
 import QuizItemEditor from './QuizItemEditor';
 import QuizItemEvaluator from './QuizItemEvaluator';
 
-function daoToModel(
+function daoToQuiz(
   quizID: Quiz['id'],
   queryResult: GetQuizQuery | undefined,
 ): Quiz | undefined {
@@ -81,14 +85,54 @@ function daoToModel(
   };
 }
 
+function quizItemToDao(quizItem: QuizItem) {
+  if (quizItem.type === 'MULTIPLE_OPTIONS') {
+    const { id, stem, constraints, solution } = quizItem;
+    return {
+      id,
+      type: QuizItemType.MultipleOptions,
+      stem,
+      fragmentMultipleOptions: {
+        update: {
+          constraints_minCount: constraints?.minCount,
+          constraints_maxCount: constraints?.maxCount,
+          // TODO: Update `options`
+        },
+      },
+    };
+  }
+
+  if (quizItem.type === 'NUMERIC') {
+    const { id, stem, precision, stepSize, constraints, solution } = quizItem;
+    return {
+      id,
+      type: QuizItemType.Numeric,
+      stem,
+      fragmentNumeric: {
+        update: {
+          precision,
+          stepSize,
+          constraints_minValue: constraints?.minValue,
+          constraints_maxValue: constraints?.maxValue,
+          solution,
+        },
+      },
+    };
+  }
+
+  return undefined as never;
+}
+
 export interface QuizProps {
   id: string;
   isEditable?: boolean;
 }
 
 export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
+  const [, updateQuizItem] = useUpdateQuizItemMutation();
+
   const [res] = useGetQuizQuery({ variables: { id: quizID } });
-  const quiz = daoToModel(quizID, res.data);
+  const quiz = daoToQuiz(quizID, res.data);
   const items = quiz?.items || [];
 
   const [remainingItems, setRemainingItems] = useState<QuizItem[]>([]);
@@ -153,6 +197,10 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                   isEditable={isEditable}
                   onStemChange={stem => {
                     setRemainingItems(prevItems => {
+                      updateQuizItem({
+                        id: item.id,
+                        data: quizItemToDao(item),
+                      });
                       return [
                         ...prevItems.slice(0, i),
                         { ...prevItems[i], stem },

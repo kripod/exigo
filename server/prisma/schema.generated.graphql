@@ -58,6 +58,10 @@ type Mutation {
   createOneUser(email: String, password: String): User!
   deleteOneQuiz(where: QuizWhereUniqueInput!): Quiz
   updateOneQuiz(data: QuizUpdateInput!, where: QuizWhereUniqueInput!): Quiz
+  updateOneQuizItem(
+    data: QuizItemUpdateInput!
+    where: QuizItemWhereUniqueInput!
+  ): QuizItem
 }
 
 type NumericQuizItemFragment {
@@ -208,6 +212,16 @@ input QuizCreateInput {
   updatedAt: DateTime
 }
 
+input QuizCreateWithoutItemsInput {
+  author: UserCreateOneWithoutAuthorInput!
+  createdAt: DateTime
+  id: ID
+  isPrivate: Boolean
+  timeLimitInMinutes: Int
+  title: String!
+  updatedAt: DateTime
+}
+
 type QuizItem {
   fragmentMultipleOptions: MultipleOptionsQuizItemFragment
   fragmentNumeric: NumericQuizItemFragment
@@ -242,6 +256,15 @@ input QuizItemScalarWhereInput {
 enum QuizItemType {
   MULTIPLE_OPTIONS
   NUMERIC
+}
+
+input QuizItemUpdateInput {
+  fragmentMultipleOptions: MultipleOptionsQuizItemFragmentUpdateOneWithoutQuizItemInput
+  fragmentNumeric: NumericQuizItemFragmentUpdateOneWithoutQuizItemInput
+  id: ID
+  quiz: QuizUpdateOneWithoutItemsInput
+  stem: String
+  type: QuizItemType
 }
 
 input QuizItemUpdateManyDataInput {
@@ -299,6 +322,30 @@ input QuizUpdateInput {
   timeLimitInMinutes: Int
   title: String
   updatedAt: DateTime
+}
+
+input QuizUpdateOneWithoutItemsInput {
+  connect: QuizWhereUniqueInput
+  create: QuizCreateWithoutItemsInput
+  delete: Boolean
+  disconnect: Boolean
+  update: QuizUpdateWithoutItemsDataInput
+  upsert: QuizUpsertWithoutItemsInput
+}
+
+input QuizUpdateWithoutItemsDataInput {
+  author: UserUpdateOneRequiredWithoutQuizzesInput
+  createdAt: DateTime
+  id: ID
+  isPrivate: Boolean
+  timeLimitInMinutes: Int
+  title: String
+  updatedAt: DateTime
+}
+
+input QuizUpsertWithoutItemsInput {
+  create: QuizCreateWithoutItemsInput!
+  update: QuizUpdateWithoutItemsDataInput!
 }
 
 input QuizWhereUniqueInput {

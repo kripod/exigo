@@ -26,3 +26,9 @@ query GetQuiz($id: ID!) {
     }
   }
 }
+
+mutation UpdateQuizItem($id: ID!, $data: QuizItemUpdateInput!) {
+  updateOneQuizItem(where: { id: $id }, data: $data) {
+    id
+  }
+}
