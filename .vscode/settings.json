@@ -5,6 +5,15 @@
     "source.fixAll": true
   },
 
+  // Use ESLint for TypeScript code
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": ["./client", "./server"],
+
   // Use workspace version of TypeScript instead of the one built-in
   "typescript.tsdk": "node_modules/typescript/lib"
 }
