@@ -211,7 +211,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
     setRemainingItems(prevItems => {
       return [
         ...prevItems.slice(0, index),
-        { ...prevItems[index], item },
+        { ...prevItems[index], ...item } as QuizItem,
         ...prevItems.slice(index + 1),
       ];
     });
