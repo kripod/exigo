@@ -308,7 +308,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
               ];
             })
           }
-          onSurrender={setItemBeingRemoved}
+          onRemove={setItemBeingRemoved}
         />
       </CarouselProvider>
     </Measure>

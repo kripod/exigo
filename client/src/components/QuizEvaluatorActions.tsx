@@ -23,7 +23,7 @@ export interface QuizEvaluatorActionsProps extends StackProps {
   responses: QuizAnswers;
   disableNavigation?: boolean;
   onCheckAnswer: (item: QuizItem) => void;
-  onSurrender: (item: QuizItem) => void;
+  onRemove: (item: QuizItem) => void;
 }
 
 export default function QuizEvaluatorActions({
@@ -31,7 +31,7 @@ export default function QuizEvaluatorActions({
   responses,
   disableNavigation = false,
   onCheckAnswer,
-  onSurrender,
+  onRemove,
   ...restProps
 }: QuizEvaluatorActionsProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
@@ -100,7 +100,7 @@ export default function QuizEvaluatorActions({
                       variantColor="red"
                       onClick={() => {
                         goToNext();
-                        onSurrender(shownItem);
+                        onRemove(shownItem);
                         if (onClose) onClose(); // TODO: onClose?();
                       }}
                     >
@@ -119,7 +119,7 @@ export default function QuizEvaluatorActions({
         responses={responses}
         disableActions={disableNavigation}
         onCheckAnswer={onCheckAnswer}
-        onSurrender={onSurrender}
+        onRemove={onRemove}
       />
     </Flex>
   );

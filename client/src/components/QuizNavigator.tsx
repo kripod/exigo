@@ -10,7 +10,7 @@ export interface QuizNavigatorProps extends ButtonGroupProps {
   responses: QuizAnswers;
   disableActions?: boolean;
   onCheckAnswer: (item: QuizItem) => void;
-  onSurrender: (item: QuizItem) => void;
+  onRemove: (item: QuizItem) => void;
 }
 
 export default function QuizNavigator({
@@ -18,7 +18,7 @@ export default function QuizNavigator({
   responses,
   disableActions = false,
   onCheckAnswer,
-  onSurrender,
+  onRemove,
   ...restProps
 }: QuizNavigatorProps) {
   const { shownIndex, setShownIndex, totalCount } = useCarouselControls();
