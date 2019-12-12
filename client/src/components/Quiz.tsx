@@ -10,6 +10,7 @@ import QuizAnswers from '../models/QuizAnswers';
 import QuizItem from '../models/QuizItem';
 import MultipleOptionsQuizItem from '../models/QuizItems/MultipleOptionsQuizItem';
 import NumericQuizItem from '../models/QuizItems/NumericQuizItem';
+import QuizItemModelType from '../models/QuizItemType';
 import CarouselContainer from './CarouselContainer';
 import CarouselProvider from './CarouselProvider';
 import CarouselRotator from './CarouselRotator';
@@ -47,7 +48,7 @@ function daoToQuiz(
           .map(option => option.id);
         return {
           id,
-          type: 'MULTIPLE_OPTIONS', // TODO
+          type: QuizItemModelType.MULTIPLE_OPTIONS,
           stem,
           solution,
           options,
@@ -68,7 +69,7 @@ function daoToQuiz(
         } = fragments.fragmentNumeric!;
         return {
           id,
-          type: 'NUMERIC', // TODO
+          type: QuizItemModelType.NUMERIC,
           stem,
           solution,
           precision,
@@ -87,7 +88,7 @@ function daoToQuiz(
 }
 
 function quizItemToDao(quizItem: QuizItem) {
-  if (quizItem.type === 'MULTIPLE_OPTIONS') {
+  if (quizItem.type === QuizItemModelType.MULTIPLE_OPTIONS) {
     const { id, stem, constraints, solution } = quizItem;
     return {
       id,
@@ -103,7 +104,7 @@ function quizItemToDao(quizItem: QuizItem) {
     };
   }
 
-  if (quizItem.type === 'NUMERIC') {
+  if (quizItem.type === QuizItemModelType.NUMERIC) {
     const { id, stem, precision, stepSize, constraints, solution } = quizItem;
     return {
       id,
@@ -124,6 +125,11 @@ function quizItemToDao(quizItem: QuizItem) {
   return undefined as never;
 }
 
+// TODO: Allow creating items of other types
+function createDummyQuizItem(): NumericQuizItem {
+  return { id: '', type: QuizItemModelType.NUMERIC, stem: '' };
+}
+
 export interface QuizProps {
   id: string;
   isEditable?: boolean;
@@ -140,7 +146,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
 
   const [res] = useGetQuizQuery({
     variables: { id: quizID },
-    pause: isEditable && remainingItems.length > 0,
+    pause: isEditable && remainingItems.length > 1,
   });
   const quiz = daoToQuiz(quizID, res.data);
   const items = quiz?.items || [];
@@ -148,7 +154,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   useEffect(() => {
     setRemainingItems(
       isEditable
-        ? items
+        ? [...items, createDummyQuizItem()]
         : // Simulate that solutions are not given at first
           items.map(({ solution, ...itemProps }) => itemProps),
     );
