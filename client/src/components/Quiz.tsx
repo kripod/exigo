@@ -220,7 +220,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
                       onChange={nextItem => {
                         debouncedUpdateQuizItem({
                           id: item.id,
-                          data: quizItemToDao(item),
+                          data: quizItemToDao(nextItem),
                         });
                         setRemainingItems(prevItems => {
                           return [
