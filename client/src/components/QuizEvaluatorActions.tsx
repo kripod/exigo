@@ -21,6 +21,7 @@ import QuizNavigator from './QuizNavigator';
 export interface QuizEvaluatorActionsProps extends StackProps {
   remainingItems: QuizItem[];
   responses: QuizAnswers;
+  isEditable?: boolean;
   disableNavigation?: boolean;
   onCheckAnswer: (item: QuizItem) => void;
   onRemove: (item: QuizItem) => void;
@@ -29,6 +30,7 @@ export interface QuizEvaluatorActionsProps extends StackProps {
 export default function QuizEvaluatorActions({
   remainingItems,
   responses,
+  isEditable = false,
   disableNavigation = false,
   onCheckAnswer,
   onRemove,
@@ -53,6 +55,7 @@ export default function QuizEvaluatorActions({
     <Flex justify="space-between" flexWrap="wrap" {...restProps}>
       <ButtonGroup mr={2} mb={3}>
         <Button
+          hidden={isEditable}
           isDisabled={isSolutionShown || currentResponse == null}
           aria-label="Check answer"
           leftIcon={'glasses' as any}
@@ -72,12 +75,12 @@ export default function QuizEvaluatorActions({
             <>
               <PopoverTrigger>
                 <Button
-                  isDisabled={isSolutionShown}
+                  isDisabled={isSolutionShown && !isEditable}
                   aria-label="Surrender current item"
-                  leftIcon={'running' as any}
+                  leftIcon={(isEditable ? 'trash' : 'running') as any}
                   variant="ghost"
                 >
-                  Surrender
+                  {isEditable ? 'Delete' : 'Surrender'}
                 </Button>
               </PopoverTrigger>
 
@@ -85,7 +88,9 @@ export default function QuizEvaluatorActions({
                 <PopoverArrow />
                 <PopoverHeader fontWeight={600}>Are you sure?</PopoverHeader>
                 <PopoverBody>
-                  You may not revisit this item after surrendering.
+                  {isEditable
+                    ? 'You may not recover this item after removal.'
+                    : 'You may not revisit this item after surrendering.'}
                 </PopoverBody>
                 <PopoverFooter textAlign="right">
                   <ButtonGroup size="sm">
@@ -94,7 +99,7 @@ export default function QuizEvaluatorActions({
                       variant="outline"
                       onClick={onClose}
                     >
-                      No, keep trying
+                      {isEditable ? 'No, keep item' : 'No, keep trying'}
                     </Button>
                     <Button
                       variantColor="red"

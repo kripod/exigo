@@ -65,6 +65,16 @@ export type UpdateQuizItemMutation = { __typename?: 'Mutation' } & {
   >;
 };
 
+export type DeleteQuizItemMutationVariables = {
+  id: Types.Scalars['ID'];
+};
+
+export type DeleteQuizItemMutation = { __typename?: 'Mutation' } & {
+  deleteOneQuizItem: Types.Maybe<
+    { __typename?: 'QuizItem' } & Pick<Types.QuizItem, 'id'>
+  >;
+};
+
 export const GetQuizDocument = gql`
   query GetQuiz($id: ID!) {
     quiz(where: { id: $id }) {
@@ -126,4 +136,18 @@ export function useUpdateQuizItemMutation() {
     UpdateQuizItemMutation,
     UpdateQuizItemMutationVariables
   >(UpdateQuizItemDocument);
+}
+export const DeleteQuizItemDocument = gql`
+  mutation DeleteQuizItem($id: ID!) {
+    deleteOneQuizItem(where: { id: $id }) {
+      id
+    }
+  }
+`;
+
+export function useDeleteQuizItemMutation() {
+  return Urql.useMutation<
+    DeleteQuizItemMutation,
+    DeleteQuizItemMutationVariables
+  >(DeleteQuizItemDocument);
 }

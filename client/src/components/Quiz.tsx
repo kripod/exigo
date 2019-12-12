@@ -19,6 +19,7 @@ import Measure from './Measure';
 import {
   GetQuizQuery,
   useCreateQuizItemMutation,
+  useDeleteQuizItemMutation,
   useGetQuizQuery,
   useUpdateQuizItemMutation,
 } from './Quiz.generated';
@@ -148,8 +149,6 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   const [remainingItems, setRemainingItems] = useState<QuizItem[]>([]);
   const [responses, setResponses] = useState<QuizAnswers>({});
 
-  const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
-
   const [createRes, createQuizItem] = useCreateQuizItemMutation();
   const [debouncedCreateQuizItem] = useDebouncedCallback(
     createQuizItem,
@@ -163,6 +162,14 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
       });
     }
   }, [createRes.data]);
+
+  const [, deleteQuizItem] = useDeleteQuizItemMutation();
+  const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
+  useEffect(() => {
+    if (itemBeingRemoved != null) {
+      deleteQuizItem({ id: itemBeingRemoved.id });
+    }
+  }, [deleteQuizItem, itemBeingRemoved]);
 
   const [, updateQuizItem] = useUpdateQuizItemMutation();
   const [debouncedUpdateQuizItem] = useDebouncedCallback(
@@ -288,6 +295,7 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
         <QuizEvaluatorActions
           remainingItems={remainingItems}
           responses={responses}
+          isEditable={isEditable}
           disableNavigation={itemBeingRemoved != null}
           mt={2}
           px={4}

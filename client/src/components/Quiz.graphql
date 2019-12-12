@@ -38,3 +38,9 @@ mutation UpdateQuizItem($id: ID!, $data: QuizItemUpdateInput!) {
     id
   }
 }
+
+mutation DeleteQuizItem($id: ID!) {
+  deleteOneQuizItem(where: { id: $id }) {
+    id
+  }
+}
