@@ -13,7 +13,7 @@ type MultipleOptionsQuizItemFragment {
   constraints_minCount: Int
   id: ID!
   options(after: ID, before: ID, first: Int, last: Int, skip: Int): [Option!]!
-  quizItem: QuizItem!
+  quizItem: QuizItem
 }
 
 input MultipleOptionsQuizItemFragmentCreateOneWithoutFragmentMultipleOptionsInput {
@@ -71,7 +71,7 @@ type NumericQuizItemFragment {
   constraints_minValue: Float
   id: ID!
   precision: Float
-  quizItem: QuizItem!
+  quizItem: QuizItem
   solution: Float!
   stepSize: Float
 }

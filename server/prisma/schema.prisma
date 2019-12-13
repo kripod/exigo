@@ -52,11 +52,12 @@ enum QuizItemType {
 
 // TODO: `implements QuizItemBase`
 model MultipleOptionsQuizItemFragment {
-  id                   String   @id @default(cuid())
-  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
+  id                   String    @id @default(cuid())
+  // TODO: Make required when cascaded deletion is supported
+  quizItem             QuizItem? @relation(references: id, onDelete: CASCADE)
   options              Option[]
-  constraints_minCount Int?     @default(1)
-  constraints_maxCount Int?     @default(1)
+  constraints_minCount Int?      @default(1)
+  constraints_maxCount Int?      @default(1)
 }
 
 model Option {
@@ -69,11 +70,12 @@ model Option {
 
 // TODO: `implements QuizItemBase`
 model NumericQuizItemFragment {
-  id                   String   @id @default(cuid())
-  quizItem             QuizItem @relation(references: id, onDelete: CASCADE)
+  id                   String    @id @default(cuid())
+  // TODO: Make required when cascaded deletion is supported
+  quizItem             QuizItem? @relation(references: id, onDelete: CASCADE)
   solution             Float
-  precision            Float?   @default(0)
-  stepSize             Float?   @default(1)
+  precision            Float?    @default(0)
+  stepSize             Float?    @default(1)
   constraints_minValue Float?
   constraints_maxValue Float?
 }

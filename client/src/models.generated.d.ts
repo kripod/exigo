@@ -23,7 +23,7 @@ export type MultipleOptionsQuizItemFragment = {
   constraints_minCount?: Maybe<Scalars['Int']>;
   id: Scalars['ID'];
   options: Array<Option>;
-  quizItem: QuizItem;
+  quizItem?: Maybe<QuizItem>;
 };
 
 export type MultipleOptionsQuizItemFragmentOptionsArgs = {
@@ -119,7 +119,7 @@ export type NumericQuizItemFragment = {
   constraints_minValue?: Maybe<Scalars['Float']>;
   id: Scalars['ID'];
   precision?: Maybe<Scalars['Float']>;
-  quizItem: QuizItem;
+  quizItem?: Maybe<QuizItem>;
   solution: Scalars['Float'];
   stepSize?: Maybe<Scalars['Float']>;
 };

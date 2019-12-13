@@ -336,7 +336,7 @@
       "model": "MultipleOptionsQuizItemFragment",
       "field": "quizItem",
       "type": "QuizItem",
-      "arity": "required"
+      "arity": "optional"
     },
     {
       "stepType": "CreateDirective",
@@ -504,7 +504,7 @@
       "model": "NumericQuizItemFragment",
       "field": "quizItem",
       "type": "QuizItem",
-      "arity": "required"
+      "arity": "optional"
     },
     {
       "stepType": "CreateDirective",
