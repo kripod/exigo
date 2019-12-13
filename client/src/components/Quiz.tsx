@@ -166,10 +166,10 @@ export default function QuizComponent({ id: quizID, isEditable }: QuizProps) {
   const [, deleteQuizItem] = useDeleteQuizItemMutation();
   const [itemBeingRemoved, setItemBeingRemoved] = useState<QuizItem>();
   useEffect(() => {
-    if (itemBeingRemoved != null) {
+    if (isEditable && itemBeingRemoved != null) {
       deleteQuizItem({ id: itemBeingRemoved.id });
     }
-  }, [deleteQuizItem, itemBeingRemoved]);
+  }, [deleteQuizItem, isEditable, itemBeingRemoved]);
 
   const [, updateQuizItem] = useUpdateQuizItemMutation();
   const [debouncedUpdateQuizItem] = useDebouncedCallback(
